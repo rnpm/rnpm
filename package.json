@@ -2,11 +2,9 @@
   "name": "rnpm",
   "version": "0.0.1",
   "description": "React Native Package Manager",
-  "version": "0.1.0",
-  "description": "",
   "main": "bin/index.js",
   "bin": {
-    "rnpm": "index.js"
+    "rnpm": "bin/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/Kureev/rnpm/issues"
   },
-  "homepage": "https://github.com/Kureev/rnpm#readme"
+  "homepage": "https://github.com/Kureev/rnpm#readme",
+  "dependencies": {
+    "npmlog": "^2.0.0"
+  }
 }

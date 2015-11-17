@@ -8,10 +8,10 @@ var path = require('path');
 exports.requireFile = function requireFile(filePath) {
   try {
     return require(path.join(process.cwd(), filePath));
-  } catch(err) {
+  } catch (err) {
     return null;
   }
-}
+};
 
 /**
  * Tries to load given file in a try-catch block. For the detailed behaviour,
@@ -19,16 +19,16 @@ exports.requireFile = function requireFile(filePath) {
  */
 exports.loadFile = function loadFile(filePath) {
   try {
-    return fs.readFileSync(path.join(process.cwd(), filePath), {encoding: 'utf8'});
-  } catch(err) {
+    return fs.readFileSync(path.join(process.cwd(), filePath), { encoding: 'utf8', });
+  } catch (err) {
     return null;
   }
-}
+};
 
 /**
  * Returns an array of React Native dependencies, that is all npm packages
  * that are subject to this plugin
  */
 exports.loadDependencies = function loadDependencies() {
- return [];
-}
+  return [];
+};
