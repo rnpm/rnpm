@@ -1,6 +1,9 @@
 var android = require('./android/project');
 var ios = require('./ios/project');
 var loadConfig = require('./config');
+var log = require('npmlog');
+
+log.heading = 'rnpm';
 
 function init() {
   var config = loadConfig();
@@ -12,10 +15,7 @@ function init() {
 
   Object.keys(projects).forEach(function(platform) {
     if (!projects[platform] && config[platform]) {
-      console.log(`No project found for ${platform}. If you are sure it's there, try setting `
-        + `alternative config for rnpm. If you do not support ${platform} in your current `
-        + `project, you can supress this warning by setting ${platform}:false in your `
-        + `package.json`);
+      log.warn('ENOENT', `No project for ${platform} at ${config[platform].project}`);
     }
   });
 }
