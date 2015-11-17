@@ -2,11 +2,12 @@
   "name": "rnpm",
   "version": "0.0.1",
   "description": "React Native Package Manager",
-  "main": "index.js",
-  "dependencies": {
-    "npmlog": "^2.0.0"
+  "version": "0.1.0",
+  "description": "",
+  "main": "bin/index.js",
+  "bin": {
+    "rnpm": "index.js"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,7 +15,10 @@
     "type": "git",
     "url": "git+https://github.com/Kureev/rnpm.git"
   },
-  "author": "",
+  "contributors": [
+    "Alexey Kureev <kureev-mail@ya.ru> (https://github.com/Kureev)",
+    "Mike Grabowski <grabbou@gmail.com> (https://github.com/grabbou)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Kureev/rnpm/issues"
