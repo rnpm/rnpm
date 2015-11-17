@@ -1,7 +1,7 @@
 var android = require('../android/project');
 var ios = require('../ios/project');
 var loadConfig = require('../config');
-var validateProjects = require('../utils/validateProjects');
+var validateProjects = require('./validateProjects');
 
 /*
  * Initialisation of the `rnpm` called before anything.
