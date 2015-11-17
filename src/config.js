@@ -1,3 +1,4 @@
+var log = require('npmlog');
 var efs = require('./utils/fs');
 
 /**
@@ -16,7 +17,7 @@ function loadConfig() {
   var pjson = efs.requireFile('./package.json');
 
   if (!pjson) {
-    return console.log(`Package.json not found. Are you sure it's a React Native project?`);
+    return log.warn('EPACKAGEJSON', `Not found. Are you sure it's a React Native project?`);
   }
 
   var defaultConfig = {
