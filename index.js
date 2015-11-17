@@ -1,5 +1,5 @@
-var projects = require('./src/init')();
+var cli = require('./src/init')();
 
 // do something with projects.ios && projects.android now
 // projects.ios.addDependency('');
-console.log(projects);
+console.log(cli);

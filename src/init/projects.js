@@ -1,11 +1,7 @@
-var log = require('npmlog');
-var android = require('./android/project');
-var ios = require('./ios/project');
-var loadConfig = require('./config');
-var validateProjects = require('./validateProjects');
-
-// Load npmlog heading
-log.heading = 'rnpm';
+var android = require('../android/project');
+var ios = require('../ios/project');
+var loadConfig = require('../config');
+var validateProjects = require('../validateProjects');
 
 /*
  * Initialisation of the `rnpm` called before anything.
@@ -18,7 +14,7 @@ log.heading = 'rnpm';
  * Any invalid projects are omitted and deleted from the object
  * being returned. See `validateProjects` for further details.
  */
-function init() {
+function initProjects() {
   var config = loadConfig();
 
   var projects = {
@@ -29,4 +25,4 @@ function init() {
   return validateProjects(projects, config);
 }
 
-module.exports = init;
+module.exports = initProjects;
