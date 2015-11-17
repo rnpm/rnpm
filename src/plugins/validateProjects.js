@@ -14,7 +14,7 @@ var log = require('npmlog');
  * extra care by the application author has to be taken.
  */
 function validateProjects(projects, config) {
-  return Object.keys(projects).reduce(function(acc, platform) {
+  return Object.keys(projects).reduce((acc, platform) => {
     var project = projects[platform];
 
     if (!config[platform]) return acc;
@@ -30,7 +30,7 @@ function validateProjects(projects, config) {
       return acc;
     }
 
-    return Object.assign({}, acc, {[platform]: project});
+    return Object.assign({}, acc, { [platform]: project, });
   }, {});
 }
 
