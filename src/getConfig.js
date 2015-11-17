@@ -1,5 +1,5 @@
 const log = require('npmlog');
-const fs = require('fs');
+const efs = require('./utils/fs');
 
 /**
  * Loads config for `rnpm` to use by projects.
@@ -11,7 +11,7 @@ const fs = require('fs');
  * there will be warnings.
  */
 module.exports = () => {
-  var pjson = require('../package.json');
+  var pjson = efs.requireFile('./package.json');
 
   if (!pjson) {
     return log.warn('EPACKAGEJSON', `Not found. Are you sure it's a React Native project?`);
