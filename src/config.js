@@ -1,13 +1,4 @@
-var fs = require('fs');
-var path = require('path');
-
-function _loadPackage() {
-  try {
-    return require(path.join(process.cwd(), 'package.json'));
-  } catch(err) {
-    return;
-  }
-}
+var efs = require('./utils/fs');
 
 /**
  * Loads config for `rnpm` to use by projects.
@@ -17,9 +8,12 @@ function _loadPackage() {
  *
  * In order to override default settings, simply mirror them under `rnpm` key in your
  * package.json.
+ *
+ * In order to make `rnpm` ignore certain targets, simply set them to `false`. Otherwise,
+ * there will be warnings.
  */
 function loadConfig() {
-  var pjson = _loadPackage();
+  var pjson = efs.requireFile('./package.json');
 
   if (!pjson) {
     return console.log(`Package.json not found. Are you sure it's a React Native project?`);

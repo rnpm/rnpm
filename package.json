@@ -1,0 +1,21 @@
+{
+  "name": "rnpm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kureev/rnpm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kureev/rnpm/issues"
+  },
+  "homepage": "https://github.com/Kureev/rnpm#readme"
+}
