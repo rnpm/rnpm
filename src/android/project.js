@@ -9,4 +9,8 @@ ProjectAndroid.fromConfig = function(config) {
   return project ? new ProjectAndroid(project, config) : null;
 }
 
+ProjectAndroid.prototype.validate = function validateAndroid() {
+  return null;
+}
+
 module.exports = ProjectAndroid;
