@@ -4,7 +4,7 @@
   "description": "React Native Package Manager",
   "main": "src/index.js",
   "bin": {
-    "rnpm": "bin/index.js"
+    "rnpm": "bin/cli"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
