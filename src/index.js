@@ -1,8 +1,8 @@
-const config = require('../src/getConfig')();
-const actions = require('../src/actions');
+const config = require('./getConfig')();
+const actions = require('./actions');
 
-const ios = require('../src/ios');
-const android = require('../src/android');
+const ios = require('./ios');
+const android = require('./android');
 
 const projects = {
   ios: ios.fromConfig(config.ios),
