@@ -2,7 +2,7 @@
   "name": "rnpm",
   "version": "0.0.1",
   "description": "React Native Package Manager",
-  "main": "bin/index.js",
+  "main": "src/index.js",
   "bin": {
     "rnpm": "bin/index.js"
   },
@@ -24,5 +24,9 @@
   "homepage": "https://github.com/Kureev/rnpm#readme",
   "dependencies": {
     "npmlog": "^2.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^4.1.5",
+    "eslint": "^1.9.0"
   }
 }
