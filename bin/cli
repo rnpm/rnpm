@@ -44,7 +44,7 @@ Object.keys(cli.actions).forEach(actionName => {
     .description(action.description)
     .action(function() {
       // First argument to this function is `commander` itself. The rest are arguments.
-      // equivalent to {commander, ...passedArgs}
+      // equivalent to `{...passedArgs, commander}` kind of thing
       const passedArgs = dropRight(passedArgs, 1);
       const args = bindCommandArgs(action.args, passedArgs);
       action.run(cli, args, this.opts());
