@@ -5,6 +5,7 @@ var updateNotifier = require('update-notifier');
 var program = require('commander');
 var cli = require('../src');
 var dropRight = require('lodash.dropright');
+var zipObject = require('lodash.zipobject');
 
 // Check for updates once a day
 updateNotifier({pkg: pkg}).notify();
@@ -26,13 +27,14 @@ const buildCommandName = (actionName, args) => {
  * e.g transforms ['d', 'folder', 'something'] to
  * {folderName: 'd', rnVersion: 'something'} etc.
  */
-const bindCommandArgs = (args, passedArgs) => {
-  var parsedArgs = {};
-  passedArgs.forEach((passedArg, index) => {
-    parsedArgs[args[index].property] = passedArg;
-  });
-  return parsedArgs;
-};
+const bindCommandArgs = (args, passedArgs) => zipObject(
+  passedArgs.map((passedArg, index) => {
+    return [
+      args[index].property,
+      passedArg
+    ];
+  })
+);
 
 Object.keys(cli.actions).forEach(actionName => {
   const action = cli.actions[actionName];
@@ -43,9 +45,7 @@ Object.keys(cli.actions).forEach(actionName => {
     .usage(action.usage)
     .description(action.description)
     .action(function() {
-      // Last argument to this function is `commander` itself. The rest are arguments.
-      // equivalent to `{...passedArgs, commander}` kind of thing
-      const passedArgs = dropRight(passedArgs, 1);
+      const passedArgs = dropRight(arguments, 1);
       const args = bindCommandArgs(action.args, passedArgs);
       action.run(cli, args, this.opts());
     });
