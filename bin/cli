@@ -4,29 +4,48 @@ var pkg = require('../package.json');
 var updateNotifier = require('update-notifier');
 var program = require('commander');
 var cli = require('../src');
+var dropRight = require('lodash.dropright');
 
 // Check for updates once a day
 updateNotifier({pkg: pkg}).notify();
 
 program.version(pkg.version);
 
+/**
+ * Builds command name by respecting optional/required arguments
+ */
 const buildCommandName = (actionName, args) => {
   if (!args) return actionName;
 
   return args
     .reduce((cmd, arg) => cmd + (arg.required ? ` <${arg.name}>` : ` [${arg.name}]`), actionName);
-}
+};
+
+/**
+ * Binds passed command line arguments to the ones defined by action,
+ * e.g transforms ['d', 'folder', 'something'] to
+ * {folderName: 'd', rnVersion: 'something'} etc.
+ */
+const bindCommandArgs = (args, passedArgs) => {
+  var parsedArgs = {};
+  dropRight(passedArgs, 1).forEach((passedArg, index) => {
+    parsedArgs[args[index].property] = passedArg;
+  });
+  return parsedArgs;
+};
 
 Object.keys(cli.actions).forEach(actionName => {
-  var action = cli.actions[actionName];
+  const action = cli.actions[actionName];
+  const commandName = buildCommandName(actionName, action.args);
 
-  var commandName = buildCommandName(actionName, action.args);
-
-  var cliAction = program
+  const cliAction = program
     .command(commandName)
     .usage(action.usage)
     .description(action.description)
-    .action(action.run.bind(null, cli));
+    .action(function() {
+      const args = bindCommandArgs(action.args, arguments);
+      action.run(cli, args, this.opts());
+    });
 
   if (action.options) {
     action.options.forEach(option => cliAction.option(option.name, option.description));

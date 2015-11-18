@@ -24,6 +24,7 @@
   "homepage": "https://github.com/Kureev/rnpm#readme",
   "dependencies": {
     "commander": "^2.9.0",
+    "lodash.dropright": "^3.0.0",
     "npmlog": "^2.0.0",
     "update-notifier": "^0.5.0"
   },

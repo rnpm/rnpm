@@ -1,4 +1,11 @@
-function updateProjects(cli, program) {}
+function sampleAction() {
+  console.log(arguments);
+  // {'0':
+  //   { projects: { ios: null, android: null },
+  //     actions: { update: [Object], sample: [Object] } },
+  //  '1': { folderName: 'd', rnVersion: undefined },
+  //  '2': { force: undefined } }
+}
 
 module.exports = {
   description: 'This is sample demonstration with what is available',
@@ -8,9 +15,11 @@ module.exports = {
   }],
   args: [{
     name: 'folder',
-    required: true
+    required: true,
+    property: 'folderName'
   }, {
-    name: 'reactNativeVersion'
+    name: 'reactNativeVersion',
+    property: 'rnVersion'
   }],
-  run: updateProjects
+  run: sampleAction
 };
