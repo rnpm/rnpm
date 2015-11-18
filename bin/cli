@@ -15,12 +15,10 @@ program.version(pkg.version);
 /**
  * Builds command name by respecting optional/required arguments
  */
-const buildCommandName = (actionName, args) => {
-  if (!args) return actionName;
-
-  return args
-    .reduce((cmd, arg) => cmd + (arg.required ? ` <${arg.name}>` : ` [${arg.name}]`), actionName);
-};
+const buildCommandName = (actionName, args) => args.reduce(
+  (cmd, arg) => cmd + (arg.required ? ` <${arg.name}>` : ` [${arg.name}]`),
+  actionName
+);
 
 /**
  * Binds passed command line arguments to the ones defined by action,
@@ -38,7 +36,7 @@ const bindCommandArgs = (args, passedArgs) => zipObject(
 
 Object.keys(cli.actions).forEach(actionName => {
   const action = cli.actions[actionName];
-  const commandName = buildCommandName(actionName, action.args);
+  const commandName = buildCommandName(actionName, action.args || []);
 
   const cliAction = program
     .command(commandName)
