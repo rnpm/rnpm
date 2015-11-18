@@ -38,14 +38,14 @@ const bindCommandArgs = (args, passedArgs) => zipObject(
 /**
  * Builds action from given action configuration and attaches it to commander
  */
-const buildAction = (cli, config, action, actionName) => {
+const buildAction = (program, config, action, actionName) => {
   const commandName = buildCommandName(actionName, action.args || []);
 
-  const cliAction = cli
+  const cliAction = program
     .command(commandName)
     .usage(action.usage)
     .description(action.description)
-    .action(function() {
+    .action(function () {
       const args = bindCommandArgs(action.args, arguments);
       action.run(config, args, this.opts());
     });
