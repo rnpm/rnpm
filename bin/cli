@@ -15,6 +15,7 @@ Object.keys(cli.actions).forEach(actionName => {
 
   var cliAction = program
     .command(actionName)
+    .usage(action.usage)
     .description(action.description)
     .action(action.run.bind(null, cli));
 
