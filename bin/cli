@@ -3,7 +3,7 @@
 var pkg = require('../package.json');
 var updateNotifier = require('update-notifier');
 var program = require('commander');
-var cli = require('../src');
+var rnpm = require('../src');
 var dropRight = require('lodash.dropright');
 var zipObject = require('lodash.zipobject');
 var forEach = require('lodash.foreach');
@@ -38,7 +38,7 @@ const bindCommandArgs = (args, passedArgs) => zipObject(
 /**
  * Builds action from given action configuration and attaches it to commander
  */
-const buildAction = (program, config, action, actionName) => {
+const buildAction = (program, rnpm, action, actionName) => {
   const commandName = buildCommandName(actionName, action.args || []);
 
   const cliAction = program
@@ -47,7 +47,7 @@ const buildAction = (program, config, action, actionName) => {
     .description(action.description)
     .action(function () {
       const args = bindCommandArgs(action.args, arguments);
-      action.run(config, args, this.opts());
+      action.run(rnpm, args, this.opts());
     });
 
   if (action.options) {
@@ -55,6 +55,6 @@ const buildAction = (program, config, action, actionName) => {
   }
 }
 
-forEach(cli.actions, buildAction.bind(null, program, cli));
+forEach(rnpm.actions, buildAction.bind(null, program, rnpm));
 
 program.parse(process.argv);
