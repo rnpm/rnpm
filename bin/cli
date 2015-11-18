@@ -10,17 +10,26 @@ updateNotifier({pkg: pkg}).notify();
 
 program.version(pkg.version);
 
+const buildCommandName = (actionName, args) => {
+  if (!args) return actionName;
+
+  return args
+    .reduce((cmd, arg) => cmd + (arg.required ? ` <${arg.name}>` : ` [${arg.name}]`), actionName);
+}
+
 Object.keys(cli.actions).forEach(actionName => {
   var action = cli.actions[actionName];
 
+  var commandName = buildCommandName(actionName, action.args);
+
   var cliAction = program
-    .command(actionName)
+    .command(commandName)
     .usage(action.usage)
     .description(action.description)
     .action(action.run.bind(null, cli));
 
   if (action.options) {
-    action.options.forEach(option => cliAction.option(option[0], option[1]));
+    action.options.forEach(option => cliAction.option(option.name, option.description));
   }
 });
 
