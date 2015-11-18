@@ -16,7 +16,6 @@ module.exports = {
   args: [{
     name: 'folder',
     required: true,
-    property: 'folderName'
   }, {
     name: 'reactNativeVersion',
     property: 'rnVersion'

@@ -28,8 +28,9 @@ const buildCommandName = (actionName, args) => args.reduce(
  */
 const bindCommandArgs = (args, passedArgs) => zipObject(
   passedArgs.map((passedArg, index) => {
+    const arg = args[index];
     return [
-      args[index].property,
+      arg.property || arg.name,
       passedArg
     ];
   })
