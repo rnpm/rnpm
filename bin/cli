@@ -28,7 +28,7 @@ const buildCommandName = (actionName, args) => {
  */
 const bindCommandArgs = (args, passedArgs) => {
   var parsedArgs = {};
-  dropRight(passedArgs, 1).forEach((passedArg, index) => {
+  passedArgs.forEach((passedArg, index) => {
     parsedArgs[args[index].property] = passedArg;
   });
   return parsedArgs;
@@ -43,7 +43,10 @@ Object.keys(cli.actions).forEach(actionName => {
     .usage(action.usage)
     .description(action.description)
     .action(function() {
-      const args = bindCommandArgs(action.args, arguments);
+      // First argument to this function is `commander` itself. The rest are arguments.
+      // equivalent to {commander, ...passedArgs}
+      const passedArgs = dropRight(passedArgs, 1);
+      const args = bindCommandArgs(action.args, passedArgs);
       action.run(cli, args, this.opts());
     });
 
