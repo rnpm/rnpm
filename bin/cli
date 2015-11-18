@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+var pkg = require('../package.json');
+var updateNotifier = require('update-notifier');
+var program = require('commander');
+var cli = require('../src');
+
+// Check for updates once a day
+updateNotifier({pkg: pkg}).notify();
+
+program.version(pkg.version);
+
+Object.keys(cli.actions).forEach(actionName => {
+  var action = cli.actions[actionName];
+
+  var cliAction = program
+    .command(actionName)
+    .description(action.description)
+    .action(action.run.bind(null, cli));
+});
+
+program.parse(process.argv);
