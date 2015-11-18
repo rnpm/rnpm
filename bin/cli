@@ -16,7 +16,7 @@ program.version(pkg.version);
 /**
  * Builds command name by respecting optional/required arguments
  */
-const buildCommandName = (actionName, args) => args.reduce(
+const composeCommand = (actionName, args) => (args || []).reduce(
   (cmd, arg) => cmd + (arg.required ? ` <${arg.name}>` : ` [${arg.name}]`),
   actionName
 );
@@ -39,10 +39,10 @@ const bindCommandArgs = (args, passedArgs) => zipObject(
  * Builds action from given action configuration and attaches it to commander
  */
 const buildAction = (program, rnpm, action, actionName) => {
-  const commandName = buildCommandName(actionName, action.args || []);
+  const command = composeCommand(actionName, action.args);
 
   const cli = program
-    .command(commandName)
+    .command(command)
     .usage(action.usage)
     .description(action.description)
     .action(function() {
