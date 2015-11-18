@@ -41,17 +41,17 @@ const bindCommandArgs = (args, passedArgs) => zipObject(
 const buildAction = (program, rnpm, action, actionName) => {
   const commandName = buildCommandName(actionName, action.args || []);
 
-  const cliAction = program
+  const cli = program
     .command(commandName)
     .usage(action.usage)
     .description(action.description)
-    .action(function () {
+    .action(function() {
       const args = bindCommandArgs(action.args, arguments);
-      action.run(rnpm, args, this.opts());
+      action.run(rnpm, args, cli.opts());
     });
 
   if (action.options) {
-    action.options.forEach(option => cliAction.option(option.name, option.description));
+    action.options.forEach(option => cli.option(option.name, option.description));
   }
 }
 
