@@ -22,11 +22,11 @@ const composeCommand = (actionName, args) => (args || []).reduce(
 );
 
 /**
- * Binds passed command line arguments to the ones defined by action,
+ * Maps passed command line arguments to the ones defined by action,
  * e.g transforms ['d', 'folder', 'something'] to
- * {folderName: 'd', rnVersion: 'something'} etc.
+ * {folderName: 'd', rnVersion: 'something'}.
  */
-const bindCommandArgs = (args, passedArgs) => zipObject(
+const mapArgs = (args, passedArgs) => zipObject(
   args.map((arg, index) => {
     return [
       arg.property || arg.name,
@@ -46,7 +46,7 @@ const buildAction = (program, rnpm, action, actionName) => {
     .usage(action.usage)
     .description(action.description)
     .action(function() {
-      const args = bindCommandArgs(action.args, arguments);
+      const args = mapArgs(action.args, arguments);
       action.run(rnpm, args, cli.opts());
     });
 
