@@ -27,11 +27,10 @@ const buildCommandName = (actionName, args) => args.reduce(
  * {folderName: 'd', rnVersion: 'something'} etc.
  */
 const bindCommandArgs = (args, passedArgs) => zipObject(
-  passedArgs.map((passedArg, index) => {
-    const arg = args[index];
+  args.map((arg, index) => {
     return [
       arg.property || arg.name,
-      passedArg
+      passedArgs[index]
     ];
   })
 );
@@ -47,8 +46,7 @@ const buildAction = (cli, config, action, actionName) => {
     .usage(action.usage)
     .description(action.description)
     .action(function() {
-      const passedArgs = dropRight(arguments, 1);
-      const args = bindCommandArgs(action.args, passedArgs);
+      const args = bindCommandArgs(action.args, arguments);
       action.run(config, args, this.opts());
     });
 
