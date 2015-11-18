@@ -17,6 +17,10 @@ Object.keys(cli.actions).forEach(actionName => {
     .command(actionName)
     .description(action.description)
     .action(action.run.bind(null, cli));
+
+  if (action.options) {
+    action.options.forEach(option => cliAction.option(option[0], option[1]));
+  }
 });
 
 program.parse(process.argv);
