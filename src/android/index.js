@@ -10,9 +10,9 @@ const SETTINGS_GRADLE_PATH = path.join(
   process.cwd(), 'android', 'settings.gradle'
 );
 
-const MAIN_ACTIVITY_PATH = path.join(
+const composeMainActivityPath = (name) => path.join(
   process.cwd(), 'android', 'app', 'src', 'main',
-  'java', 'com', 'basic', 'MainActivity.java'
+  'java', 'com', name, 'MainActivity.java'
 );
 
 const SETTINGS_PATCH_PATTERN = `include ':app'`;
@@ -51,7 +51,7 @@ const getModuleAndroidConfig = compose(
   (c) => c.android, getConfig, getModulePackage
 );
 
-const readFile = (file) => fs.readFileSync(file, 'utf8');
+const readFile = (file) => () => fs.readFileSync(file, 'utf8');
 const writeFile = (file, content) => {
   if (content) {
     return fs.writeFileSync(file, content, 'utf8');
@@ -69,17 +69,18 @@ const replace = (scope, pattern, patch) =>
   scope.replace(pattern, `${pattern}\n${patch}`);
 
 const getSettingsPatch = (name) =>
-  `\nproject(':${name}').projectDir = ` +
+  `include ':react-native-vector-icons'\n` +
+  `project(':${name}').projectDir = ` +
     `new File(rootProject.projectDir, '../node_modules/${name}/android')\n`;
 
 const getBuildPatch = (name) =>
-  `\n\tcompile project(':${name}')\n`;
+  `    compile project(':${name}')`;
 
 const getImportPatch = (importPath) =>
-  `\nimport ${importPath}\n`;
+  `import ${importPath}`;
 
 const getPackagePatch = (instance) =>
-  `\n\t.addPackage(${instance})\n`;
+  `                .addPackage(${instance})`;
 
 /**
  * Make a project settings patcher
@@ -145,17 +146,21 @@ const applyBuildGradlePatch = (name) =>
  * @param  {String}   instance   Code to instance a package, e.g. new VectorIconsPackage();
  * @return {Function}            Patcher function
  */
-const applyMainActivityPatch = (importPath, instance) =>
-  compose(
-    writeFile(MAIN_ACTIVITY_PATH),
+const applyMainActivityPatch = (name, importPath, instance) => {
+  const mainActivityPath = composeMainActivityPath(name);
+
+  return compose(
+    writeFile(mainActivityPath),
     makeMainActivityPatcher(importPath, instance),
-    readFile(MAIN_ACTIVITY_PATH)
+    readFile(mainActivityPath)
   );
+};
 
 module.exports = function registerNativeAndroidModule(name) {
   const config = getModuleAndroidConfig(name);
+  const pjson = require('./package.json');
 
-  applySettingsGradlePatch(name);
-  applyBuildGradlePatch(name);
-  applyMainActivityPatch(config.importPath, config.instance);
+  applySettingsGradlePatch(name)();
+  applyBuildGradlePatch(name)();
+  applyMainActivityPatch(pjson.name, config.importPath, config.instance)();
 };
