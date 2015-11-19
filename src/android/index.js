@@ -17,6 +17,8 @@ const MAIN_ACTIVITY_PATH = path.join(
 
 const SETTINGS_PATCH_PATTERN = `include ':app'`;
 const BUILD_PATCH_PATTERN = `dependencies {`;
+const MAIN_ACTIVITY_IMPORT_PATTERN = `import android.app.Activity;`;
+const MAIN_ACTIVITY_PACKAGE_PATTERN = `.addPackage(new MainReactPackage())`;
 
 /**
  * Get module dir
@@ -42,8 +44,8 @@ const getModulePackage = (name) =>
 const getConfig = (content) => JSON.parse(content).rnpm;
 
 /**
- * @param  {Object} packageJSON Content of the package.json
- * @return {Object}             Android config for processing module
+ * @param  {String} Name of the module
+ * @return {Object} Android config for processing module
  */
 const getModuleAndroidConfig = compose(
   (c) => c.android, getConfig, getModulePackage
@@ -73,6 +75,12 @@ const getSettingsPatch = (name) =>
 const getBuildPatch = (name) =>
   `\n\tcompile project(':${name}')\n`;
 
+const getImportPatch = (importPath) =>
+  `\nimport ${importPath}\n`;
+
+const getPackagePatch = (instance) =>
+  `\n\t.addPackage(${instance})\n`;
+
 /**
  * Make a project settings patcher
  * @param  {String}   name Name of the project we're going to include
@@ -99,21 +107,36 @@ const makeProjectBuildPatcher = (name) =>
    */
   (content) => replace(content, BUILD_PATCH_PATTERN, getBuildPatch(name));
 
+const makeMainActivityPatcher = (importPath, instance) =>
+  (content) =>
+    replace(content, MAIN_ACTIVITY_IMPORT_PATTERN, getImportPatch(importPath)) &&
+    replace(content, MAIN_ACTIVITY_PACKAGE_PATTERN, getPackagePatch(instance));
+
 const patchSettingsGradle = (name) =>
   compose(
     writeFile(SETTINGS_GRADLE_PATH),
     makeProjectSettingsPatcher(name),
-    readFile(SETTINGS_GRADLE_PATH),
+    readFile(SETTINGS_GRADLE_PATH)
   );
 
 const patchBuildGradle = (name) =>
   compose(
     writeFile(BUILD_GRADLE_PATH),
     makeProjectBuildPatcher(name),
-    readFile(BUILD_GRADLE_PATH),
+    readFile(BUILD_GRADLE_PATH)
+  );
+
+const patchMainActivity = (importPath, instance) =>
+  compose(
+    writeFile(MAIN_ACTIVITY_PATH),
+    makeMainActivityPatcher(importPath, instance),
+    readFile(MAIN_ACTIVITY_PATH)
   );
 
 module.exports = function registerNativeAndroidModule(name) {
+  const config = getModuleAndroidConfig(name);
+
   patchSettingsGradle(name);
   patchBuildGradle(name);
+  patchMainActivity(config.importPath, config.instance);
 };
