@@ -9,4 +9,4 @@ const projects = {
   android: android.fromConfig(config.android),
 };
 
-module.exports = {projects, actions};
+module.exports = { projects, actions, };
