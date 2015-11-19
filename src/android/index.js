@@ -107,26 +107,45 @@ const makeProjectBuildPatcher = (name) =>
    */
   (content) => replace(content, BUILD_PATCH_PATTERN, getBuildPatch(name));
 
+/**
+ * Make a MainActivity.java program patcher
+ * @param  {String}   importPath Import path, e.g. com.oblador.vectoricons.VectorIconsPackage;
+ * @param  {String}   instance   Code to instance a package, e.g. new VectorIconsPackage();
+ * @return {Function}            Patcher function
+ */
 const makeMainActivityPatcher = (importPath, instance) =>
   (content) =>
     replace(content, MAIN_ACTIVITY_IMPORT_PATTERN, getImportPatch(importPath)) &&
     replace(content, MAIN_ACTIVITY_PACKAGE_PATTERN, getPackagePatch(instance));
 
-const patchSettingsGradle = (name) =>
+/**
+ * @param  {String} name Name of the project we're going to include
+ * @return {Function}    Settings.gradle patcher
+ */
+const applySettingsGradlePatch = (name) =>
   compose(
     writeFile(SETTINGS_GRADLE_PATH),
     makeProjectSettingsPatcher(name),
     readFile(SETTINGS_GRADLE_PATH)
   );
 
-const patchBuildGradle = (name) =>
+/**
+ * @param  {String} name Name of the project we're going to include
+ * @return {Function}    Build.gradle patcher
+ */
+const applyBuildGradlePatch = (name) =>
   compose(
     writeFile(BUILD_GRADLE_PATH),
     makeProjectBuildPatcher(name),
     readFile(BUILD_GRADLE_PATH)
   );
 
-const patchMainActivity = (importPath, instance) =>
+/**
+ * @param  {String}   importPath Import path, e.g. com.oblador.vectoricons.VectorIconsPackage;
+ * @param  {String}   instance   Code to instance a package, e.g. new VectorIconsPackage();
+ * @return {Function}            Patcher function
+ */
+const applyMainActivityPatch = (importPath, instance) =>
   compose(
     writeFile(MAIN_ACTIVITY_PATH),
     makeMainActivityPatcher(importPath, instance),
@@ -136,7 +155,7 @@ const patchMainActivity = (importPath, instance) =>
 module.exports = function registerNativeAndroidModule(name) {
   const config = getModuleAndroidConfig(name);
 
-  patchSettingsGradle(name);
-  patchBuildGradle(name);
-  patchMainActivity(config.importPath, config.instance);
+  applySettingsGradlePatch(name);
+  applyBuildGradlePatch(name);
+  applyMainActivityPatch(config.importPath, config.instance);
 };
