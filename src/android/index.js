@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const compose = require('lodash.flowright');
 
@@ -8,6 +8,10 @@ const BUILD_GRADLE_PATH = path.join(
 
 const SETTINGS_GRADLE_PATH = path.join(
   process.cwd(), 'android', 'settings.gradle'
+);
+
+const ASSETS_PATH = path.join(
+  process.cwd(), 'android', 'app', 'src', 'main', 'assets'
 );
 
 const composeMainActivityPath = (name) => path.join(
@@ -156,11 +160,29 @@ const applyMainActivityPatch = (name, importPath, instance) => {
   );
 };
 
+const copyAssets = (name, assets) => {
+  if (!assets) assets = [];
+
+  return () => assets.forEach((asset) =>
+    fs.copySync(
+      path.join(getModuleDir(name), asset),
+      path.join(ASSETS_PATH, asset)
+    )
+  );
+};
+
 module.exports = function registerNativeAndroidModule(name) {
-  const config = getModuleAndroidConfig(name);
+  const config = compose(getConfig, getModulePackage)(name);
   const pjson = require('./package.json');
 
-  applySettingsGradlePatch(name)();
-  applyBuildGradlePatch(name)();
-  applyMainActivityPatch(pjson.name, config.importPath, config.instance)();
+  compose(
+    copyAssets(name, config.assets),
+    applySettingsGradlePatch(name),
+    applyBuildGradlePatch(name),
+    applyMainActivityPatch(
+      pjson.name,
+      config.android.importPath,
+      config.android.instance
+    )
+  )();
 };

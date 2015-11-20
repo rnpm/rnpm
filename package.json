@@ -24,6 +24,7 @@
   "homepage": "https://github.com/Kureev/rnpm#readme",
   "dependencies": {
     "commander": "^2.9.0",
+    "fs-extra": "^0.26.2",
     "lodash.dropright": "^3.0.0",
     "lodash.flowright": "^3.2.1",
     "lodash.foreach": "^3.0.3",
