@@ -3,12 +3,12 @@ const path = require('path');
 const compose = require('lodash.flowright');
 const pjson = require('./package.json');
 
-module.exports = function registerNativeAndroidModule(name) {
-  const SETTINGS_PATCH_PATTERN = `include ':app'`;
-  const BUILD_PATCH_PATTERN = `dependencies {`;
-  const MAIN_ACTIVITY_IMPORT_PATTERN = `import android.app.Activity;`;
-  const MAIN_ACTIVITY_PACKAGE_PATTERN = `.addPackage(new MainReactPackage())`;
+const SETTINGS_PATCH_PATTERN = `include ':app'`;
+const BUILD_PATCH_PATTERN = `dependencies {`;
+const MAIN_ACTIVITY_IMPORT_PATTERN = `import android.app.Activity;`;
+const MAIN_ACTIVITY_PACKAGE_PATTERN = `.addPackage(new MainReactPackage())`;
 
+module.exports = function registerNativeAndroidModule(name) {
   const BUILD_GRADLE_PATH = path.join(
     process.cwd(), 'android', 'app', 'build.gradle');
 
