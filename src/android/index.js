@@ -2,14 +2,14 @@ const fs = require('fs-extra');
 const path = require('path');
 const compose = require('lodash.flowright');
 const pjson = require('../../package.json');
-const utils = require('./src/utils');
+const utils = require('../utils');
 
 const SETTINGS_PATCH_PATTERN = `include ':app'`;
 const BUILD_PATCH_PATTERN = `dependencies {`;
 const MAIN_ACTIVITY_IMPORT_PATTERN = `import android.app.Activity;`;
 const MAIN_ACTIVITY_PACKAGE_PATTERN = `.addPackage(new MainReactPackage())`;
 
-module.exports = function registerNativeAndroidModule(name) {
+module.exports = function registerNativeAndroidModule(name, config) {
   const BUILD_GRADLE_PATH = path.join(
     process.cwd(), 'android', 'app', 'build.gradle');
 
@@ -30,13 +30,6 @@ module.exports = function registerNativeAndroidModule(name) {
   const modulePackageContent = fs.readFileSync(
     path.join(MODULE_DIR, 'package.json'), 'utf8'
   );
-
-  /**
-   * Get config from package.json's content
-   * @param  {String} content Content of package.json
-   * @return {Object}         Module's rnpm config
-   */
-  const getConfig = (content) => JSON.parse(content).rnpm;
 
   const SETTINGS_PATCH = `include ':react-native-vector-icons'\n` +
     `project(':${name}').projectDir = new File(rootProject.projectDir, ` +
@@ -78,13 +71,13 @@ module.exports = function registerNativeAndroidModule(name) {
       utils.replace(content, MAIN_ACTIVITY_PACKAGE_PATTERN, getPackagePatch(instance));
 
   const applySettingsGradlePatch = compose(
-    writeFile(SETTINGS_GRADLE_PATH),
+    utils.writeFile(SETTINGS_GRADLE_PATH),
     patchProjectSettings,
     utils.readFile(SETTINGS_GRADLE_PATH)
   );
 
   const applyBuildGradlePatch = compose(
-    writeFile(BUILD_GRADLE_PATH),
+    utils.writeFile(BUILD_GRADLE_PATH),
     patchProjectBuild,
     utils.readFile(BUILD_GRADLE_PATH)
   );
@@ -96,7 +89,7 @@ module.exports = function registerNativeAndroidModule(name) {
    */
   const applyMainActivityPatch = (importPath, instance) =>
     compose(
-      writeFile(MAIN_ACTIVITY_PATH),
+      utils.writeFile(MAIN_ACTIVITY_PATH),
       makeMainActivityPatcher(importPath, instance),
       readFile(MAIN_ACTIVITY_PATH)
     );
@@ -116,8 +109,6 @@ module.exports = function registerNativeAndroidModule(name) {
       )
     );
   };
-
-  const config = getConfig(modulePackageContent);
 
   compose(
     copyAssets(config.assets),
