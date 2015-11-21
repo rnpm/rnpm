@@ -1,8 +1,9 @@
 const fs = require('fs-extra');
 const path = require('path');
 const compose = require('lodash.flowright');
-const pjson = require('../../package.json');
 const utils = require('../utils');
+
+const pjson = require(path.join(process.cwd(), 'package.json'));
 
 const SETTINGS_PATCH_PATTERN = `include ':app'`;
 const BUILD_PATCH_PATTERN = `dependencies {`;
@@ -27,15 +28,10 @@ module.exports = function registerNativeAndroidModule(name, config) {
     'java', 'com', pjson.name, 'MainActivity.java'
   );
 
-  const modulePackageContent = fs.readFileSync(
-    path.join(MODULE_DIR, 'package.json'), 'utf8'
-  );
-
-  const SETTINGS_PATCH = `include ':react-native-vector-icons'\n` +
-    `project(':${name}').projectDir = new File(rootProject.projectDir, ` +
-    `'../node_modules/${name}/android')\n`;
-
-  const getBuildPatch = () => `    compile project(':${name}')`;
+  const BUILD_PATCH = `    compile project(':${name}')`;
+  const SETTINGS_PATCH = `include ':${name}'
+project(':${name}').projectDir = new File(rootProject.projectDir, \
+'../node_modules/${name}/android')`;
 
   const getImportPatch = (importPath) =>
     `import ${importPath}`;
@@ -57,7 +53,7 @@ module.exports = function registerNativeAndroidModule(name, config) {
    * @return {String}         Patched content of Build.gradle
    */
   const patchProjectBuild = (content) =>
-    utils.replace(content, BUILD_PATCH_PATTERN, getBuildPatch);
+    utils.replace(content, BUILD_PATCH_PATTERN, BUILD_PATCH);
 
   /**
    * Make a MainActivity.java program patcher
@@ -91,7 +87,7 @@ module.exports = function registerNativeAndroidModule(name, config) {
     compose(
       utils.writeFile(MAIN_ACTIVITY_PATH),
       makeMainActivityPatcher(importPath, instance),
-      readFile(MAIN_ACTIVITY_PATH)
+      utils.readFile(MAIN_ACTIVITY_PATH)
     );
 
   /**
