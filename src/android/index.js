@@ -1,7 +1,8 @@
 const fs = require('fs-extra');
 const path = require('path');
 const compose = require('lodash.flowright');
-const pjson = require('./package.json');
+const pjson = require('../../package.json');
+const utils = require('./src/utils');
 
 const SETTINGS_PATCH_PATTERN = `include ':app'`;
 const BUILD_PATCH_PATTERN = `dependencies {`;
@@ -37,18 +38,6 @@ module.exports = function registerNativeAndroidModule(name) {
    */
   const getConfig = (content) => JSON.parse(content).rnpm;
 
-  const readFile = (file) => () => fs.readFileSync(file, 'utf8');
-  const writeFile = (file, content) => content ?
-    fs.writeFileSync(file, content, 'utf8') :
-    (c) => fs.writeFileSync(file, c, 'utf8');
-  const replace = (scope, pattern, patch) =>
-    scope.replace(pattern, `${pattern}\n${patch}`);
-
-  const writeSettingsGradle = (content) =>
-    fs.writeFileSync(SETTINGS_GRADLE_PATH, content, 'utf8');
-  const writeBuildGradle = (content) =>
-    fs.writeFileSync(BUILD_GRADLE_PATH, content, 'utf8');
-
   const SETTINGS_PATCH = `include ':react-native-vector-icons'\n` +
     `project(':${name}').projectDir = new File(rootProject.projectDir, ` +
     `'../node_modules/${name}/android')\n`;
@@ -67,7 +56,7 @@ module.exports = function registerNativeAndroidModule(name) {
    * @return {String}         Patched content of Settings.gradle
    */
   const patchProjectSettings = (content) =>
-    replace(content, SETTINGS_PATCH_PATTERN, SETTINGS_PATCH);
+    utils.replace(content, SETTINGS_PATCH_PATTERN, SETTINGS_PATCH);
 
   /**
    * Replace BUILD_PATCH_PATTERN by patch in the passed content
@@ -75,7 +64,7 @@ module.exports = function registerNativeAndroidModule(name) {
    * @return {String}         Patched content of Build.gradle
    */
   const patchProjectBuild = (content) =>
-    replace(content, BUILD_PATCH_PATTERN, getBuildPatch);
+    utils.replace(content, BUILD_PATCH_PATTERN, getBuildPatch);
 
   /**
    * Make a MainActivity.java program patcher
@@ -85,25 +74,19 @@ module.exports = function registerNativeAndroidModule(name) {
    */
   const makeMainActivityPatcher = (importPath, instance) =>
     (content) =>
-      replace(content, MAIN_ACTIVITY_IMPORT_PATTERN, getImportPatch(importPath)) &&
-      replace(content, MAIN_ACTIVITY_PACKAGE_PATTERN, getPackagePatch(instance));
+      utils.replace(content, MAIN_ACTIVITY_IMPORT_PATTERN, getImportPatch(importPath)) &&
+      utils.replace(content, MAIN_ACTIVITY_PACKAGE_PATTERN, getPackagePatch(instance));
 
-  /**
-   * @return {Function}    Settings.gradle patcher
-   */
   const applySettingsGradlePatch = compose(
     writeFile(SETTINGS_GRADLE_PATH),
     patchProjectSettings,
-    readFile(SETTINGS_GRADLE_PATH)
+    utils.readFile(SETTINGS_GRADLE_PATH)
   );
 
-  /**
-   * @return {Function}    Build.gradle patcher
-   */
   const applyBuildGradlePatch = compose(
     writeFile(BUILD_GRADLE_PATH),
     patchProjectBuild,
-    readFile(BUILD_GRADLE_PATH)
+    utils.readFile(BUILD_GRADLE_PATH)
   );
 
   /**
@@ -118,6 +101,11 @@ module.exports = function registerNativeAndroidModule(name) {
       readFile(MAIN_ACTIVITY_PATH)
     );
 
+  /**
+   * Copy assets from MODULE_DIR to ASSETS_PATH
+   * @param  {Array} assets Array of assets specified in config
+   * @return {Function}
+   */
   const copyAssets = (assets) => {
     if (!assets) assets = [];
 
