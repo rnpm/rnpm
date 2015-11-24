@@ -12,6 +12,11 @@ const BASE_DIR = './android';
 module.exports = function getDefaultConfigAndroid(folder, pjson) {
   var src = path.join(folder, BASE_DIR);
 
+  // This package / project does not support android
+  if (!fs.existsSync(src)) {
+    return false;
+  }
+
   // Some projects are placed under `app`
   // @todo use some `glob` pattern to indicate different settings
   if (fs.existsSync(path.join(src, 'app'))) {
