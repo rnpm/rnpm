@@ -6,10 +6,6 @@ const glob = require('glob');
 const GLOB_PATTERN = '**/*.xcodeproj';
 const GLOB_EXCLUDE_PATTERN = ['node_modules/**', 'Examples/**', 'examples/**'];
 
-const getPbxProject = (src, xcodeProject) => {
-  return path.join(xcodeProject, `project.pbxproj`);
-};
-
 /**
  * Gets default config from android project
  */
