@@ -35,7 +35,7 @@ module.exports = function getDefaultConfigAndroid(folder, pjson) {
     _folder: folder,
     project: path.join(src, 'build.gradle'),
     settings: path.join(BASE_DIR, 'settings.gradle'),
-    assetsFolder: path.join(src, 'src/main/res'),
+    assetsFolder: path.join(src, 'src/main'),
     mainActivity: path.join(src, `src/main/java/${packagePath}/MainActivity.java`),
     packageImportPath: `${packageName}.Package`,
     packageInstance: `new ${packageName}()`,
