@@ -92,8 +92,8 @@ project(':${name}').projectDir = new File(rootProject.projectDir, \
     applySettingsGradlePatch,
     applyBuildGradlePatch,
     applyMainActivityPatch(
-      dependencyConfig.importPath,
-      dependencyConfig.instance
+      dependencyConfig.packageImportPath,
+      dependencyConfig.packageInstance
     )
   )();
 };

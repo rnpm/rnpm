@@ -3,21 +3,7 @@ const efs = require('./utils/fs');
 const transform = require('lodash.transform');
 const path = require('path');
 
-const transformConfig = (config, folder) => transform(
-  config,
-  (platform, value, key) => {
-    platform[key] = path.join(folder, value);
-  }
-);
-
-/**
- * ResolvePaths takes config.ios/android and folder and returns object containing
- * absolute paths to the files and folders
- */
-const resolvePaths = (config, folder) => ({
-  ios: config.ios ? transformConfig(config.ios, folder) : null,
-  android: config.android ? transformConfig(config.android, folder) : null,
-});
+const getDefaultConfigAndroid = require('./android/getDefaultConfig');
 
 /**
  * Loads config for `rnpm` to use by projects.
@@ -45,16 +31,8 @@ module.exports = function getConfig(packageName) {
     ios: {
       project: `./ios/${pjson.name}.xcodeproj`,
     },
-    android: {
-      project: './android/app/build.gradle',
-      settings: './android/settings.gradle',
-      assetsFolder: './android/app/src/main/assets',
-      mainActivity: `./android/app/src/main/java/com/${pjson.name}/MainActivity.java`,
-    },
+    android: getDefaultConfigAndroid(folder, pjson),
   };
 
-  return resolvePaths(
-    Object.assign({}, defaultConfig, pjson.rnpm),
-    folder
-  );
+  return Object.assign({}, defaultConfig, pjson.rnpm);
 };
