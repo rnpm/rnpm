@@ -111,7 +111,6 @@ project(':${name}').projectDir = new File(rootProject.projectDir, \
     applySettingsGradlePatch,
     applyBuildGradlePatch,
     applyMainActivityPatch(
-      pjson.name,
       config.android.importPath,
       config.android.instance
     )
