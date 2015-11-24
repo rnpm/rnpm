@@ -40,7 +40,7 @@ function updateProjects(rnpm, args) {
     .forEach(name => {
       const dependencyConfig = getConfig(name);
 
-      if (rnpm.config.android) {
+      if (rnpm.config.android && dependencyConfig.android) {
         log.info(`Linking ${name} android dependency`);
         registerDependencyAndroid(name, dependencyConfig.android, rnpm.config.android);
       }
