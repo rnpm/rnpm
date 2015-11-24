@@ -20,7 +20,7 @@ const findNativeDependencies = () => fs
  * Main action
  * See action description for further informations
  */
-function updateProjects(rnpm, args) {
+function updateProjects(projects, args) {
   const dependencies = args.packageName
     ? [args.packageName]
     : findNativeDependencies();
@@ -29,7 +29,7 @@ function updateProjects(rnpm, args) {
     log.info(`Found ${dependencies.length} native dependencies to link`);
   }
 
-  const errors = validateProjects(rnpm.config);
+  const errors = validateProjects(projects);
   if (errors.length > 0) {
     return errors.forEach(err =>
       log.error(err.code, err.msg)
@@ -40,9 +40,9 @@ function updateProjects(rnpm, args) {
     .forEach(name => {
       const dependencyConfig = getConfig(name);
 
-      if (rnpm.config.android && dependencyConfig.android) {
+      if (projects.android && dependencyConfig.android) {
         log.info(`Linking ${name} android dependency`);
-        registerDependencyAndroid(name, dependencyConfig.android, rnpm.config.android);
+        registerDependencyAndroid(name, dependencyConfig.android, projects.android);
       }
     });
 }

@@ -51,7 +51,7 @@ const buildAction = (program, rnpm, action, actionName) => {
     .description(action.description)
     .action(function runAction() {
       const args = mapArgs(action.args, arguments);
-      action.run(rnpm, args, cli.opts());
+      action.run(rnpm.config, args, cli.opts());
     });
 
   if (action.options) {
