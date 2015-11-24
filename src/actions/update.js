@@ -1,4 +1,4 @@
-const efs = require('efs');
+const efs = require('../utils/fs');
 const path = require('path');
 const getConfig = require('../getConfig');
 const log = require('npmlog');
