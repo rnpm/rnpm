@@ -3,6 +3,7 @@ const path = require('path');
 const getConfig = require('../getConfig');
 const log = require('npmlog');
 
+const validateProjects = require('../plugins/validateProjects');
 const registerDependencyAndroid = require('../android/registerNativeModule');
 
 /**
@@ -26,6 +27,13 @@ function updateProjects(cli, args) {
 
   if (!args.packageName) {
     log.info(`Found ${dependencies.length} native dependencies to link`);
+  }
+
+  const errors = validateProjects(cli.config);
+  if (errors.length > 0) {
+    return errors.forEach(err =>
+      log.error(err.code, err.msg)
+    );
   }
 
   dependencies
