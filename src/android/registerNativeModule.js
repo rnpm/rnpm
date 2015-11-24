@@ -10,8 +10,6 @@ const MAIN_ACTIVITY_IMPORT_PATTERN = `import android.app.Activity;`;
 const MAIN_ACTIVITY_PACKAGE_PATTERN = `.addPackage(new MainReactPackage())`;
 
 module.exports = function registerNativeAndroidModule(name, dependencyConfig, projectConfig) {
-  const MODULE_DIR = path.join(process.cwd(), 'node_modules', name);
-
   const BUILD_PATCH = `    compile project(':${name}')`;
   const SETTINGS_PATCH = `include ':${name}'
 project(':${name}').projectDir = new File(rootProject.projectDir, \
@@ -62,14 +60,14 @@ project(':${name}').projectDir = new File(rootProject.projectDir, \
     );
 
   /**
-   * Copy assets from MODULE_DIR to config.android.assets
+   * Copy assets from dependencyConfig.folder to projectConfig.assetsFolder
    * @param  {Array} assets Array of assets specified in config
    * @return {Function}
    */
   const copyAssets = (assets) => {
     return () => (assets || []).forEach((asset) =>
       fs.copySync(
-        path.join(MODULE_DIR, asset),
+        path.join(dependencyConfig._folder, asset),
         path.join(projectConfig.assetsFolder, asset)
       )
     );
