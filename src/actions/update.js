@@ -5,6 +5,7 @@ const log = require('npmlog');
 
 const validateProjects = require('../plugins/validateProjects');
 const registerDependencyAndroid = require('../android/registerNativeModule');
+const registerDependencyIOS = require('../ios/registerNativeModule');
 
 /**
  * Finds native dependencies located in the node_modules directory
@@ -43,6 +44,11 @@ function updateProjects(projects, args) {
       if (projects.android && dependencyConfig.android) {
         log.info(`Linking ${name} android dependency`);
         registerDependencyAndroid(name, dependencyConfig.android, projects.android);
+      }
+
+      if (projects.ios && dependencyConfig.ios) {
+        log.info(`Linking ${name} ios dependency`);
+        registerDependencyIOS(name, dependencyConfig.ios, projects.ios);
       }
     });
 }
