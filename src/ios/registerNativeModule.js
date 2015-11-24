@@ -11,7 +11,7 @@ const hasLibraryImported = (libraries, packageName) => {
 
 const backupProject = (project, name) => {
   fs.writeFileSync(path.join(BACKUP_PATH, name), project.writeSync());
-}
+};
 
 const getProducts = (project) => {
   return project
@@ -19,11 +19,9 @@ const getProducts = (project) => {
     .children
     .map(c => c.comment)
     .filter(c => c.indexOf('.a') > -1);
-}
+};
 
-const getRelativePath = (dependencyProject, project) => {
-
-}
+const getRelativePath = (dependencyProject, project) => {};
 
 module.exports = function registerNativeModuleIOS(name, dependencyConfig, projectConfig) {
   const project = xcode.project(projectConfig._pbxproj).parseSync();
@@ -34,24 +32,8 @@ module.exports = function registerNativeModuleIOS(name, dependencyConfig, projec
     return;
   }
 
-  console.log(project.pbxGroupByName('FileReferences'))
-
   backupProject(project, projectConfig.projectName);
 
   const products = getProducts(dependencyProject);
-
-  console.log()
-
-  // var file = new pbxFile(getRelativePath(dependency));
-
-  // file.uuid = parsedTarget.generateUuid();
-  // file.fileRef = parsedTarget.generateUuid();
-  //
-  // parsedTarget.addToPbxFileReferenceSection(file);    // PBXFileReference
-  // pbxGroup.children.push(pbxGroupChild(file));
-  // products.forEach(p => parsedTarget.addStaticLibrary(p));
-  // products.forEach(p => parsedTarget.addToPbxBuildFileSection(new pbxFile(p))); // why add this
-  // fs.writeFileSync(targetProjectPath, parsedTarget.writeSync());
-  // return true;
 
 };
