@@ -4,7 +4,7 @@ const transform = require('lodash.transform');
 const path = require('path');
 
 const getDefaultConfigAndroid = require('./android/getDefaultConfig');
-
+const getDefaultConfigIOS = require('./ios/getDefaultConfig');
 /**
  * Loads config for `rnpm` to use by projects.
  *
@@ -28,9 +28,7 @@ module.exports = function getConfig(packageName) {
   }
 
   const defaultConfig = {
-    ios: {
-      project: `./ios/${pjson.name}.xcodeproj`,
-    },
+    ios: getDefaultConfigIOS(folder, pjson),
     android: getDefaultConfigAndroid(folder, pjson),
   };
 
