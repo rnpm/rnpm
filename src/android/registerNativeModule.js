@@ -9,32 +9,31 @@ const BUILD_PATCH_PATTERN = `dependencies {`;
 const MAIN_ACTIVITY_IMPORT_PATTERN = `import android.app.Activity;`;
 const MAIN_ACTIVITY_PACKAGE_PATTERN = `.addPackage(new MainReactPackage())`;
 
+/**
+ * Given package name, returns Java import declaration to be
+ * inserted in the file
+ */
+const getImportPatch = (importPath) => `import ${importPath}`;
+
+/**
+ * Given package initialisation, returns Java .addPackage function call
+ * to be attached in the MainActivity.java
+ */
+const getPackagePatch = (instance) => `                .addPackage(${instance})`;
+
 module.exports = function registerNativeAndroidModule(name, dependencyConfig, projectConfig) {
-  const BUILD_PATCH = `    compile project(':${name}')`;
-  const SETTINGS_PATCH = `include ':${name}'
+  const buildPatch = `    compile project(':${name}')`;
+  const settingsPatch = `include ':${name}'
 project(':${name}').projectDir = new File(rootProject.projectDir, \
 '../node_modules/${name}/android')`;
 
-  const getImportPatch = (importPath) => `import ${importPath}`;
-
-  const getPackagePatch = (instance) =>
-    `                .addPackage(${instance})`;
-
-  /**
-   * Replace SETTINGS_PATCH_PATTERN by patch in the passed content
-   * @param  {String} content Content of the Settings.gradle file
-   * @return {String}         Patched content of Settings.gradle
-   */
+  // Replace SETTINGS_PATCH_PATTERN by patch in the passed content
   const patchProjectSettings = (content) =>
-    utils.replace(content, SETTINGS_PATCH_PATTERN, SETTINGS_PATCH);
+    utils.replace(content, SETTINGS_PATCH_PATTERN, settingsPatch);
 
-  /**
-   * Replace BUILD_PATCH_PATTERN by patch in the passed content
-   * @param  {String} content Content of the Build.gradle file
-   * @return {String}         Patched content of Build.gradle
-   */
+  // Replace BUILD_PATCH_PATTERN by patch in the passed content
   const patchProjectBuild = (content) =>
-    utils.replace(content, BUILD_PATCH_PATTERN, BUILD_PATCH);
+    utils.replace(content, BUILD_PATCH_PATTERN, buildPatch);
 
   /**
    * Make a MainActivity.java program patcher
@@ -59,11 +58,7 @@ project(':${name}').projectDir = new File(rootProject.projectDir, \
       efs.loadFile.bind(null, projectConfig.mainActivity)
     );
 
-  /**
-   * Copy assets from dependencyConfig.folder to projectConfig.assetsFolder
-   * @param  {Array} assets Array of assets specified in config
-   * @return {Function}
-   */
+  // Copy assets from dependencyConfig.folder to projectConfig.assetsFolder
   const copyAssets = (assets) => {
     return () => (assets || []).forEach((asset) =>
       fs.copySync(
