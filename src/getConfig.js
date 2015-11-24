@@ -1,5 +1,23 @@
 const log = require('npmlog');
 const efs = require('./utils/fs');
+const transform = require('lodash.transform');
+const path = require('path');
+
+const transformConfig = (config, folder) => transform(
+  config,
+  (platform, value, key) => {
+    platform[key] = path.join(folder, value);
+  }
+);
+
+/**
+ * ResolvePaths takes config.ios/android and folder and returns object containing
+ * absolute paths to the files and folders
+ */
+const resolvePaths = (config, folder) => ({
+  ios: config.ios ? transformConfig(config.ios, folder) : null,
+  android: config.android ? transformConfig(config.android, folder) : null,
+});
 
 /**
  * Loads config for `rnpm` to use by projects.
@@ -9,24 +27,34 @@ const efs = require('./utils/fs');
  *
  * In order to make `rnpm` ignore certain targets, simply set them to `false`. Otherwise,
  * there will be warnings.
+ *
+ * It optionally accepts packageName - when it's present, config will be loaded from node_modules/packageName
  */
-module.exports = function getConfig() {
-  var pjson = efs.requireFile('./package.json');
+module.exports = function getConfig(packageName) {
+  const folder = packageName
+    ? path.join(process.cwd(), 'node_modules', packageName)
+    : process.cwd();
+
+  const pjson = efs.requireFile(path.join(folder, './package.json'));
 
   if (!pjson) {
     return log.warn('EPACKAGEJSON', `Not found. Are you sure it's a React Native project?`);
   }
 
-  var defaultConfig = {
+  const defaultConfig = {
     ios: {
       project: `./ios/${pjson.name}.xcodeproj`,
     },
     android: {
       project: './android/app/build.gradle',
+      settings: './android/settings.gradle',
+      assets: './android/app/src/main/assets',
+      mainActivity: `./android/app/src/main/java/com/${pjson.name}/MainActivity.java`,
     },
   };
 
-  return pjson.rnpm
-   ? Object.assign({}, defaultConfig, pjson.rnpm)
-   : defaultConfig;
+  return resolvePaths(
+    Object.assign({}, defaultConfig, pjson.rnpm),
+    folder
+  );
 };

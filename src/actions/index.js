@@ -1,5 +1,4 @@
 const update = require('./update');
-const sample = require('./sample');
 
 /**
  * Returns object that contains all the actions that can be called
@@ -10,5 +9,4 @@ const sample = require('./sample');
  */
 module.exports = {
   update,
-  sample,
 };

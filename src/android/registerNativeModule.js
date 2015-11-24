@@ -1,40 +1,23 @@
 const fs = require('fs-extra');
+const efs = require('../utils/fs');
 const path = require('path');
 const compose = require('lodash.flowright');
 const utils = require('../utils');
-
-const pjson = require(path.join(process.cwd(), 'package.json'));
 
 const SETTINGS_PATCH_PATTERN = `include ':app'`;
 const BUILD_PATCH_PATTERN = `dependencies {`;
 const MAIN_ACTIVITY_IMPORT_PATTERN = `import android.app.Activity;`;
 const MAIN_ACTIVITY_PACKAGE_PATTERN = `.addPackage(new MainReactPackage())`;
 
-module.exports = function registerNativeAndroidModule(name, config) {
-  const BUILD_GRADLE_PATH = path.join(
-    process.cwd(), 'android', 'app', 'build.gradle');
-
-  const MODULE_DIR = path.join(
-    process.cwd(), 'node_modules', name);
-
-  const SETTINGS_GRADLE_PATH = path.join(
-    process.cwd(), 'android', 'settings.gradle');
-
-  const ASSETS_PATH = path.join(
-    process.cwd(), 'android', 'app', 'src', 'main', 'assets');
-
-  const MAIN_ACTIVITY_PATH = path.join(
-    process.cwd(), 'android', 'app', 'src', 'main',
-    'java', 'com', pjson.name, 'MainActivity.java'
-  );
+module.exports = function registerNativeAndroidModule(name, dependencyConfig, projectConfig) {
+  const MODULE_DIR = path.join(process.cwd(), 'node_modules', name);
 
   const BUILD_PATCH = `    compile project(':${name}')`;
   const SETTINGS_PATCH = `include ':${name}'
 project(':${name}').projectDir = new File(rootProject.projectDir, \
 '../node_modules/${name}/android')`;
 
-  const getImportPatch = (importPath) =>
-    `import ${importPath}`;
+  const getImportPatch = (importPath) => `import ${importPath}`;
 
   const getPackagePatch = (instance) =>
     `                .addPackage(${instance})`;
@@ -66,18 +49,6 @@ project(':${name}').projectDir = new File(rootProject.projectDir, \
       utils.replace(content, MAIN_ACTIVITY_IMPORT_PATTERN, getImportPatch(importPath)) &&
       utils.replace(content, MAIN_ACTIVITY_PACKAGE_PATTERN, getPackagePatch(instance));
 
-  const applySettingsGradlePatch = compose(
-    utils.writeFile(SETTINGS_GRADLE_PATH),
-    patchProjectSettings,
-    utils.readFile(SETTINGS_GRADLE_PATH)
-  );
-
-  const applyBuildGradlePatch = compose(
-    utils.writeFile(BUILD_GRADLE_PATH),
-    patchProjectBuild,
-    utils.readFile(BUILD_GRADLE_PATH)
-  );
-
   /**
    * @param  {String}   importPath Import path, e.g. com.oblador.vectoricons.VectorIconsPackage;
    * @param  {String}   instance   Code to instance a package, e.g. new VectorIconsPackage();
@@ -85,29 +56,39 @@ project(':${name}').projectDir = new File(rootProject.projectDir, \
    */
   const applyMainActivityPatch = (importPath, instance) =>
     compose(
-      utils.writeFile(MAIN_ACTIVITY_PATH),
+      efs.writeFile.bind(projectConfig.mainActivity),
       makeMainActivityPatcher(importPath, instance),
-      utils.readFile(MAIN_ACTIVITY_PATH)
+      efs.loadFile(projectConfig.mainActivity)
     );
 
   /**
-   * Copy assets from MODULE_DIR to ASSETS_PATH
+   * Copy assets from MODULE_DIR to config.android.assets
    * @param  {Array} assets Array of assets specified in config
    * @return {Function}
    */
   const copyAssets = (assets) => {
-    if (!assets) assets = [];
-
-    return () => assets.forEach((asset) =>
+    return () => (assets || []).forEach((asset) =>
       fs.copySync(
         path.join(MODULE_DIR, asset),
-        path.join(ASSETS_PATH, asset)
+        path.join(projectConfig.assetsFolder, asset)
       )
     );
   };
 
+  const applySettingsGradlePatch = compose(
+    efs.writeFile.bind(projectConfig.settings),
+    patchProjectSettings,
+    efs.loadFile(projectConfig.settings)
+  );
+
+  const applyBuildGradlePatch = compose(
+    efs.writeFile.bind(projectConfig.project),
+    patchProjectBuild,
+    efs.loadFile(projectConfig.project)
+  );
+
   compose(
-    copyAssets(config.assets),
+    copyAssets(dependencyConfig.assets),
     applySettingsGradlePatch,
     applyBuildGradlePatch,
     applyMainActivityPatch(
