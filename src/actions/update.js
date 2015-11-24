@@ -1,4 +1,4 @@
-const fs = require('fs');
+const efs = require('efs');
 const path = require('path');
 const getConfig = require('../getConfig');
 const log = require('npmlog');
@@ -6,16 +6,7 @@ const log = require('npmlog');
 const validateProjects = require('../plugins/validateProjects');
 const registerDependencyAndroid = require('../android/registerNativeModule');
 const registerDependencyIOS = require('../ios/registerNativeModule');
-
-/**
- * Finds native dependencies located in the node_modules directory
- *
- * All modules that do not start with `react-native-` are discarded.
- */
-const findNativeDependencies = () => fs
-  .readdirSync(path.join('.', 'node_modules'))
-  .map(depPath => path.basename(depPath))
-  .filter(depPath => depPath.indexOf('react-native-') === 0);
+const pjson = efs.requireFile(path.join(process.cwd(), './package.json'));
 
 /**
  * Main action
@@ -24,7 +15,7 @@ const findNativeDependencies = () => fs
 function updateProjects(projects, args) {
   const dependencies = args.packageName
     ? [args.packageName]
-    : findNativeDependencies();
+    : Object.keys(pjson.dependencies);
 
   if (!args.packageName) {
     log.info(`Found ${dependencies.length} native dependencies to link`);
