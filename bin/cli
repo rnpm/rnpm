@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 
-var pkg = require('../package.json');
-var updateNotifier = require('update-notifier');
-var program = require('commander');
-var rnpm = require('../src');
-var dropRight = require('lodash.dropright');
-var zipObject = require('lodash.zipobject');
-var forEach = require('lodash.foreach');
+const pkg = require('../package.json');
+const updateNotifier = require('update-notifier');
+const program = require('commander');
+const config = require('../src/getConfig')();
+const actions = require('../src/actions');
+const dropRight = require('lodash.dropright');
+const zipObject = require('lodash.zipobject');
+const forEach = require('lodash.foreach');
 
-if (!rnpm.config) {
+if (!config) {
   process.exit(1);
 }
 
@@ -42,7 +43,7 @@ const mapArgs = (args, passedArgs) => zipObject(
 /**
  * Builds action from given action configuration and attaches it to commander
  */
-const buildAction = (program, rnpm, action, actionName) => {
+const buildAction = (action, actionName) => {
   const command = composeCommand(actionName, action.args);
 
   const cli = program
@@ -51,7 +52,7 @@ const buildAction = (program, rnpm, action, actionName) => {
     .description(action.description)
     .action(function runAction() {
       const args = mapArgs(action.args, arguments);
-      action.run(rnpm.config, args, cli.opts());
+      action.run(config, args, cli.opts());
     });
 
   if (action.options) {
@@ -59,6 +60,6 @@ const buildAction = (program, rnpm, action, actionName) => {
   }
 };
 
-forEach(rnpm.actions, buildAction.bind(null, program, rnpm));
+forEach(actions, buildAction);
 
 program.parse(process.argv);
