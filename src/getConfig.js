@@ -5,6 +5,7 @@ const path = require('path');
 
 const getDefaultConfigAndroid = require('./android/getDefaultConfig');
 const getDefaultConfigIOS = require('./ios/getDefaultConfig');
+
 /**
  * Loads config for `rnpm` to use by projects.
  *
