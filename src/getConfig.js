@@ -48,7 +48,7 @@ module.exports = function getConfig(packageName) {
     android: {
       project: './android/app/build.gradle',
       settings: './android/settings.gradle',
-      assets: './android/app/src/main/assets',
+      assetsPath: './android/app/src/main/assets',
       mainActivity: `./android/app/src/main/java/com/${pjson.name}/MainActivity.java`,
     },
   };

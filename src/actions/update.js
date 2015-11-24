@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const getConfig = require('../getConfig');
+const log = require('npmlog');
 
 const registerDependencyAndroid = require('../android/registerNativeModule');
 
@@ -23,11 +24,16 @@ function updateProjects(cli, args) {
     ? [args.packageName]
     : findNativeDependencies();
 
+  if (!args.packageName) {
+    log.info(`Found ${dependencies.length} native dependencies to link`);
+  }
+
   dependencies
     .forEach(name => {
       const dependencyConfig = getConfig(name);
 
       if (cli.config.android) {
+        log.info(`Linking ${name} android dependency`);
         registerDependencyAndroid(name, dependencyConfig.android, cli.config.android);
       }
     });

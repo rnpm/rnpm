@@ -13,8 +13,8 @@ exports.requireFile = function requireFile(filePath) {
   }
 };
 
-exports.writeFile = function writeFile(filePath, content) {
-  return fs.writeFileSync(filePath, c, 'utf8');
+exports.writeFile = function writeFile(filePath, contents) {
+  return fs.writeFileSync(filePath, contents, 'utf8');
 };
 
 /**

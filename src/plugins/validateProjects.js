@@ -1,4 +1,4 @@
-var log = require('npmlog');
+const log = require('npmlog');
 
 /**
  * Validates projects and prints warnings if there are any issues (side-effect).
@@ -30,7 +30,7 @@ function validateProjects(projects, config) {
       return acc;
     }
 
-    return Object.assign({}, acc, { [platform]: project, });
+    return Object.assign({}, acc, {[platform]: project});
   }, {});
 }
 

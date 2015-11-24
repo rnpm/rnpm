@@ -56,9 +56,9 @@ project(':${name}').projectDir = new File(rootProject.projectDir, \
    */
   const applyMainActivityPatch = (importPath, instance) =>
     compose(
-      efs.writeFile.bind(projectConfig.mainActivity),
+      efs.writeFile.bind(null, projectConfig.mainActivity),
       makeMainActivityPatcher(importPath, instance),
-      efs.loadFile(projectConfig.mainActivity)
+      efs.loadFile.bind(null, projectConfig.mainActivity)
     );
 
   /**
@@ -76,15 +76,15 @@ project(':${name}').projectDir = new File(rootProject.projectDir, \
   };
 
   const applySettingsGradlePatch = compose(
-    efs.writeFile.bind(projectConfig.settings),
+    efs.writeFile.bind(null, projectConfig.settings),
     patchProjectSettings,
-    efs.loadFile(projectConfig.settings)
+    efs.loadFile.bind(null, projectConfig.settings)
   );
 
   const applyBuildGradlePatch = compose(
-    efs.writeFile.bind(projectConfig.project),
+    efs.writeFile.bind(null, projectConfig.project),
     patchProjectBuild,
-    efs.loadFile(projectConfig.project)
+    efs.loadFile.bind(null, projectConfig.project)
   );
 
   compose(
@@ -92,8 +92,8 @@ project(':${name}').projectDir = new File(rootProject.projectDir, \
     applySettingsGradlePatch,
     applyBuildGradlePatch,
     applyMainActivityPatch(
-      config.android.importPath,
-      config.android.instance
+      dependencyConfig.importPath,
+      dependencyConfig.instance
     )
   )();
 };

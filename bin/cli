@@ -8,6 +8,10 @@ var dropRight = require('lodash.dropright');
 var zipObject = require('lodash.zipobject');
 var forEach = require('lodash.foreach');
 
+if (!rnpm.config) {
+  process.exit(1);
+}
+
 // Check for updates once a day
 updateNotifier({pkg: pkg}).notify();
 
@@ -30,7 +34,7 @@ const mapArgs = (args, passedArgs) => zipObject(
   args.map((arg, index) => {
     return [
       arg.property || arg.name,
-      passedArgs[index]
+      passedArgs[index],
     ];
   })
 );
@@ -45,7 +49,7 @@ const buildAction = (program, rnpm, action, actionName) => {
     .command(command)
     .usage(action.usage)
     .description(action.description)
-    .action(function() {
+    .action(function runAction() {
       const args = mapArgs(action.args, arguments);
       action.run(rnpm, args, cli.opts());
     });
@@ -53,7 +57,7 @@ const buildAction = (program, rnpm, action, actionName) => {
   if (action.options) {
     action.options.forEach(option => cli.option(option.name, option.description));
   }
-}
+};
 
 forEach(rnpm.actions, buildAction.bind(null, program, rnpm));
 
