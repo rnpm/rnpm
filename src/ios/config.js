@@ -33,22 +33,21 @@ const findProject = (folder) => {
  * when constructing final object
  */
 exports.projectConfig = function projectConfigIOS(folder, userConfig) {
-  const project = path.join(
-    folder,
-    userConfig.project || findProject(folder)
-  );
+  const project = userConfig.project || findProject(folder);
 
   // No iOS stuff found here
   if (!project) {
     return null;
   }
 
+  const projectPath = path.join(folder, project);
+
   return {
-    src: path.dirname(project),
+    src: path.dirname(projectPath),
     folder: folder,
-    pbxproj: path.join(project, 'project.pbxproj'),
-    project: project,
-    projectName: path.basename(project),
+    pbxproj: path.join(projectPath, 'project.pbxproj'),
+    project: projectPath,
+    projectName: path.basename(projectPath),
   };
 };
 
