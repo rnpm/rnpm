@@ -39,8 +39,6 @@ Automatically updates your project by linking all dependencies for Android (if p
 $ rnpm link react-native-module
 ```
 
-to link only specified package.
-
 ## Roadmap
 
 We have lots of plans to make this tool better, some of them are:
