@@ -1,4 +1,4 @@
-const update = require('./update');
+const link = require('./link');
 
 /**
  * Returns an array that contains all the actions that can be called
@@ -7,4 +7,4 @@ const update = require('./update');
  * Each action exports an object that can be consumed by Commander to form
  * a nice CLI interface with flags, options and help
  */
-module.exports = [update];
+module.exports = [link];
