@@ -34,10 +34,6 @@ function updateProjects(args) {
     .forEach(name => {
       const dependencyConfig = config.getDependencyConfig(name);
 
-      // project is package.json.rnpm so you have `project.assets` here as well
-      // if they were defined
-      console.log(project.android);
-
       if (project.android && dependencyConfig.android) {
         log.info(`Linking ${name} android dependency`);
         registerDependencyAndroid(name, dependencyConfig.android, project.android);
@@ -46,6 +42,10 @@ function updateProjects(args) {
       if (project.ios && dependencyConfig.ios) {
         log.info(`Linking ${name} ios dependency`);
         registerDependencyIOS(name, dependencyConfig.ios, project.ios);
+      }
+
+      if (dependencyConfig.assets) {
+        // copy all dependencyConfig.assets to project.assetsFolder
       }
     });
 }
