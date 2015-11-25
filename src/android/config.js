@@ -9,13 +9,13 @@ const BASE_DIR = './android';
 const GLOB_PATTERN = '**/*.java';
 
 const getSourceDirectory = (folder) => {
-  var src = path.join(folder, BASE_DIR);
+  var src = BASE_DIR;
 
-  if (!fs.existsSync(src)) {
+  if (!fs.existsSync(path.join(folder, src))) {
     return null;
   }
 
-  if (fs.existsSync(path.join(src, 'app'))) {
+  if (fs.existsSync(path.join(folder, src, 'app'))) {
     src = path.join(src, 'app');
   }
 
@@ -51,7 +51,7 @@ const getPackageInstance = (src) => {
 };
 
 exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
-  const src = userConfig.sourceDir || getSourceDirectory(folder);
+  const src = path.join(folder, userConfig.sourceDir || getSourceDirectory(folder));
 
   if (!src) {
     return null;
@@ -70,7 +70,7 @@ exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
 };
 
 exports.dependencyConfig = function dependencyConfigAndroid(folder, userConfig) {
-  const src = userConfig.sourceDir || getSourceDirectory(folder);
+  const src = path.join(folder, userConfig.sourceDir || getSourceDirectory(folder));
 
   if (!src) {
     return null;

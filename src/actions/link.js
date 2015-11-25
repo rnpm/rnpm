@@ -41,8 +41,6 @@ function link(packageName) {
         return log.info(`Project ${name} is not a react-native library`);
       }
 
-      console.log(project.android);
-
       if (project.android && dependencyConfig.android) {
         log.info(`Linking ${name} android dependency`);
         registerDependencyAndroid(name, dependencyConfig.android, project.android);
