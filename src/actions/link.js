@@ -64,8 +64,6 @@ function link(packageName) {
 }
 
 link.description = 'This action updates your project and links all native dependencies';
-link.args = [{
-  name: 'packageName',
-}];
+link.args = '[packageName]';
 
 module.exports = link;

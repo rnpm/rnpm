@@ -14,18 +14,12 @@ updateNotifier({pkg: pkg}).notify();
 cli.version(pkg.version);
 
 /**
- * Builds command name by respecting optional/required arguments
- */
-const composeCommand = (actionName, args) => (args || []).reduce(
-  (cmd, arg) => cmd + (arg.required ? ` <${arg.name}>` : ` [${arg.name}]`),
-  actionName
-);
-
-/**
  * Builds action from given action configuration and attaches it to commander
  */
 const buildAction = (action) => {
-  const name = composeCommand(action.name, action.args);
+  const name = action.args
+    ? `${action.name} ${action.args}`
+    : action.name;
 
   const command = cli
     .command(name)
