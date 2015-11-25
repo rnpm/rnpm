@@ -32,11 +32,11 @@ And don't worry - in case it fails, you can always add `rnpm` object to your `pa
 
 ## Available commands
 
-#### rnpm update [name]
+#### rnpm link [name]
 Automatically updates your project by linking all dependencies for Android (if present) and for iOS (if present). It's a great fit to your `postinstall` hook to always make sure you are linked. You can supply optional [name] argument to link only one dependency, e.g.
 
 ```bash
-$ rnpm udpate react-native-module
+$ rnpm link react-native-module
 ```
 
 to link only specified package.
@@ -57,7 +57,7 @@ We have lots of plans to make this tool better, some of them are:
 
 #### How's that different from react-native link
 
-react-native link is great, but it only works for Android now. It also does not automatically add packages to your project nor supports custom folder configuration. We aim to solve these issues by analyzing folders and getting maxium informations available from them.
+react-native link is great, but it only works for Android now. It also does not automatically add packages to your project nor support custom folder configuration. We aim to solve these issues by analyzing folders and getting maxium informations available from them. When running `rnpm link` you don't have to think about the package exported by developer or the import path to include in your Java project.
 
 #### Does it works with Cocoapods?
 
