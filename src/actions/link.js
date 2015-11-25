@@ -42,11 +42,11 @@ function link(packageName) {
       if (!dependencyConfig) {
         return log.warn('ERRINVALIDPROJ', `Project ${name} is not a react-native library`);
       }
-      //
-      // if (project.android && dependencyConfig.android) {
-      //   log.info(`Linking ${name} android dependency`);
-      //   registerDependencyAndroid(name, dependencyConfig.android, project.android);
-      // }
+
+      if (project.android && dependencyConfig.android) {
+        log.info(`Linking ${name} android dependency`);
+        registerDependencyAndroid(name, dependencyConfig.android, project.android);
+      }
 
       if (project.ios && dependencyConfig.ios) {
         log.info(`Linking ${name} ios dependency`);
