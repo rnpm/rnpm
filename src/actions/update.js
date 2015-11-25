@@ -17,7 +17,6 @@ const getProjectDependencies = () => {
  * See action description for further informations
  */
 function updateProjects(args) {
-
   const project = config.getProjectConfig();
 
   if (!project) {
