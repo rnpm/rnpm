@@ -19,13 +19,10 @@ const replace = (scope, pattern, patch) =>
   scope.replace(pattern, `${pattern}\n${patch}`);
 
 module.exports = function registerNativeAndroidModule(name, dependencyConfig, projectConfig) {
-  const MODULE_DIR = path.join(process.cwd(), 'node_modules', name);
   const BUILD_PATCH = `    compile project(':${name}')`;
   const SETTINGS_PATCH = `include ':${name}'\n` +
     `project(':${name}').projectDir = ` +
     `new File(rootProject.projectDir, '../node_modules/${name}/android')`;
-
-  const config = require(path.join(MODULE_DIR, 'package.json')).rnpm;
 
   /**
    * Replace SETTINGS_PATCH_PATTERN by patch in the passed content
@@ -44,7 +41,7 @@ module.exports = function registerNativeAndroidModule(name, dependencyConfig, pr
     replace(content, BUILD_PATCH_PATTERN, BUILD_PATCH);
 
   const getMainActivityPatch = () =>
-    `                .addPackage(${dependencyConfig.packageInstance})`
+    `                .addPackage(${dependencyConfig.packageInstance})`;
 
   /**
    * Make a MainActivity.java program patcher
@@ -76,6 +73,9 @@ module.exports = function registerNativeAndroidModule(name, dependencyConfig, pr
     readFile(projectConfig.mainActivityPath)
   );
 
+  /**
+   * Check if module has been installed already
+   */
   const isInstalled = compose(
     (content) => ~content.indexOf(getMainActivityPatch()),
     readFile(projectConfig.mainActivityPath)
