@@ -63,10 +63,9 @@ function link(packageName) {
     });
 }
 
-module.exports = {
-  description: 'This action updates your project and links all native dependencies',
-  run: link,
-  args: [{
-    name: 'packageName',
-  }],
-};
+link.description = 'This action updates your project and links all native dependencies';
+link.args = [{
+  name: 'packageName',
+}];
+
+module.exports = link;

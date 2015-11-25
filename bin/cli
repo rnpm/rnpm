@@ -25,15 +25,13 @@ const composeCommand = (actionName, args) => (args || []).reduce(
  * Builds action from given action configuration and attaches it to commander
  */
 const buildAction = (action) => {
-  const name = composeCommand(action.run.name, action.args);
+  const name = composeCommand(action.name, action.args);
 
   const command = cli
     .command(name)
     .usage(action.usage)
     .description(action.description)
-    .action(function runAction() {
-      action.run.apply(null, arguments);
-    });
+    .action(action);
 
   if (action.options) {
     action.options.forEach(option => command.option(option.name, option.description));
