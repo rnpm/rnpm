@@ -56,8 +56,8 @@ function link(packageName) {
       if (dependencyConfig.assets) {
         log.warn(
           'ERRASSETS',
-          `We have discovered assets in ${name} package. This is not yet supported by`
-          + ` the CLI and manual action is required`
+          `We have discovered assets in ${name} package. This is not yet supported by ` +
+          `the CLI and manual action is required`
         );
       }
     });
