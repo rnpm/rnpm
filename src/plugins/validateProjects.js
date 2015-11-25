@@ -1,37 +1,29 @@
-var log = require('npmlog');
+const fs = require('fs');
+
+// Returns true if value is a path and should be checked
+const isPath = (value) => value.indexOf(process.cwd()) === 0;
 
 /**
- * Validates projects and prints warnings if there are any issues (side-effect).
- *
- * Projects that have no config supplied are ommited. Otherwise, they are added
- * to the accumulated value and return at the end of iteration.
- *
- * User might set config for a given platform to `false` to indicate that given
- * platform is not available (e.g {ios: false});
- *
- * If project has been created, it's being validated to check if any additional errors
- * are present (e.g. missing assets etc) that this package cannot fix. In such situation,
- * extra care by the application author has to be taken.
+ * Validates projects and returns an array of errors encountered
  */
-function validateProjects(projects, config) {
-  return Object.keys(projects).reduce((acc, platform) => {
-    var project = projects[platform];
+const validatePlatform = (platform, config) => {
+  return Object.keys(config).reduce((errors, key) => {
+    const value = config[key];
 
-    if (!config[platform]) return acc;
-
-    if (!project) {
-      log.warn('ENOENT', `No project for ${platform} at ${config[platform].project}`);
-      return acc;
+    if (isPath(value) && !fs.existsSync(value)) {
+      errors.push({
+        code: 'ENOENT',
+        msg: `No ${key} found at ${value} for ${platform}. You can override it in your package.json`
+      })
     }
 
-    var projectError = project.validate();
-    if (projectError) {
-      log.warn('EPROJECT', projectError);
-      return acc;
-    }
-
-    return Object.assign({}, acc, { [platform]: project, });
-  }, {});
+    return errors;
+  }, []);
 }
 
-module.exports = validateProjects;
+module.exports = function validateProjects(projects) {
+  return Object.keys(projects).reduce((errors, platform) => {
+    const platformErrors = validatePlatform(platform, projects[platform]);
+    return errors.concat(platformErrors);
+  }, []);
+};

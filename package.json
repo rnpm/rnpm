@@ -1,36 +1,45 @@
 {
-  "name": "rnpm",
-  "version": "0.0.1",
+  "name": "react-native-package-manager",
+  "version": "1.0.0-rc1",
   "description": "React Native Package Manager",
-  "main": "src/index.js",
+  "main": "./src/actions/index.js",
   "bin": {
-    "rnpm": "bin/rnpm.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "rnpm": "bin/cli"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kureev/rnpm.git"
+    "url": "git+https://github.com/rnpm/rnpm.git"
   },
   "contributors": [
     "Alexey Kureev <kureev-mail@ya.ru> (https://github.com/Kureev)",
     "Mike Grabowski <grabbou@gmail.com> (https://github.com/grabbou)"
   ],
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "engineStrict": true,
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Kureev/rnpm/issues"
+    "url": "https://github.com/rnpm/rnpm/issues"
   },
-  "homepage": "https://github.com/Kureev/rnpm#readme",
+  "keywords": [
+    "react-native",
+    "native-modules",
+    "packager"
+  ],
+  "homepage": "https://github.com/rnpm/rnpm#readme",
   "dependencies": {
     "commander": "^2.9.0",
     "fs-extra": "^0.26.2",
+    "glob": "^6.0.1",
     "lodash.dropright": "^3.0.0",
     "lodash.flowright": "^3.2.1",
-    "lodash.foreach": "^3.0.3",
+    "lodash.transform": "^3.0.4",
     "lodash.zipobject": "^3.0.0",
     "npmlog": "^2.0.0",
-    "update-notifier": "^0.5.0"
+    "update-notifier": "^0.5.0",
+    "xcode": "^0.8.2",
+    "xmldoc": "^0.4.0"
   },
   "devDependencies": {
     "babel-eslint": "^4.1.5",

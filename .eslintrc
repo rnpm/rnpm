@@ -39,7 +39,7 @@
 /**
  * Variables
  */
-    "no-shadow": 2,                  // http://eslint.org/docs/rules/no-shadow
+    "no-shadow": 0,                  // http://eslint.org/docs/rules/no-shadow
     "no-shadow-restricted-names": 2, // http://eslint.org/docs/rules/no-shadow-restricted-names
     "no-unused-vars": [0, {          // http://eslint.org/docs/rules/no-unused-vars
       "vars": "local",
@@ -50,7 +50,7 @@
 /**
  * Possible errors
  */
-    "comma-dangle": [2, "always"],    // http://eslint.org/docs/rules/comma-dangle
+    "comma-dangle": [2, "always-multiline"],    // http://eslint.org/docs/rules/comma-dangle
     "no-cond-assign": [2, "always"],  // http://eslint.org/docs/rules/no-cond-assign
     "no-console": 0,                 // http://eslint.org/docs/rules/no-console
     "no-debugger": 1,                // http://eslint.org/docs/rules/no-debugger

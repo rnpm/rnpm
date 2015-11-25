@@ -7,10 +7,14 @@ var path = require('path');
  */
 exports.requireFile = function requireFile(filePath) {
   try {
-    return require(path.join(process.cwd(), filePath));
+    return require(filePath);
   } catch (err) {
     return null;
   }
+};
+
+exports.writeFile = function writeFile(filePath, contents) {
+  return fs.writeFileSync(filePath, contents, 'utf8');
 };
 
 /**
@@ -18,11 +22,7 @@ exports.requireFile = function requireFile(filePath) {
  * see `requireFile` docs.
  */
 exports.loadFile = function loadFile(filePath) {
-  try {
-    return fs.readFileSync(path.join(process.cwd(), filePath), { encoding: 'utf8', });
-  } catch (err) {
-    return null;
-  }
+  return fs.readFileSync(filePath, {encoding: 'utf8'});
 };
 
 /**

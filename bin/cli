@@ -1,60 +1,31 @@
 #!/usr/bin/env node
 
-var pkg = require('../package.json');
-var updateNotifier = require('update-notifier');
-var program = require('commander');
-var rnpm = require('../src');
-var dropRight = require('lodash.dropright');
-var zipObject = require('lodash.zipobject');
-var forEach = require('lodash.foreach');
+const cli = require('commander');
+const updateNotifier = require('update-notifier');
+const log = require('npmlog');
+
+const actions = require('../src/actions');
+const pkg = require('../package.json');
 
 // Check for updates once a day
 updateNotifier({pkg: pkg}).notify();
 
-program.version(pkg.version);
+// Set log header
+log.heading = 'rnpm';
 
-/**
- * Builds command name by respecting optional/required arguments
- */
-const composeCommand = (actionName, args) => (args || []).reduce(
-  (cmd, arg) => cmd + (arg.required ? ` <${arg.name}>` : ` [${arg.name}]`),
-  actionName
-);
-
-/**
- * Maps passed command line arguments to the ones defined by action,
- * e.g transforms ['d', 'folder', 'something'] to
- * {folderName: 'd', rnVersion: 'something'}.
- */
-const mapArgs = (args, passedArgs) => zipObject(
-  args.map((arg, index) => {
-    return [
-      arg.property || arg.name,
-      passedArgs[index]
-    ];
-  })
-);
+cli.version(pkg.version);
 
 /**
  * Builds action from given action configuration and attaches it to commander
  */
-const buildAction = (program, rnpm, action, actionName) => {
-  const command = composeCommand(actionName, action.args);
-
-  const cli = program
-    .command(command)
+const buildAction = (action) => {
+  cli
+    .command(action.name)
     .usage(action.usage)
     .description(action.description)
-    .action(function() {
-      const args = mapArgs(action.args, arguments);
-      action.run(rnpm, args, cli.opts());
-    });
+    .action(action.func);
+};
 
-  if (action.options) {
-    action.options.forEach(option => cli.option(option.name, option.description));
-  }
-}
+actions.forEach(buildAction);
 
-forEach(rnpm.actions, buildAction.bind(null, program, rnpm));
-
-program.parse(process.argv);
+cli.parse(process.argv);

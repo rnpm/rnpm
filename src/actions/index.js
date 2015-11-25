@@ -1,14 +1,7 @@
-const update = require('./update');
-const sample = require('./sample');
-
-/**
- * Returns object that contains all the actions that can be called
- * in the current CLI version
- *
- * Each action exports an object that can be consumed by Commander to form
- * a nice CLI interface with flags, options and help
- */
-module.exports = {
-  update,
-  sample,
-};
+module.exports = [
+  {
+    func: require('./link'),
+    description: 'This action updates your project and links all native dependencies',
+    name: 'link [packageName]',
+  },
+];
