@@ -1,13 +1,9 @@
 {
   "name": "rnpm",
-  "version": "0.0.1",
+  "version": "1.0.0-rc1",
   "description": "React Native Package Manager",
-  "main": "src/index.js",
   "bin": {
     "rnpm": "bin/cli"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -28,7 +24,6 @@
     "glob": "^6.0.1",
     "lodash.dropright": "^3.0.0",
     "lodash.flowright": "^3.2.1",
-    "lodash.foreach": "^3.0.3",
     "lodash.transform": "^3.0.4",
     "lodash.zipobject": "^3.0.0",
     "npmlog": "^2.0.0",
@@ -39,8 +34,5 @@
   "devDependencies": {
     "babel-eslint": "^4.1.5",
     "eslint": "^1.9.0"
-  },
-  "rnpm": {
-    "ios": false
   }
 }
