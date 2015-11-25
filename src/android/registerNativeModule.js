@@ -1,6 +1,5 @@
 const fs = require('fs-extra');
 const path = require('path');
-const xml = require('xmldoc');
 const compose = require('lodash.flowright');
 
 const SETTINGS_PATCH_PATTERN = `include ':app'`;
