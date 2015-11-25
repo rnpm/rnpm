@@ -13,7 +13,7 @@
  */
 
 const log = require('npmlog');
-const efs = require('./utils/fs');
+const fs = require('fs');
 const transform = require('lodash.transform');
 const path = require('path');
 
@@ -24,11 +24,13 @@ const iosConfig = require('./ios/defaultConfig');
  * Gets rnpm config from reading it from JSON (for now)
  */
 const getRNPMConfig = function getRNPMConfig(folder) {
-  const pjson = efs.requireFile(path.join(folder, './package.json'));
+  const pjsonPath = path.join(folder, './package.json');
 
-  if (!pjson) {
-    return log.warn('EPACKAGEJSON', `Not found. Are you sure it's a React Native project?`);
+  if (!fs.existsSync(pjsonPath)) {
+    return null;
   }
+
+  const pjson = require(pjsonPath);
 
   return pjson.rnpm || {};
 };
@@ -40,9 +42,8 @@ exports.getProjectConfig = function getProjectConfig() {
   const folder = process.cwd();
   const rnpm = getRNPMConfig(folder);
 
-  // No package.json
   if (!rnpm) {
-    return null;
+    return log.warn('EPACKAGEJSON', `Not found. Are you sure it's a React Native project?`);;
   }
 
   return {
@@ -58,9 +59,8 @@ exports.getDependencyConfig = function getDependencyConfig(packageName) {
   const folder = path.join(process.cwd(), 'node_modules', packageName);
   const rnpm = getRNPMConfig(folder);
 
-  // No package.json
   if (!rnpm) {
-    return null;
+    return log.warn('EPACKAGEJSON', `Not found for ${packageName}. Try running npm prune`);
   }
 
   return {

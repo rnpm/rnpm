@@ -1,18 +1,6 @@
 var fs = require('fs');
 var path = require('path');
 
-/**
- * Tries to require given file in a try-catch block. If file is not present,
- * null value is returend allowing other methods to handle errors gracefuly.
- */
-exports.requireFile = function requireFile(filePath) {
-  try {
-    return require(filePath);
-  } catch (err) {
-    return null;
-  }
-};
-
 exports.writeFile = function writeFile(filePath, contents) {
   return fs.writeFileSync(filePath, contents, 'utf8');
 };
