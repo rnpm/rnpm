@@ -5,6 +5,8 @@ React Native Package Manager
 
 React Native package manager built up from multiple independent actions to ease your daily react native development. It aims to work with almost all packages available with no extra configuration required.
 
+**This version is still in alpha as we are getting unit tests written. Feel free to submit bugs and feature requests**
+
 ## Requirements
 
 - Node 4.x
