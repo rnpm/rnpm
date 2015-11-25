@@ -1,6 +1,6 @@
 {
   "name": "react-native-package-manager",
-  "version": "1.0.0-rc1",
+  "version": "1.0.0",
   "description": "React Native Package Manager",
   "main": "./src/actions/index.js",
   "bin": {
