@@ -53,7 +53,6 @@ module.exports = function link(packageName) {
       }
 
       if (project.android && dependencyConfig.assets.length > 0) {
-        console.log(dependencyConfig.assets);
         log.info(`Copying assets from ${name} to android project`);
         copyAssetsAndroid(dependencyConfig.assets, project.android.assetsPath);
       }
