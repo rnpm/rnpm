@@ -1,5 +1,3 @@
-const link = require('./link');
-
 /**
  * Returns an array that contains all the actions that can be called
  * in the current CLI version
@@ -7,4 +5,6 @@ const link = require('./link');
  * Each action exports an object that can be consumed by Commander to form
  * a nice CLI interface with flags, options and help
  */
-module.exports = [link];
+module.exports = [
+  require('./link'),
+];
