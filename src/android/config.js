@@ -87,6 +87,7 @@ exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
     folder: folder,
     project: path.join(src, userConfig.project || 'build.gradle'),
     settings: path.join(folder, BASE_DIR, userConfig.settings || 'settings.gradle'),
+    assetsPath: path.join(src, userConfig.assetsPath || 'src/main/assets'),
     mainActivity: path.join(src, userConfig.mainActivity || `src/main/java/${packageFolder}/MainActivity.java`),
   };
 };
