@@ -19,7 +19,7 @@ Unfortunately, at the time of writing, `rnpm` is taken in the registry, so pleas
 $ npm install react-native-package-manager -g
 $ react-native init myProject
 $ cd myProject
-& rnpm --help
+$ rnpm --help
 ```
 
 ## Rationale
