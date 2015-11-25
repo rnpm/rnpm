@@ -3,10 +3,14 @@ const fs = require('fs');
 const efs = require('../utils/fs');
 const glob = require('glob');
 
-// Glob pattern to look for xcodeproj
+/**
+ * Glob pattern to look for xcodeproj
+ */
 const GLOB_PATTERN = '**/*.xcodeproj';
 
-// These folders will be excluded from search to speed it up
+/**
+ * These folders will be excluded from search to speed it up
+ */
 const GLOB_EXCLUDE_PATTERN = ['node_modules/**', 'Examples/**', 'examples/**'];
 
 /**
@@ -35,7 +39,9 @@ const findProject = (folder) => {
 exports.projectConfig = function projectConfigIOS(folder, userConfig) {
   const project = userConfig.project || findProject(folder);
 
-  // No iOS stuff found here
+  /**
+   * No iOS config found here
+   */
   if (!project) {
     return null;
   }

@@ -4,7 +4,9 @@ const fs = require('fs');
 const efs = require('../utils/fs');
 const glob = require('glob');
 
-// Default android source directory to look for files
+/**
+ * Default android source directory to look for files
+ */
 const BASE_DIR = './android';
 const GLOB_PATTERN = '**/*.java';
 
@@ -59,7 +61,9 @@ const getPackageInstance = (src) => {
     .map(file => file.match(/class (.*) implements ReactPackage/))
     .filter(match => match);
 
-  // No packages exported, ignore
+  /**
+   * No packages exported, ignore
+   */
   if (packages.length === 0) {
     return null;
   }
@@ -93,8 +97,8 @@ exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
 };
 
 /**
- * Same as projectConfigAndroid except it returns different config that applies to packages
- * only
+ * Same as projectConfigAndroid except it returns
+ * different config that applies to packages only
  */
 exports.dependencyConfig = function dependencyConfigAndroid(folder, userConfig) {
   const src = userConfig.sourceDir || getSourceDirectory(folder);
@@ -107,7 +111,9 @@ exports.dependencyConfig = function dependencyConfigAndroid(folder, userConfig) 
   const packageName = userConfig.packageName || getPackageName(sourceDir);
   const packageInstance = userConfig.packageInstance || getPackageInstance(sourceDir);
 
-  // This module has no package to export
+  /**
+   * This module has no package to export
+   */
   if (!packageInstance) {
     return null;
   }

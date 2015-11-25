@@ -1,6 +1,8 @@
 const fs = require('fs');
 
-// Returns true if value is a path and should be checked
+/**
+ * Returns true if value is a path and should be checked
+ */
 const isPath = (value) => value.indexOf(process.cwd()) === 0;
 
 /**
@@ -13,13 +15,13 @@ const validatePlatform = (platform, config) => {
     if (isPath(value) && !fs.existsSync(value)) {
       errors.push({
         code: 'ENOENT',
-        msg: `No ${key} found at ${value} for ${platform}. You can override it in your package.json`
-      })
+        msg: `No ${key} found at ${value} for ${platform}. You can override it in your package.json`,
+      });
     }
 
     return errors;
   }, []);
-}
+};
 
 module.exports = function validateProjects(projects) {
   return Object.keys(projects).reduce((errors, platform) => {
