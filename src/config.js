@@ -21,22 +21,29 @@ const androidConfig = require('./android/defaultConfig');
 const iosConfig = require('./ios/defaultConfig');
 
 /**
- * Returns project config for current working directory
+ * Gets rnpm config from reading it from JSON (for now)
  */
-exports.getProjectConfig = function getProjectConfig() {
-  const folder = process.cwd();
+const getRNPMConfig = function getRNPMConfig(folder) {
   const pjson = efs.requireFile(path.join(folder, './package.json'));
 
   if (!pjson) {
     return log.warn('EPACKAGEJSON', `Not found. Are you sure it's a React Native project?`);
   }
 
-  const defaultConfig = {
-    ios: iosConfig.defaultProject(folder),
-    android: androidConfig.defaultProject(folder),
-  };
+  return pjson.rnpm || {};
+};
 
-  return Object.assign({}, defaultConfig, pjson.rnpm);
+/**
+ * Returns project config for current working directory
+ */
+exports.getProjectConfig = function getProjectConfig() {
+  const folder = process.cwd();
+  const rnpm = getRNPMConfig(folder);
+
+  return {
+    ios: iosConfig.defaultProject(folder, rnpm.ios || {}),
+    android: androidConfig.defaultProject(folder, rnpm.android || {}),
+  };
 };
 
 /**
@@ -44,16 +51,10 @@ exports.getProjectConfig = function getProjectConfig() {
  */
 exports.getDependencyConfig = function getDependencyConfig(packageName) {
   const folder = path.join(process.cwd(), 'node_modules', packageName);
-  const pjson = efs.requireFile(path.join(folder, './package.json'));
+  const rnpm = getRNPMConfig(folder);
 
-  if (!pjson) {
-    return log.warn('EPACKAGEJSON', `Not found for dependency ${packageName}. Run npm prune to fix this issue.`);
-  }
-
-  const defaultConfig = {
-    ios: iosConfig.defaultDependency(folder),
-    android: androidConfig.defaultDependency(folder),
+  return {
+    ios: iosConfig.defaultDependency(folder, rnpm.ios || {}),
+    android: androidConfig.defaultDependency(folder, rnpm.android || {}),
   };
-
-  return Object.assign({}, defaultConfig, pjson.rnpm);
 };

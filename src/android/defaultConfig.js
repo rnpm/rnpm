@@ -30,16 +30,16 @@ const getPackageName = (src) => {
 
 const getPackageFolder = (packageName) => packageName.replace('.', path.sep);
 
-exports.defaultProject = function defaultProjectAndroid(folder) {
-  const src = getSourceDirectory(folder);
+exports.defaultProject = function defaultProjectAndroid(folder, userConfig) {
+  const src = userConfig.sourceDir || getSourceDirectory(folder);
 
   if (!src) {
-    return false;
+    return null;
   }
 
-  const packageName = getPackageName(src);
-  const packageFolder = getPackageFolder(packageName);
-
+  const packageName = userConfig.packageName || getPackageName(src);
+  const packageFolder = userConfig.packageFolder || getPackageFolder(packageName);
+  
   return {
     _src: src,
     _folder: folder,
@@ -50,14 +50,14 @@ exports.defaultProject = function defaultProjectAndroid(folder) {
   };
 };
 
-exports.defaultDependency = function defaultDependencyAndroid(folder) {
-  const src = getSourceDirectory(folder);
+exports.defaultDependency = function defaultDependencyAndroid(folder, userConfig) {
+  const src = userConfig.sourceDir || getSourceDirectory(folder);
 
   if (!src) {
-    return false;
+    return null;
   }
 
-  const packageName = getPackageName(src);
+  const packageName = userConfig.packageName || getPackageName(src);
 
   return {
     _src: src,
