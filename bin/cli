@@ -19,15 +19,11 @@ const buildAction = (action) => {
     ? `${action.name} ${action.args}`
     : action.name;
 
-  const command = cli
+  cli
     .command(name)
     .usage(action.usage)
     .description(action.description)
     .action(action);
-
-  if (action.options) {
-    action.options.forEach(option => command.option(option.name, option.description));
-  }
 };
 
 actions.forEach(buildAction);
