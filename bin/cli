@@ -24,8 +24,8 @@ const composeCommand = (actionName, args) => (args || []).reduce(
 /**
  * Builds action from given action configuration and attaches it to commander
  */
-const buildAction = (action, actionName) => {
-  const command = composeCommand(actionName, action.args);
+const buildAction = (action) => {
+  const command = composeCommand(action.run.name, action.args);
 
   const cli = program
     .command(command)

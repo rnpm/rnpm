@@ -19,7 +19,7 @@ const getProjectDependencies = () => {
  *
  * If optional argument [packageName] is provided, it's the only one that's checked
  */
-function updateProject(packageName) {
+function link(packageName) {
   const project = config.getProjectConfig();
 
   if (!project) {
@@ -59,7 +59,7 @@ function updateProject(packageName) {
 
 module.exports = {
   description: 'This action updates your project and links all native dependencies',
-  run: updateProject,
+  run: link,
   args: [{
     name: 'packageName',
   }],
