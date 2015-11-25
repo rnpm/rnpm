@@ -61,7 +61,7 @@ We have lots of plans to make this tool better, some of them are:
 
 react-native link is great, but it only works for Android now. It also does not automatically add packages to your project nor support custom folder configuration. We aim to solve these issues by analyzing folders and getting maxium informations available from them. When running `rnpm link` you don't have to think about the package exported by developer or the import path to include in your Java project.
 
-#### Does it works with Cocoapods?
+#### Does it work with Cocoapods?
 
 Yes, in fact - it has nothing to do with it. What it does is it just automatically links static libraries to your xcodeproj in the normal way you have been doing that. There are no more other changes.
 
