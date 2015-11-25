@@ -30,10 +30,6 @@ module.exports = function link(packageName) {
 
   const dependencies = packageName ? [packageName] : getProjectDependencies();
 
-  if (!packageName) {
-    log.info(`Found ${dependencies.length} native dependencies to link`);
-  }
-
   dependencies
     .forEach(name => {
       const dependencyConfig = config.getDependencyConfig(name);
