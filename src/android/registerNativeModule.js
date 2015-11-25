@@ -43,6 +43,9 @@ module.exports = function registerNativeAndroidModule(name, dependencyConfig, pr
   const patchProjectBuild = (content) =>
     replace(content, BUILD_PATCH_PATTERN, BUILD_PATCH);
 
+  const getMainActivityPatch = () =>
+    `                .addPackage(${dependencyConfig.packageInstance})`
+
   /**
    * Make a MainActivity.java program patcher
    * @param  {String}   importPath Import path, e.g. com.oblador.vectoricons.VectorIconsPackage;
@@ -53,10 +56,7 @@ module.exports = function registerNativeAndroidModule(name, dependencyConfig, pr
     replace(content,
       MAIN_ACTIVITY_IMPORT_PATTERN,
       dependencyConfig.packageImportPath) &&
-    replace(content,
-      MAIN_ACTIVITY_PACKAGE_PATTERN,
-      `                .addPackage(${dependencyConfig.packageInstance})`
-    );
+    replace(content, MAIN_ACTIVITY_PACKAGE_PATTERN, getMainActivityPatch());
 
   const applySettingsGradlePatch = compose(
     writeFile(projectConfig.settingsGradlePath),
@@ -76,9 +76,16 @@ module.exports = function registerNativeAndroidModule(name, dependencyConfig, pr
     readFile(projectConfig.mainActivityPath)
   );
 
-  compose(
-    applySettingsGradlePatch,
-    applyBuildGradlePatch,
-    applyMainActivityPatch
-  )();
+  const isInstalled = compose(
+    (content) => ~content.indexOf(getMainActivityPatch()),
+    readFile(projectConfig.mainActivityPath)
+  );
+
+  if (!isInstalled(name)) {
+    compose(
+      applySettingsGradlePatch,
+      applyBuildGradlePatch,
+      applyMainActivityPatch
+    )();
+  }
 };
