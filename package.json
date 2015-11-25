@@ -1,5 +1,5 @@
 {
-  "name": "react-native-package-manager",
+  "name": "rnpm",
   "version": "1.0.0",
   "description": "React Native Package Manager",
   "main": "./src/actions/index.js",
@@ -26,7 +26,8 @@
   "keywords": [
     "react-native",
     "native-modules",
-    "packager"
+    "packager",
+    "rnpm"
   ],
   "homepage": "https://github.com/rnpm/rnpm#readme",
   "dependencies": {
