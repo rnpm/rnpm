@@ -73,7 +73,9 @@ We welcome all contributors, simply make an issue or send over a pull request. W
 
 ## Sponsors
 
-tba
+This tool development and maintainance is sponsored by below companies:
+
+<a href="http://manandmoon.com" title="Man+Moon"><img src="http://manandmoon.com/images/man-moon-full-logo-.svg" width="200" /></a>
 
 ## License
 
