@@ -40,6 +40,11 @@ exports.getProjectConfig = function getProjectConfig() {
   const folder = process.cwd();
   const rnpm = getRNPMConfig(folder);
 
+  // No package.json
+  if (!rnpm) {
+    return null;
+  }
+
   return {
     ios: iosConfig.defaultProject(folder, rnpm.ios || {}),
     android: androidConfig.defaultProject(folder, rnpm.android || {}),
@@ -52,6 +57,11 @@ exports.getProjectConfig = function getProjectConfig() {
 exports.getDependencyConfig = function getDependencyConfig(packageName) {
   const folder = path.join(process.cwd(), 'node_modules', packageName);
   const rnpm = getRNPMConfig(folder);
+
+  // No package.json
+  if (!rnpm) {
+    return null;
+  }
 
   return {
     ios: iosConfig.defaultDependency(folder, rnpm.ios || {}),
