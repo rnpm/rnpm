@@ -7,7 +7,7 @@ const GLOB_PATTERN = '**/*.xcodeproj';
 const GLOB_EXCLUDE_PATTERN = ['node_modules/**', 'Examples/**', 'examples/**'];
 
 const findProject = (folder) => {
-  var projects = glob.sync(GLOB_PATTERN, {
+  const projects = glob.sync(GLOB_PATTERN, {
     cwd: folder,
     ignore: GLOB_EXCLUDE_PATTERN,
   });
