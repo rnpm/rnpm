@@ -27,6 +27,10 @@ const getSourceDirectory = (folder) => {
   return BASE_DIR;
 };
 
+/**
+ * Gets package name by opening AndroidManifest.xml and reading
+ * package attribute
+ */
 const getPackageName = (src) => {
   const manifest = new xml.XmlDocument(
     efs.loadFile(path.join(src, 'src/main/AndroidManifest.xml'))
@@ -35,8 +39,16 @@ const getPackageName = (src) => {
   return manifest.attr.package;
 };
 
+/**
+ * Given package name, replaces . to separators to follow Java convention
+ * and locate .java files
+ */
 const getPackageFolder = (packageName) => packageName.replace('.', path.sep);
 
+/**
+ * Gets package name (class that implements ReactPackage) by searching for its
+ * declaration in all Java files present in the src
+ */
 const getPackageInstance = (src) => {
   const files = glob.sync(GLOB_PATTERN, {
     cwd: src,
@@ -47,7 +59,7 @@ const getPackageInstance = (src) => {
     .map(file => file.match(/class (.*) implements ReactPackage/))
     .filter(match => match);
 
-  // No package exported, ignore
+  // No packages exported, ignore
   if (packages.length === 0) {
     return null;
   }
@@ -55,6 +67,10 @@ const getPackageInstance = (src) => {
   return packages[0][1];
 };
 
+/**
+ * Gets android project config by analyzing given folder and taking some
+ * defaults specified by user into consideration
+ */
 exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
   const src = path.join(folder, userConfig.sourceDir || getSourceDirectory(folder));
 
@@ -74,6 +90,10 @@ exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
   };
 };
 
+/**
+ * Same as projectConfigAndroid except it returns different config that applies to packages
+ * only
+ */
 exports.dependencyConfig = function dependencyConfigAndroid(folder, userConfig) {
   const src = path.join(folder, userConfig.sourceDir || getSourceDirectory(folder));
 

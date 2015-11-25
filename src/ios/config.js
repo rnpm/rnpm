@@ -3,9 +3,18 @@ const fs = require('fs');
 const efs = require('../utils/fs');
 const glob = require('glob');
 
+// Glob pattern to look for xcodeproj
 const GLOB_PATTERN = '**/*.xcodeproj';
+
+// These folders will be excluded from search to speed it up
 const GLOB_EXCLUDE_PATTERN = ['node_modules/**', 'Examples/**', 'examples/**'];
 
+/**
+ * Finds iOS project by looking for all .xcodeproj files
+ * in given folder.
+ *
+ * Returns first match if files are found or null
+ */
 const findProject = (folder) => {
   const projects = glob.sync(GLOB_PATTERN, {
     cwd: folder,
@@ -19,7 +28,11 @@ const findProject = (folder) => {
   return projects[0];
 };
 
-exports.projectConfig = function defaultProjectIOS(folder, userConfig) {
+/**
+ * Returns project config by analyzing given folder and applying some user defaults
+ * when constructing final object
+ */
+exports.projectConfig = function projectConfigIOS(folder, userConfig) {
   const project = path.join(
     folder,
     userConfig.project || findProject(folder)
