@@ -6,10 +6,7 @@ const glob = require('glob');
 const GLOB_PATTERN = '**/*.xcodeproj';
 const GLOB_EXCLUDE_PATTERN = ['node_modules/**', 'Examples/**', 'examples/**'];
 
-/**
- * Gets default config from android project
- */
-module.exports = function getDefaultConfigIOS(folder, pjson) {
+exports.defaultProject = function defaultProjectIOS(folder) {
   var projects = glob.sync(GLOB_PATTERN, {
     cwd: folder,
     ignore: GLOB_EXCLUDE_PATTERN,
@@ -30,3 +27,5 @@ module.exports = function getDefaultConfigIOS(folder, pjson) {
     projectName: path.basename(project),
   };
 };
+
+exports.defaultDependency = exports.defaultProject;

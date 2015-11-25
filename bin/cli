@@ -31,7 +31,7 @@ const composeCommand = (actionName, args) => (args || []).reduce(
  * {folderName: 'd', rnVersion: 'something'}.
  */
 const mapArgs = (args, passedArgs) => zipObject(
-  args.map((arg, index) => {
+  (args || []).map((arg, index) => {
     return [
       arg.property || arg.name,
       passedArgs[index],

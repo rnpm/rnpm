@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const getConfig = require('../getConfig');
+const config = require('../config');
 const log = require('npmlog');
 
 const validateProjects = require('../plugins/validateProjects');
@@ -39,7 +39,7 @@ function updateProjects(projects, args) {
 
   dependencies
     .forEach(name => {
-      const dependencyConfig = getConfig(name);
+      const dependencyConfig = config.getDependencyConfig(name);
 
       if (projects.android && dependencyConfig.android) {
         log.info(`Linking ${name} android dependency`);
@@ -56,7 +56,4 @@ function updateProjects(projects, args) {
 module.exports = {
   description: 'This action updates your project and links all native dependencies',
   run: updateProjects,
-  args: [{
-    name: 'packageName',
-  }],
 };
