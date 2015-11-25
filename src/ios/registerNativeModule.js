@@ -53,7 +53,7 @@ module.exports = function registerNativeModuleIOS(name, dependencyConfig, projec
   });
 
   fs.writeFileSync(
-    projectConfig._pbxproj,
+    projectConfig.pbxproj,
     project.writeSync()
   );
 };
