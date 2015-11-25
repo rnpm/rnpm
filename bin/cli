@@ -6,7 +6,6 @@ const program = require('commander');
 const actions = require('../src/actions');
 const dropRight = require('lodash.dropright');
 const zipObject = require('lodash.zipobject');
-const forEach = require('lodash.foreach');
 
 // Check for updates once a day
 updateNotifier({pkg: pkg}).notify();
@@ -40,6 +39,6 @@ const buildAction = (action) => {
   }
 };
 
-forEach(actions, buildAction);
+actions.forEach(buildAction);
 
 program.parse(process.argv);
