@@ -19,10 +19,8 @@ cli.version(pkg.version);
  * Builds action from given action configuration and attaches it to commander
  */
 const buildAction = (action) => {
-  const name = action.name;
-
   cli
-    .command(name)
+    .command(action.name)
     .usage(action.usage)
     .description(action.description)
     .action(action.func);
