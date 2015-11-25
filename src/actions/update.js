@@ -41,7 +41,7 @@ function updateProjects(args) {
 
       if (project.ios && dependencyConfig.ios) {
         log.info(`Linking ${name} ios dependency`);
-        registerDependencyIOS(name, dependencyConfig.ios, project.ios);
+        registerDependencyIOS(dependencyConfig.ios, project.ios);
       }
 
       if (dependencyConfig.assets) {

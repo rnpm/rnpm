@@ -30,7 +30,7 @@ const addProjectToLibraries = (libraries, file) => {
   });
 };
 
-module.exports = function registerNativeModuleIOS(name, dependencyConfig, projectConfig) {
+module.exports = function registerNativeModuleIOS(dependencyConfig, projectConfig) {
   const project = xcode.project(projectConfig.pbxproj).parseSync();
   const dependencyProject = xcode.project(dependencyConfig.pbxproj).parseSync();
 
