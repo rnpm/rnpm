@@ -5,6 +5,7 @@ const log = require('npmlog');
 
 const registerDependencyAndroid = require('../android/registerNativeModule');
 const registerDependencyIOS = require('../ios/registerNativeModule');
+const copyAssetsAndroid = require('../android/copyAssets');
 
 /**
  * Returns an array of dependencies that should be linked/checked.
@@ -18,8 +19,6 @@ const getProjectDependencies = () => {
  * Updates project and linkes all dependencies to it
  *
  * If optional argument [packageName] is provided, it's the only one that's checked
- *
- * @todo add support for copying assets, investigate if it's still neded in RN 0.14+
  */
 module.exports = function link(packageName) {
   const project = config.getProjectConfig();
@@ -54,11 +53,7 @@ module.exports = function link(packageName) {
       }
 
       if (dependencyConfig.assets) {
-        log.warn(
-          'ERRASSETS',
-          `We have discovered assets in ${name} package. This is not yet supported by ` +
-          `the CLI and manual action is required`
-        );
+        copyAssetsAndroid(dependencyConfig.assets, project.android.assetsPath);
       }
     });
 }
