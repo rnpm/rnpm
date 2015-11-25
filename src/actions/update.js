@@ -3,20 +3,23 @@ const path = require('path');
 const config = require('../config');
 const log = require('npmlog');
 
-const validateProjects = require('../plugins/validateProjects');
 const registerDependencyAndroid = require('../android/registerNativeModule');
 const registerDependencyIOS = require('../ios/registerNativeModule');
 
+/**
+ * Returns an array of dependencies that should be linked/checked.
+ */
 const getProjectDependencies = () => {
   const pjson = require(path.join(process.cwd(), './package.json'));
   return Object.keys(pjson.dependencies).filter(name => name !== 'react-native');
 };
 
 /**
- * Main action
- * See action description for further informations
+ * Updates project and linkes all dependencies to it
+ *
+ * If optional argument [packageName] is provided, it's the only one that's checked
  */
-function updateProjects(packageName) {
+function updateProject(packageName) {
   const project = config.getProjectConfig();
 
   if (!project) {
@@ -56,7 +59,7 @@ function updateProjects(packageName) {
 
 module.exports = {
   description: 'This action updates your project and links all native dependencies',
-  run: updateProjects,
+  run: updateProject,
   args: [{
     name: 'packageName',
   }],
