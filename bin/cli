@@ -5,7 +5,6 @@ const updateNotifier = require('update-notifier');
 const log = require('npmlog');
 
 const pkg = require('../package.json');
-const actions = require('../src/actions');
 
 // Check for updates once a day
 updateNotifier({pkg: pkg}).notify();
@@ -30,6 +29,6 @@ const buildAction = (action) => {
     .action(action);
 };
 
-actions.forEach(buildAction);
+['../src/actions/link'].map(require).forEach(buildAction);
 
 cli.parse(process.argv);
