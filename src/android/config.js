@@ -8,18 +8,23 @@ const glob = require('glob');
 const BASE_DIR = './android';
 const GLOB_PATTERN = '**/*.java';
 
+/**
+ * Gets source directory for current folder
+ *
+ * Given folder, it checks if /android exists, if no - returns null
+ * Tries to find /app folder in /android and if it exists - returns it
+ * Otherwise returns /android
+ */
 const getSourceDirectory = (folder) => {
-  var src = BASE_DIR;
-
-  if (!fs.existsSync(path.join(folder, src))) {
+  if (!fs.existsSync(path.join(folder, BASE_DIR))) {
     return null;
   }
 
-  if (fs.existsSync(path.join(folder, src, 'app'))) {
-    src = path.join(src, 'app');
+  if (fs.existsSync(path.join(folder, BASE_DIR, 'app'))) {
+    return path.join(BASE_DIR, 'app');
   }
 
-  return src;
+  return BASE_DIR;
 };
 
 const getPackageName = (src) => {
