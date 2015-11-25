@@ -46,10 +46,10 @@ exports.getProjectConfig = function getProjectConfig() {
     return log.warn('EPACKAGEJSON', `Not found. Are you sure it's a React Native project?`);;
   }
 
-  return {
+  return Object.assign({}, rnpm, {
     ios: iosConfig.projectConfig(folder, rnpm.ios || {}),
     android: androidConfig.projectConfig(folder, rnpm.android || {}),
-  };
+  });
 };
 
 /**
@@ -63,8 +63,8 @@ exports.getDependencyConfig = function getDependencyConfig(packageName) {
     return log.warn('EPACKAGEJSON', `Not found for ${packageName}. Try running npm prune`);
   }
 
-  return {
+  return Object.assign({}, rnpm, {
     ios: iosConfig.dependencyConfig(folder, rnpm.ios || {}),
     android: androidConfig.dependencyConfig(folder, rnpm.android || {}),
-  };
+  });
 };

@@ -45,7 +45,6 @@ exports.projectConfig = function projectConfigIOS(folder, userConfig) {
     folder: folder,
     project: path.join(src, 'build.gradle'),
     settings: path.join(BASE_DIR, 'settings.gradle'),
-    assetsFolder: path.join(src, 'src/main'),
     mainActivity: path.join(src, `src/main/java/${packageFolder}/MainActivity.java`),
   };
 };

@@ -11,7 +11,7 @@ const registerDependencyIOS = require('../ios/registerNativeModule');
  * Main action
  * See action description for further informations
  */
-function updateProjects(projects, args) {
+function updateProjects(project, args) {
   const pjson = require(path.join(process.cwd(), './package.json'));
 
   const dependencies = args.packageName
@@ -22,25 +22,22 @@ function updateProjects(projects, args) {
     log.info(`Found ${dependencies.length} native dependencies to link`);
   }
 
-  const errors = validateProjects(projects);
-  if (errors.length > 0) {
-    return errors.forEach(err =>
-      log.error(err.code, err.msg)
-    );
-  }
-
   dependencies
     .forEach(name => {
       const dependencyConfig = config.getDependencyConfig(name);
 
-      // if (projects.android && dependencyConfig.android) {
-      //   log.info(`Linking ${name} android dependency`);
-      //   registerDependencyAndroid(name, dependencyConfig.android, projects.android);
-      // }
+      // project is package.json.rnpm so you have `project.assets` here as well
+      // if they were defined
+      console.log(project.android);
 
-      if (projects.ios && dependencyConfig.ios) {
+      if (project.android && dependencyConfig.android) {
+        log.info(`Linking ${name} android dependency`);
+        registerDependencyAndroid(name, dependencyConfig.android, project.android);
+      }
+
+      if (project.ios && dependencyConfig.ios) {
         log.info(`Linking ${name} ios dependency`);
-        registerDependencyIOS(name, dependencyConfig.ios, projects.ios);
+        registerDependencyIOS(name, dependencyConfig.ios, project.ios);
       }
     });
 }
