@@ -6,13 +6,14 @@ const log = require('npmlog');
 const validateProjects = require('../plugins/validateProjects');
 const registerDependencyAndroid = require('../android/registerNativeModule');
 const registerDependencyIOS = require('../ios/registerNativeModule');
-const pjson = efs.requireFile(path.join(process.cwd(), './package.json'));
 
 /**
  * Main action
  * See action description for further informations
  */
 function updateProjects(projects, args) {
+  const pjson = require(path.join(process.cwd(), './package.json'));
+
   const dependencies = args.packageName
     ? [args.packageName]
     : Object.keys(pjson.dependencies);
