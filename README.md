@@ -78,7 +78,7 @@ react-native link is great, but it only works for Android now. It also does not 
 
 #### Does it work with Cocoapods?
 
-Yes, in fact - it has nothing to do with it. What it does is just automatically linking static libraries to your xcodeproj in the normal way you have been doing that. There are no more other changes.
+Yes, in fact - it has nothing to do with it. What it does is just linking static libraries automatically to your xcodeproj in the normal way you have been doing that. There are no more other changes.
 
 ## Special thanks
 
