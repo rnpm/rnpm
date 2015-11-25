@@ -52,6 +52,11 @@ function link(packageName) {
         log.info(`Linking ${name} ios dependency`);
         registerDependencyIOS(dependencyConfig.ios, project.ios);
       }
+
+      if (dependencyConfig.assets) {
+        // copyAssetsAndroid(dependencyConfig.assets, project.android.assetsPath)
+        // copyAssetsIOS(dependencyConfig.assets, project.ios.assetsPath)
+      }
     });
 }
 
