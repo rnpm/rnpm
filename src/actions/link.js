@@ -52,8 +52,8 @@ module.exports = function link(packageName) {
         registerDependencyIOS(dependencyConfig.ios, project.ios);
       }
 
-      // @todo do we need that for iOS?
-      if (project.android && dependencyConfig.assets) {
+      if (project.android && dependencyConfig.assets.length > 0) {
+        log.info(`Copying assets from ${name} to android project`);
         copyAssetsAndroid(dependencyConfig.assets, project.android.assetsPath);
       }
     });

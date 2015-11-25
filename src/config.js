@@ -64,5 +64,6 @@ exports.getDependencyConfig = function getDependencyConfig(packageName) {
   return Object.assign({}, rnpm, {
     ios: iosConfig.dependencyConfig(folder, rnpm.ios || {}),
     android: androidConfig.dependencyConfig(folder, rnpm.android || {}),
+    assets: (rnpm.assets || []).map(assetPath => path.join(folder, assetPath)),
   });
 };
