@@ -14,9 +14,16 @@
 
 const fs = require('fs');
 const path = require('path');
+const glob = require('glob');
 
 const androidConfig = require('./android/config');
 const iosConfig = require('./ios/config');
+
+const getAssetsInFolder = (folder) => {
+  return glob.sync(path.join(folder, '**'), {
+    nodir: true,
+  });
+};
 
 /**
  * Gets rnpm config from reading it from JSON (for now)
@@ -64,6 +71,10 @@ exports.getDependencyConfig = function getDependencyConfig(packageName) {
   return Object.assign({}, rnpm, {
     ios: iosConfig.dependencyConfig(folder, rnpm.ios || {}),
     android: androidConfig.dependencyConfig(folder, rnpm.android || {}),
-    assets: (rnpm.assets || []).map(assetPath => path.join(folder, assetPath)),
+    assets: (rnpm.assets || [])
+      .map(assetsFolder => path.join(folder, assetsFolder))
+      .reduce((assets, assetsFolder) => {
+        return assets.concat(getAssetsInFolder(assetsFolder));
+      }, []),
   });
 };
