@@ -1,4 +1,4 @@
-rnpm <img src="https://david-dm.org/rnpm/rnpm.svg" />
+:iphone: rnpm <img src="https://david-dm.org/rnpm/rnpm.svg" />
 =============
 
 **React Native Package Manager** built to ease your daily React Native development. Inspired by `Cocoapods`, `fastlane` and `react-native link` it acts as your best friend and guides you through the native unknowns. It aims to work with almost all packages available with no extra configuration required.
@@ -7,13 +7,23 @@ rnpm <img src="https://david-dm.org/rnpm/rnpm.svg" />
 
 ## Requirements
 
-- Node >= 4.x
+- node >= 4.x
 
-## Usage
+## Getting started
 
+**Installation**
 ```bash
 $ npm install rnpm -g
-$ cd ./myProject && rnpm --help
+```
+
+**Running**
+From your's project folder install some react-native modules that require additional installation and simply run:
+```bash
+$ rnpm link
+```
+In the case you want to link only one depepndency, you can specify it's name as an argument:
+```bash
+$ rnpm link react-native-blur
 ```
 
 ## Rationale
@@ -36,6 +46,17 @@ Automatically updates your project by linking all dependencies for Android (if p
 ```bash
 $ rnpm link react-native-module
 ```
+
+## Advanced usage
+If you're authoring an awesome react-native library with custom assets, you probably need an additional step after linking - copying assets to the application folder. Well, that's not complicated: just add `rnpm` section in your `package.json` file:
+```json
+...
+"rnpm": {
+  "assets": ["Fonts"]
+},
+...
+```
+We'll copy your assets carefully with love :heart:
 
 ## Roadmap
 
