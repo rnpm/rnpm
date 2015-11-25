@@ -72,12 +72,13 @@ const getPackageInstance = (src) => {
  * defaults specified by user into consideration
  */
 exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
-  const src = path.join(folder, userConfig.sourceDir || getSourceDirectory(folder));
+  const sourceDir = userConfig.sourceDir || getSourceDirectory(folder);
 
-  if (!src) {
+  if (!sourceDir) {
     return null;
   }
 
+  const src = path.join(folder, sourceDir);
   const packageName = userConfig.packageName || getPackageName(src);
   const packageFolder = userConfig.packageFolder || getPackageFolder(packageName);
 
@@ -95,12 +96,13 @@ exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
  * only
  */
 exports.dependencyConfig = function dependencyConfigAndroid(folder, userConfig) {
-  const src = path.join(folder, userConfig.sourceDir || getSourceDirectory(folder));
+  const sourceDir = userConfig.sourceDir || getSourceDirectory(folder);
 
-  if (!src) {
+  if (!sourceDir) {
     return null;
   }
 
+  const src = path.join(folder, sourceDir);
   const packageName = userConfig.packageName || getPackageName(src);
   const packageInstance = userConfig.packageInstance || getPackageInstance(src);
 
