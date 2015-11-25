@@ -13,9 +13,13 @@ React Native package manager built up from multiple independent actions to ease 
 
 ## Usage
 
+Unfortunately, at the time of writing, `rnpm` is taken in the registry, so please use `react-native-package-manager` when installing instead. The CLI tool will be available globally as `rnpm` normally.
+
 ```bash
-$ npm install rnpm -g
-$ cd ./my-app && rnpm --help
+$ npm install react-native-package-manager -g
+$ react-native init myProject
+$ cd myProject
+& rnpm --help
 ```
 
 ## Rationale

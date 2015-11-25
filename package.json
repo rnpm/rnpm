@@ -1,23 +1,33 @@
 {
-  "name": "rnpm",
+  "name": "react-native-package-manager",
   "version": "1.0.0-rc1",
   "description": "React Native Package Manager",
+  "main": "./src/actions/index.js",
   "bin": {
     "rnpm": "bin/cli"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kureev/rnpm.git"
+    "url": "git+https://github.com/rnpm/rnpm.git"
   },
   "contributors": [
     "Alexey Kureev <kureev-mail@ya.ru> (https://github.com/Kureev)",
     "Mike Grabowski <grabbou@gmail.com> (https://github.com/grabbou)"
   ],
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "engineStrict": true,
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Kureev/rnpm/issues"
+    "url": "https://github.com/rnpm/rnpm/issues"
   },
-  "homepage": "https://github.com/Kureev/rnpm#readme",
+  "keywords": [
+    "react-native",
+    "native-modules",
+    "packager"
+  ],
+  "homepage": "https://github.com/rnpm/rnpm#readme",
   "dependencies": {
     "commander": "^2.9.0",
     "fs-extra": "^0.26.2",
