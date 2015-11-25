@@ -1,16 +1,17 @@
 #!/usr/bin/env node
 
-const pkg = require('../package.json');
+const cli = require('commander');
 const updateNotifier = require('update-notifier');
-const program = require('commander');
-const actions = require('../src/actions');
 const dropRight = require('lodash.dropright');
 const zipObject = require('lodash.zipobject');
+
+const pkg = require('../package.json');
+const actions = require('../src/actions');
 
 // Check for updates once a day
 updateNotifier({pkg: pkg}).notify();
 
-program.version(pkg.version);
+cli.version(pkg.version);
 
 /**
  * Builds command name by respecting optional/required arguments
@@ -24,10 +25,10 @@ const composeCommand = (actionName, args) => (args || []).reduce(
  * Builds action from given action configuration and attaches it to commander
  */
 const buildAction = (action) => {
-  const command = composeCommand(action.run.name, action.args);
+  const name = composeCommand(action.run.name, action.args);
 
-  const cli = program
-    .command(command)
+  const command = cli
+    .command(name)
     .usage(action.usage)
     .description(action.description)
     .action(function runAction() {
@@ -35,10 +36,10 @@ const buildAction = (action) => {
     });
 
   if (action.options) {
-    action.options.forEach(option => cli.option(option.name, option.description));
+    action.options.forEach(option => command.option(option.name, option.description));
   }
 };
 
 actions.forEach(buildAction);
 
-program.parse(process.argv);
+cli.parse(process.argv);
