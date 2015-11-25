@@ -7,16 +7,25 @@ const validateProjects = require('../plugins/validateProjects');
 const registerDependencyAndroid = require('../android/registerNativeModule');
 const registerDependencyIOS = require('../ios/registerNativeModule');
 
+const getProjectDependencies = () => {
+  const pjson = require(path.join(process.cwd(), './package.json'));
+  return Object.keys(pjson.dependencies);
+};
+
 /**
  * Main action
  * See action description for further informations
  */
-function updateProjects(project, args) {
-  const pjson = require(path.join(process.cwd(), './package.json'));
+function updateProjects(args) {
 
-  const dependencies = args.packageName
-    ? [args.packageName]
-    : Object.keys(pjson.dependencies);
+  const project = config.getProjectConfig();
+
+  if (!project) {
+    log.error('ERRPACKAGEJSON', `No package found. Are you sure it's a React Native project?`);
+    return;
+  }
+
+  const dependencies = args.packageName ? [args.packageName] : getProjectDependencies();
 
   if (!args.packageName) {
     log.info(`Found ${dependencies.length} native dependencies to link`);

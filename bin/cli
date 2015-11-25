@@ -3,17 +3,10 @@
 const pkg = require('../package.json');
 const updateNotifier = require('update-notifier');
 const program = require('commander');
-const config = require('../src/config');
 const actions = require('../src/actions');
 const dropRight = require('lodash.dropright');
 const zipObject = require('lodash.zipobject');
 const forEach = require('lodash.foreach');
-
-const projectConfig = config.getProjectConfig();
-
-if (!projectConfig) {
-  process.exit(1);
-}
 
 // Check for updates once a day
 updateNotifier({pkg: pkg}).notify();
@@ -54,7 +47,7 @@ const buildAction = (action, actionName) => {
     .description(action.description)
     .action(function runAction() {
       const args = mapArgs(action.args, arguments);
-      action.run(projectConfig, args, cli.opts());
+      action.run(args, cli.opts());
     });
 
   if (action.options) {

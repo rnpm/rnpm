@@ -43,7 +43,7 @@ exports.getProjectConfig = function getProjectConfig() {
   const rnpm = getRNPMConfig(folder);
 
   if (!rnpm) {
-    return log.warn('EPACKAGEJSON', `Not found. Are you sure it's a React Native project?`);;
+    return null;
   }
 
   return Object.assign({}, rnpm, {
@@ -60,7 +60,7 @@ exports.getDependencyConfig = function getDependencyConfig(packageName) {
   const rnpm = getRNPMConfig(folder);
 
   if (!rnpm) {
-    return log.warn('EPACKAGEJSON', `Not found for ${packageName}. Try running npm prune`);
+    return null;
   }
 
   return Object.assign({}, rnpm, {
