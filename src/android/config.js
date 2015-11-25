@@ -30,7 +30,7 @@ const getPackageName = (src) => {
 
 const getPackageFolder = (packageName) => packageName.replace('.', path.sep);
 
-exports.defaultProject = function defaultProjectAndroid(folder, userConfig) {
+exports.projectConfig = function projectConfigIOS(folder, userConfig) {
   const src = userConfig.sourceDir || getSourceDirectory(folder);
 
   if (!src) {
@@ -50,7 +50,7 @@ exports.defaultProject = function defaultProjectAndroid(folder, userConfig) {
   };
 };
 
-exports.defaultDependency = function defaultDependencyAndroid(folder, userConfig) {
+exports.dependencyConfig = function dependencyConfigAndroid(folder, userConfig) {
   const src = userConfig.sourceDir || getSourceDirectory(folder);
 
   if (!src) {

@@ -19,7 +19,7 @@ const findProject = (folder) => {
   return path.join(folder, projects[0]);
 };
 
-exports.defaultProject = function defaultProjectIOS(folder, userConfig) {
+exports.projectConfig = function defaultProjectIOS(folder, userConfig) {
   const project = userConfig.project || findProject(folder);
 
   // No iOS stuff found here
@@ -36,4 +36,4 @@ exports.defaultProject = function defaultProjectIOS(folder, userConfig) {
   };
 };
 
-exports.defaultDependency = exports.defaultProject;
+exports.dependencyConfig = exports.projectConfig;

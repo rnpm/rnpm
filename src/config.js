@@ -17,8 +17,8 @@ const fs = require('fs');
 const transform = require('lodash.transform');
 const path = require('path');
 
-const androidConfig = require('./android/defaultConfig');
-const iosConfig = require('./ios/defaultConfig');
+const androidConfig = require('./android/config');
+const iosConfig = require('./ios/config');
 
 /**
  * Gets rnpm config from reading it from JSON (for now)
@@ -47,8 +47,8 @@ exports.getProjectConfig = function getProjectConfig() {
   }
 
   return {
-    ios: iosConfig.defaultProject(folder, rnpm.ios || {}),
-    android: androidConfig.defaultProject(folder, rnpm.android || {}),
+    ios: iosConfig.projectConfig(folder, rnpm.ios || {}),
+    android: androidConfig.projectConfig(folder, rnpm.android || {}),
   };
 };
 
@@ -64,7 +64,7 @@ exports.getDependencyConfig = function getDependencyConfig(packageName) {
   }
 
   return {
-    ios: iosConfig.defaultDependency(folder, rnpm.ios || {}),
-    android: androidConfig.defaultDependency(folder, rnpm.android || {}),
+    ios: iosConfig.dependencyConfig(folder, rnpm.ios || {}),
+    android: androidConfig.dependencyConfig(folder, rnpm.android || {}),
   };
 };
