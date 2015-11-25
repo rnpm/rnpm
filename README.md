@@ -5,7 +5,7 @@ React Native Package Manager
 
 React Native package manager built up from multiple independent actions to ease your daily react native development. It aims to work with almost all packages available with no extra configuration required.
 
-**This version is still in alpha as we are getting unit tests written. Feel free to submit bugs and feature requests**
+**This version is still in alpha as we are getting unit tests written. Feel free to submit bugs and feature requests. Always use this tool in a connection with source control to make sure all changes can be reverted.**
 
 ## Requirements
 
@@ -13,13 +13,9 @@ React Native package manager built up from multiple independent actions to ease 
 
 ## Usage
 
-Unfortunately, at the time of writing, `rnpm` is taken in the registry, so please use `react-native-package-manager` when installing instead. The CLI tool will be available globally as `rnpm` normally.
-
 ```bash
 $ npm install rnpm -g
-$ react-native init myProject
-$ cd myProject
-$ rnpm --help
+$ cd ./myProject && rnpm --help
 ```
 
 ## Rationale
