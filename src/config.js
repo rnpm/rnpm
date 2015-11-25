@@ -12,9 +12,7 @@
  * It optionally accepts packageName - when it's present, config will be loaded from node_modules/packageName
  */
 
-const log = require('npmlog');
 const fs = require('fs');
-const transform = require('lodash.transform');
 const path = require('path');
 
 const androidConfig = require('./android/config');
