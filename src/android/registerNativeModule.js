@@ -19,8 +19,6 @@ const replace = (scope, pattern, patch) =>
   scope.replace(pattern, `${pattern}\n${patch}`);
 
 module.exports = function registerNativeAndroidModule(name, dependencyConfig, projectConfig) {
-  console.log(dependencyConfig);
-  console.log(projectConfig);
   const MODULE_DIR = path.join(process.cwd(), 'node_modules', name);
   const BUILD_PATCH = `    compile project(':${name}')`;
   const SETTINGS_PATCH = `include ':${name}'\n` +
