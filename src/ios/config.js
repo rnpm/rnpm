@@ -16,11 +16,14 @@ const findProject = (folder) => {
     return null;
   }
 
-  return path.join(folder, projects[0]);
+  return projects[0];
 };
 
 exports.projectConfig = function defaultProjectIOS(folder, userConfig) {
-  const project = userConfig.project || findProject(folder);
+  const project = path.join(
+    folder,
+    userConfig.project || findProject(folder)
+  );
 
   // No iOS stuff found here
   if (!project) {
