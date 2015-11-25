@@ -18,6 +18,8 @@ const getProjectDependencies = () => {
  * Updates project and linkes all dependencies to it
  *
  * If optional argument [packageName] is provided, it's the only one that's checked
+ *
+ * @todo add support for copying assets, investigate if it's still neded in RN 0.14+
  */
 function link(packageName) {
   const project = config.getProjectConfig();
@@ -38,7 +40,7 @@ function link(packageName) {
       const dependencyConfig = config.getDependencyConfig(name);
 
       if (!dependencyConfig) {
-        return log.info(`Project ${name} is not a react-native library`);
+        return log.warn('ERRINVALIDPROJ', `Project ${name} is not a react-native library`);
       }
 
       if (project.android && dependencyConfig.android) {
@@ -49,10 +51,6 @@ function link(packageName) {
       if (project.ios && dependencyConfig.ios) {
         log.info(`Linking ${name} ios dependency`);
         registerDependencyIOS(dependencyConfig.ios, project.ios);
-      }
-
-      if (dependencyConfig.assets) {
-        // copy all dependencyConfig.assets to project.assetsFolder
       }
     });
 }
