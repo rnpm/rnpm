@@ -2,8 +2,6 @@
 
 const cli = require('commander');
 const updateNotifier = require('update-notifier');
-const dropRight = require('lodash.dropright');
-const zipObject = require('lodash.zipobject');
 
 const pkg = require('../package.json');
 const actions = require('../src/actions');
