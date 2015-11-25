@@ -10,6 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/rnpm/rnpm.git"
   },
+  "author": "Amazing React Native Community (https://github.com/facebook/react-native)",
   "contributors": [
     "Alexey Kureev <kureev-mail@ya.ru> (https://github.com/Kureev)",
     "Mike Grabowski <grabbou@gmail.com> (https://github.com/grabbou)"
