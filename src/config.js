@@ -36,14 +36,6 @@ const getDependencyConfig = (folder) => ({
   android: androidConfig.defaultDependency(folder),
 });
 
-const getPackageJSON = (folder) => {
-  const pjson = efs.requireFile(path.join(folder, './package.json'));
-
-  if (!pjson) {
-    return log.warn('EPACKAGEJSON', `Not found. Are you sure it's a React Native project?`);
-  }
-};
-
 /**
  * Returns project config for current working directory
  */
