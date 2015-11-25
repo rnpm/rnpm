@@ -54,6 +54,7 @@ exports.projectConfig = function projectConfigIOS(folder, userConfig) {
     pbxprojPath: path.join(projectPath, 'project.pbxproj'),
     projectPath: projectPath,
     projectName: path.basename(projectPath),
+    libraryFolder: userConfig.libraryFolder || 'Libraries',
   };
 };
 
