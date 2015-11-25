@@ -43,10 +43,10 @@ exports.projectConfig = function projectConfigIOS(folder, userConfig) {
   const projectPath = path.join(folder, project);
 
   return {
-    src: path.dirname(projectPath),
+    sourceDir: path.dirname(projectPath),
     folder: folder,
-    pbxproj: path.join(projectPath, 'project.pbxproj'),
-    project: projectPath,
+    pbxprojPath: path.join(projectPath, 'project.pbxproj'),
+    projectPath: projectPath,
     projectName: path.basename(projectPath),
   };
 };

@@ -31,8 +31,8 @@ const addProjectToLibraries = (libraries, file) => {
 };
 
 module.exports = function registerNativeModuleIOS(dependencyConfig, projectConfig) {
-  const project = xcode.project(projectConfig.pbxproj).parseSync();
-  const dependencyProject = xcode.project(dependencyConfig.pbxproj).parseSync();
+  const project = xcode.project(projectConfig.pbxprojPath).parseSync();
+  const dependencyProject = xcode.project(dependencyConfig.pbxprojPath).parseSync();
 
   const libraries = project.pbxGroupByName('Libraries');
   if (hasLibraryImported(libraries, dependencyConfig.projectName)) {
@@ -41,7 +41,7 @@ module.exports = function registerNativeModuleIOS(dependencyConfig, projectConfi
 
   const file = addFileToProject(
     project,
-    path.relative(projectConfig.src, dependencyConfig.project)
+    path.relative(projectConfig.sourceDir, dependencyConfig.projectPath)
   );
 
   addProjectToLibraries(libraries, file);
@@ -53,7 +53,7 @@ module.exports = function registerNativeModuleIOS(dependencyConfig, projectConfi
   });
 
   fs.writeFileSync(
-    projectConfig.pbxproj,
+    projectConfig.pbxprojPath,
     project.writeSync()
   );
 };

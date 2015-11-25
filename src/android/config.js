@@ -72,23 +72,23 @@ const getPackageInstance = (src) => {
  * defaults specified by user into consideration
  */
 exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
-  const sourceDir = userConfig.sourceDir || getSourceDirectory(folder);
+  const src = userConfig.sourceDir || getSourceDirectory(folder);
 
-  if (!sourceDir) {
+  if (!src) {
     return null;
   }
 
-  const src = path.join(folder, sourceDir);
-  const packageName = userConfig.packageName || getPackageName(src);
+  const sourceDir = path.join(folder, src);
+  const packageName = userConfig.packageName || getPackageName(sourceDir);
   const packageFolder = userConfig.packageFolder || getPackageFolder(packageName);
 
   return {
-    src: src,
-    folder: folder,
-    project: path.join(src, userConfig.project || 'build.gradle'),
-    settings: path.join(folder, BASE_DIR, userConfig.settings || 'settings.gradle'),
-    assetsPath: path.join(src, userConfig.assetsPath || 'src/main/assets'),
-    mainActivity: path.join(src, userConfig.mainActivity || `src/main/java/${packageFolder}/MainActivity.java`),
+    sourceDir,
+    folder,
+    buildGradlePath: path.join(sourceDir, userConfig.buildGradlePath || 'build.gradle'),
+    settingsGradlePath: path.join(folder, BASE_DIR, userConfig.settingsGradlePath || 'settings.gradle'),
+    assetsPath: path.join(sourceDir, userConfig.assetsPath || 'src/main/assets'),
+    mainActivityPath: path.join(sourceDir, userConfig.mainActivityPath || `src/main/java/${packageFolder}/MainActivity.java`),
   };
 };
 
@@ -97,15 +97,15 @@ exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
  * only
  */
 exports.dependencyConfig = function dependencyConfigAndroid(folder, userConfig) {
-  const sourceDir = userConfig.sourceDir || getSourceDirectory(folder);
+  const src = userConfig.sourceDir || getSourceDirectory(folder);
 
-  if (!sourceDir) {
+  if (!src) {
     return null;
   }
 
-  const src = path.join(folder, sourceDir);
-  const packageName = userConfig.packageName || getPackageName(src);
-  const packageInstance = userConfig.packageInstance || getPackageInstance(src);
+  const sourceDir = path.join(folder, src);
+  const packageName = userConfig.packageName || getPackageName(sourceDir);
+  const packageInstance = userConfig.packageInstance || getPackageInstance(sourceDir);
 
   // This module has no package to export
   if (!packageInstance) {
@@ -113,8 +113,8 @@ exports.dependencyConfig = function dependencyConfigAndroid(folder, userConfig) 
   }
 
   return {
-    src: src,
-    folder: folder,
+    sourceDir,
+    folder,
     packageImportPath: `import ${packageName}.${packageInstance}`,
     packageInstance: `new ${packageInstance}()`,
   };
