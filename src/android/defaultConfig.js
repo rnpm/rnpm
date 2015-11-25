@@ -39,10 +39,10 @@ exports.defaultProject = function defaultProjectAndroid(folder, userConfig) {
 
   const packageName = userConfig.packageName || getPackageName(src);
   const packageFolder = userConfig.packageFolder || getPackageFolder(packageName);
-  
+
   return {
-    _src: src,
-    _folder: folder,
+    src: src,
+    folder: folder,
     project: path.join(src, 'build.gradle'),
     settings: path.join(BASE_DIR, 'settings.gradle'),
     assetsFolder: path.join(src, 'src/main'),
@@ -60,8 +60,8 @@ exports.defaultDependency = function defaultDependencyAndroid(folder, userConfig
   const packageName = userConfig.packageName || getPackageName(src);
 
   return {
-    _src: src,
-    _folder: folder,
+    src: src,
+    folder: folder,
     packageImportPath: `import ${packageName}.Package`,
     packageInstance: ` new ${packageName}()`,
   };
