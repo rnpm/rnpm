@@ -16,7 +16,7 @@ const getProjectDependencies = () => {
  * Main action
  * See action description for further informations
  */
-function updateProjects(args) {
+function updateProjects(packageName) {
   const project = config.getProjectConfig();
 
   if (!project) {
@@ -24,15 +24,19 @@ function updateProjects(args) {
     return;
   }
 
-  const dependencies = args.packageName ? [args.packageName] : getProjectDependencies();
+  const dependencies = packageName ? [packageName] : getProjectDependencies();
 
-  if (!args.packageName) {
+  if (!packageName) {
     log.info(`Found ${dependencies.length} native dependencies to link`);
   }
 
   dependencies
     .forEach(name => {
       const dependencyConfig = config.getDependencyConfig(name);
+
+      if (!dependencyConfig) {
+        return log.info(`Project ${name} is not a react-native library`);
+      }
 
       if (project.android && dependencyConfig.android) {
         log.info(`Linking ${name} android dependency`);
