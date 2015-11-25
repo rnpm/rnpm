@@ -3,20 +3,10 @@ const path = require('path');
 const xml = require('xmldoc');
 const compose = require('lodash.flowright');
 
-const BASE_PATH = path.join(process.cwd(), 'android');
-
-const manifest = fs.readFileSync(path.join(BASE_PATH, 'app', 'src', 'main', 'AndroidManifest.xml'));
-const packageName = new xml.XmlDocument(manifest).attr.package.split('.')[1];
-
 const SETTINGS_PATCH_PATTERN = `include ':app'`;
 const BUILD_PATCH_PATTERN = `dependencies {`;
 const MAIN_ACTIVITY_IMPORT_PATTERN = `import android.app.Activity;`;
 const MAIN_ACTIVITY_PACKAGE_PATTERN = `.addPackage(new MainReactPackage())`;
-const BUILD_GRADLE_PATH = path.join(BASE_PATH, 'app', 'build.gradle');
-const SETTINGS_GRADLE_PATH = path.join(BASE_PATH, 'settings.gradle');
-const ASSETS_PATH = path.join(BASE_PATH, 'app', 'src', 'main', 'assets');
-const MAIN_ACTIVITY_PATH = path.join(BASE_PATH, 'app', 'src', 'main', 'java',
-  'com', packageName, 'MainActivity.java');
 
 const readFile = (file) =>
   () => fs.readFileSync(file, 'utf8');
@@ -28,7 +18,9 @@ const writeFile = (file, content) => content ?
 const replace = (scope, pattern, patch) =>
   scope.replace(pattern, `${pattern}\n${patch}`);
 
-module.exports = function registerNativeAndroidModule(name) {
+module.exports = function registerNativeAndroidModule(name, dependencyConfig, projectConfig) {
+  console.log(dependencyConfig);
+  console.log(projectConfig);
   const MODULE_DIR = path.join(process.cwd(), 'node_modules', name);
   const BUILD_PATCH = `    compile project(':${name}')`;
   const SETTINGS_PATCH = `include ':${name}'\n` +
@@ -36,12 +28,6 @@ module.exports = function registerNativeAndroidModule(name) {
     `new File(rootProject.projectDir, '../node_modules/${name}/android')`;
 
   const config = require(path.join(MODULE_DIR, 'package.json')).rnpm;
-
-  const getImportPatch = (importPath) =>
-    `import ${importPath}`;
-
-  const getPackagePatch = (instance) =>
-    `                .addPackage(${instance})`;
 
   /**
    * Replace SETTINGS_PATCH_PATTERN by patch in the passed content
@@ -65,56 +51,36 @@ module.exports = function registerNativeAndroidModule(name) {
    * @param  {String}   instance   Code to instance a package, e.g. new VectorIconsPackage();
    * @return {Function}            Patcher function
    */
-  const makeMainActivityPatcher = (importPath, instance) =>
-    (content) =>
-      replace(content, MAIN_ACTIVITY_IMPORT_PATTERN, getImportPatch(importPath)) &&
-      replace(content, MAIN_ACTIVITY_PACKAGE_PATTERN, getPackagePatch(instance));
+  const makeMainActivityPatcher = (content) =>
+    replace(content,
+      MAIN_ACTIVITY_IMPORT_PATTERN,
+      dependencyConfig.packageImportPath) &&
+    replace(content,
+      MAIN_ACTIVITY_PACKAGE_PATTERN,
+      `                .addPackage(${dependencyConfig.packageInstance})`
+    );
 
   const applySettingsGradlePatch = compose(
-    writeFile(SETTINGS_GRADLE_PATH),
+    writeFile(projectConfig.settingsGradlePath),
     patchProjectSettings,
-    readFile(SETTINGS_GRADLE_PATH)
+    readFile(projectConfig.settingsGradlePath)
   );
 
   const applyBuildGradlePatch = compose(
-    writeFile(BUILD_GRADLE_PATH),
+    writeFile(projectConfig.buildGradlePath),
     patchProjectBuild,
-    readFile(BUILD_GRADLE_PATH)
+    readFile(projectConfig.buildGradlePath)
   );
 
-  /**
-   * @param  {String}   importPath Import path, e.g. com.oblador.vectoricons.VectorIconsPackage;
-   * @param  {String}   instance   Code to instance a package, e.g. new VectorIconsPackage();
-   * @return {Function}            Patcher function
-   */
-  const applyMainActivityPatch = (importPath, instance) =>
-    compose(
-      writeFile(MAIN_ACTIVITY_PATH),
-      makeMainActivityPatcher(importPath, instance),
-      readFile(MAIN_ACTIVITY_PATH)
-    );
-
-  /**
-   * Copy assets from MODULE_DIR to ASSETS_PATH
-   * @param  {Array} assets Array of assets specified in config
-   * @return {Function}
-   */
-  const copyAssets = (assets) => {
-    return () => (assets || []).forEach((asset) =>
-      fs.copySync(
-        path.join(MODULE_DIR, asset),
-        path.join(ASSETS_PATH, asset)
-      )
-    );
-  };
+  const applyMainActivityPatch = compose(
+    writeFile(projectConfig.mainActivityPath),
+    makeMainActivityPatcher,
+    readFile(projectConfig.mainActivityPath)
+  );
 
   compose(
-    copyAssets(config.assets),
     applySettingsGradlePatch,
     applyBuildGradlePatch,
-    applyMainActivityPatch(
-      config.android.importPath,
-      config.android.instance
-    )
+    applyMainActivityPatch
   )();
 };
