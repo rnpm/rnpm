@@ -30,7 +30,7 @@ const getPackageName = (src) => {
 
 const getPackageFolder = (packageName) => packageName.replace('.', path.sep);
 
-exports.projectConfig = function projectConfigIOS(folder, userConfig) {
+exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
   const src = userConfig.sourceDir || getSourceDirectory(folder);
 
   if (!src) {
