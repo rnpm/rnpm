@@ -21,22 +21,6 @@ const androidConfig = require('./android/defaultConfig');
 const iosConfig = require('./ios/defaultConfig');
 
 /**
- * Gets default project configuration for a given folder
- */
-const getProjectConfig = (folder) => ({
-  ios: iosConfig.defaultProject(folder),
-  android: androidConfig.defaultProject(folder),
-});
-
-/**
- * Gets default dependency configuration for a given folder
- */
-const getDependencyConfig = (folder) => ({
-  ios: iosConfig.defaultDependency(folder),
-  android: androidConfig.defaultDependency(folder),
-});
-
-/**
  * Returns project config for current working directory
  */
 exports.getProjectConfig = function getProjectConfig() {
