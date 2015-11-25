@@ -21,7 +21,7 @@ const getProjectDependencies = () => {
  *
  * @todo add support for copying assets, investigate if it's still neded in RN 0.14+
  */
-function link(packageName) {
+module.exports = function link(packageName) {
   const project = config.getProjectConfig();
 
   if (!project) {
@@ -62,8 +62,3 @@ function link(packageName) {
       }
     });
 }
-
-link.description = 'This action updates your project and links all native dependencies';
-link.args = '[packageName]';
-
-module.exports = link;

@@ -4,6 +4,7 @@ const cli = require('commander');
 const updateNotifier = require('update-notifier');
 const log = require('npmlog');
 
+const actions = require('../src/actions');
 const pkg = require('../package.json');
 
 // Check for updates once a day
@@ -18,17 +19,15 @@ cli.version(pkg.version);
  * Builds action from given action configuration and attaches it to commander
  */
 const buildAction = (action) => {
-  const name = action.args
-    ? `${action.name} ${action.args}`
-    : action.name;
+  const name = action.name;
 
   cli
     .command(name)
     .usage(action.usage)
     .description(action.description)
-    .action(action);
+    .action(action.func);
 };
 
-['../src/actions/link'].map(require).forEach(buildAction);
+actions.forEach(buildAction);
 
 cli.parse(process.argv);
