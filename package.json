@@ -4,7 +4,7 @@
   "description": "React Native Package Manager",
   "main": "src/index.js",
   "bin": {
-    "rnpm": "bin/cli"
+    "rnpm": "bin/rnpm.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,7 +24,9 @@
   "homepage": "https://github.com/Kureev/rnpm#readme",
   "dependencies": {
     "commander": "^2.9.0",
+    "fs-extra": "^0.26.2",
     "lodash.dropright": "^3.0.0",
+    "lodash.flowright": "^3.2.1",
     "lodash.foreach": "^3.0.3",
     "lodash.zipobject": "^3.0.0",
     "npmlog": "^2.0.0",
