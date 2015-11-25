@@ -2,7 +2,7 @@
   "name": "react-native-package-manager",
   "version": "1.0.0-rc1",
   "description": "React Native Package Manager",
-  "main": "./src/actions/index.js",
+  "main": "./src/config.js",
   "bin": {
     "rnpm": "bin/cli"
   },
