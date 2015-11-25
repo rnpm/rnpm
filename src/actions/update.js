@@ -9,7 +9,7 @@ const registerDependencyIOS = require('../ios/registerNativeModule');
 
 const getProjectDependencies = () => {
   const pjson = require(path.join(process.cwd(), './package.json'));
-  return Object.keys(pjson.dependencies);
+  return Object.keys(pjson.dependencies).filter(name => name !== 'react-native');
 };
 
 /**
