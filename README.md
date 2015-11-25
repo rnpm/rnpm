@@ -1,15 +1,13 @@
-React Native Package Manager
+rnpm <img src="https://david-dm.org/rnpm/rnpm.svg" />
 =============
 
-> Codename: rnpm
-
-React Native package manager built up from multiple independent actions to ease your daily react native development. It aims to work with almost all packages available with no extra configuration required.
+**React Native Package Manager** built to ease your daily React Native development. Inspired by `Cocoapods`, `fastlane` and `react-native link` it acts as your best friend and guides you through the native unknowns. It aims to work with almost all packages available with no extra configuration required.
 
 **This version is still in alpha as we are getting unit tests written. Feel free to submit bugs and feature requests. Always use this tool in a connection with source control to make sure all changes can be reverted.**
 
 ## Requirements
 
-- Node 4.x
+- Node >= 4.x
 
 ## Usage
 
@@ -20,13 +18,13 @@ $ cd ./myProject && rnpm --help
 
 ## Rationale
 
-Why? Tooling is important. We all know this. One of the biggest advantages of native iOS development is XCode and its great tools. Unfortunately, the process of for example adding native dependencies to React Native projects is far from perfect and our aim is to make it fun again. If you have ever worked with `Cocoapods` - you will feel at home.
+Why? Tooling is important. We all know this. One of the biggest advantages of native iOS development is XCode and its great tools. Unfortunately, the process of adding native dependencies to React Native projects is far from perfect and our aim is to make it fun again.
 
-React Native Package Manager provides you with (soon) multiple features and actions to help you with daily development, including automatic app store releases, over-the-air integration with AppHub and react-native-playground shares.
+React Native Package Manager provides you with (soon) multiple actions to help you with daily development, including automatic app store releases, over-the-air integration with AppHub and react-native-playground shares.
 
 **But hey, we are tired of tools and 1239012 .rc files**
 
-So are we. That's why we have spent great amount of work on getting configuration done right. Our packager automatically scans your source directory and dependencies you are working with which allows it to link all the things without specifying any extra flags. It detects Android package names, import paths, gradle location - and for iOS - it works with any code structure you have ever came up with.
+So are we. That's why we have spent great amount of work on getting configuration done right. Our packager automatically scans your source directory and dependencies you are working with. This approach allows it to link all the things without supplying any extra configuration. It detects Android package names, import paths, gradle location - and for iOS - it works with any code structure you have ever came up with.
 
 And don't worry - in case it fails, you can always add `rnpm` object to your `package.json` - our `npm` in a name is not a mistake! We embrance existing ecosystem and integrate with the present tooling for maxium developer experience.
 
@@ -59,7 +57,15 @@ react-native link is great, but it only works for Android now. It also does not 
 
 #### Does it work with Cocoapods?
 
-Yes, in fact - it has nothing to do with it. What it does is it just automatically links static libraries to your xcodeproj in the normal way you have been doing that. There are no more other changes.
+Yes, in fact - it has nothing to do with it. What it does is just automatically linking static libraries to your xcodeproj in the normal way you have been doing that. There are no more other changes.
+
+## Special thanks
+
+Special thanks to [**coreh**](https://github.com/coreh) for giving us the `rnpm` name in the registry.
+
+## Versioning
+
+This project follows semver. There are several 0.x versions published to npm registry you should not install as they belong to the previous project that was using that name 2 years ago.
 
 ## Contributing
 
