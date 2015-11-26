@@ -10,8 +10,9 @@ const flatten = require('lodash.flatten');
 const isPlugin = (dependency) => !!~dependency.indexOf('rnpm-plugin-');
 
 /**
- * Get default actions from rnpm's package.json
- * @type {Array}
+ * Gets actions from package.json in the cwd given
+ * @param {String} cwd Path to the folder to get the package.json from
+ * @type  {Array}      Array of actions or an empty array if no package.json found
  */
 const getActions = (cwd) => {
   const packagePath = path.join(cwd, 'package.json');
@@ -39,8 +40,8 @@ const getPluginConfig = cwd => name =>
   require(path.join(cwd, 'node_modules', name));
 
 /**
- * Compose a list of dependencies from default actions,
- * package's dependencies & devDependencies
+ * Compose a list of dependencies from
+ * rnpm dependencies and current project dependencies
  * @type {Array}
  */
 const pluginsList = flatten([
