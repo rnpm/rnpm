@@ -4,13 +4,12 @@ const cli = require('commander');
 const updateNotifier = require('update-notifier');
 const log = require('npmlog');
 
-const actions = require('../src/actions');
+const actions = require('../src/getActions')();
+const config = require('../src/config');
 const pkg = require('../package.json');
 
-// Check for updates once a day
-updateNotifier({pkg: pkg}).notify();
+updateNotifier({ pkg }).notify();
 
-// Set log header
 log.heading = 'rnpm';
 
 cli.version(pkg.version);
@@ -18,14 +17,14 @@ cli.version(pkg.version);
 /**
  * Builds action from given action configuration and attaches it to commander
  */
-const buildAction = (action) => {
+actions.forEach((action) =>
   cli
     .command(action.name)
     .usage(action.usage)
     .description(action.description)
-    .action(action.func);
-};
-
-actions.forEach(buildAction);
+    .action(function runAction() {
+      action.func(config, arguments);
+    })
+);
 
 cli.parse(process.argv);

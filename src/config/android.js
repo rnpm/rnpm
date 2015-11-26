@@ -1,7 +1,6 @@
 const path = require('path');
 const xml = require('xmldoc');
 const fs = require('fs');
-const efs = require('../utils/fs');
 const glob = require('glob');
 
 /**
@@ -35,7 +34,7 @@ const getSourceDirectory = (folder) => {
  */
 const getPackageName = (src) => {
   const manifest = new xml.XmlDocument(
-    efs.loadFile(path.join(src, 'src/main/AndroidManifest.xml'))
+    fs.readFileSync(path.join(src, 'src/main/AndroidManifest.xml'), 'utf8')
   );
 
   return manifest.attr.package;
@@ -56,8 +55,10 @@ const getPackageInstance = (src) => {
     cwd: src,
   });
 
+  console.log(files);
+
   const packages = files
-    .map(filePath => efs.loadFile(path.join(src, filePath)))
+    .map(filePath => fs.readFileSync(path.join(src, filePath), 'utf8'))
     .map(file => file.match(/class (.*) implements ReactPackage/))
     .filter(match => match);
 

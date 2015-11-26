@@ -13,14 +13,11 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 
-const androidConfig = require('./android/config');
-const iosConfig = require('./ios/config');
+const androidConfig = require('./android');
+const iosConfig = require('./ios');
 
-const getAssetsInFolder = (folder) => {
-  return glob.sync(path.join(folder, '**'), {
-    nodir: true,
-  });
-};
+const getAssetsInFolder = (folder) =>
+  glob.sync(path.join(folder, '**'), { nodir: true });
 
 /**
  * Gets rnpm config from reading it from JSON (for now)
