@@ -19,7 +19,7 @@ const getActions = (cwd) => {
       Object.keys(pjson.devDependencies || {})
     )
     .filter(isPlugin)
-    .map(name => getPluginConfig(cwd, name));
+    .map(getPluginConfig(cwd));
 };
 
 /**
@@ -27,7 +27,7 @@ const getActions = (cwd) => {
  * @param  {String} name Name of the plugin
  * @return {Object}      Plugin's config
  */
-const getPluginConfig = (cwd, name) =>
+const getPluginConfig = cwd => name =>
   require(path.join(cwd, 'node_modules', name));
 
 /**
