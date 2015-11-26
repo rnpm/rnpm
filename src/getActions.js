@@ -1,6 +1,5 @@
 const path = require('path');
 const flatten = require('lodash.flatten');
-const pjson = require(path.join(process.cwd(), 'package.json'));
 
 /**
  * Filter dependencies by name pattern
