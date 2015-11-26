@@ -5,12 +5,14 @@ const updateNotifier = require('update-notifier');
 const log = require('npmlog');
 
 const actions = require('../src/getActions')();
-const config = require('../config');
+const config = require('../src/config');
 const pkg = require('../package.json');
 
 
 updateNotifier({ pkg: pkg }).notify();
+
 log.heading = 'rnpm';
+
 cli.version(pkg.version);
 
 /**

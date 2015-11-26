@@ -15,7 +15,7 @@ const isPlugin = (dependency) => !!~dependency.indexOf('rnpm-plugin-');
  */
 const defaultActions = Object.keys(
   require(path.join(__dirname, '..', 'package.json')).dependencies
-  ).filter(isPlugin);
+).filter(isPlugin);
 
 /**
  * Get plugin config
