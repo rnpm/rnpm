@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const efs = require('../utils/fs');
 const glob = require('glob');
 
 /**
