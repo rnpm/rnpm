@@ -32,7 +32,7 @@ Why? Tooling is important. We all know this. One of the biggest advantages of na
 
 React Native Package Manager provides you with (soon) multiple actions to help you with daily development, including automatic app store releases, over-the-air integration with AppHub and react-native-playground shares.
 
-**But hey, we are tired of tools and 1239012 .rc files**
+**But hey, we are tired of tools and 9000+ .rc files**
 
 So are we. That's why we have spent great amount of work on getting configuration done right. Our packager automatically scans your source directory and dependencies you are working with. This approach allows it to link all the things without supplying any extra configuration. It detects Android package names, import paths, gradle location - and for iOS - it works with any code structure you have ever came up with.
 
@@ -59,22 +59,22 @@ If you're authoring an awesome react-native library with custom assets, you prob
 We'll copy your assets carefully with love :heart:
 
 ## Roadmap
+First prio: **core elements**
+- [ ] Test coverage
+- [ ] Plugins support
 
-We have lots of plans to make this tool better, some of them are:
-- [ ] 100% test coverage
-- [ ] support for plugins and custom project linters
-- [ ] rnpm ship appstore
-- [ ] rnpm ship apphub
-- [ ] rnpm ship hockey
+Second prio: **new plugins**
+- [ ] rnpm ship
 - [ ] rnpm build
-- [ ] rnpm share rnplay
-- [ ] your ideas
+
+We're open for community ideas!
+If you know how to improve `rnpm` - please, [let us know](https://github.com/rnpm/rnpm/issues/new)!
 
 ## FAQ
 
 #### How's that different from react-native link
 
-react-native link is great, but it only works for Android now. It also does not automatically add packages to your project nor support custom folder configuration. We aim to solve these issues by analyzing folders and getting maxium informations available from them. When running `rnpm link` you don't have to think about the package exported by developer or the import path to include in your Java project.
+`react-native link` is great, but it only works for Android now. It also does not automatically add packages to your project nor support custom folder configuration. We aim to solve these issues by analyzing folders and getting maxium informations available from them. When running `rnpm link` you don't have to think about the package exported by developer or the import path to include in your Java project.
 
 #### Does it work with Cocoapods?
 
