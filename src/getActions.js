@@ -13,17 +13,23 @@ const isPlugin = (dependency) => !!~dependency.indexOf('rnpm-plugin-');
  * Get default actions from rnpm's package.json
  * @type {Array}
  */
-const defaultActions = Object.keys(
-  require(path.join(__dirname, '..', 'package.json')).dependencies
-).filter(isPlugin);
+const getActions = (cwd) => {
+  const pjson = require(path.join(cwd, 'package.json'));
+  return flatten(
+      Object.keys(pjson.dependencies || {}),
+      Object.keys(pjson.devDependencies || {})
+    )
+    .filter(isPlugin)
+    .map(name => getPluginConfig(cwd, name));
+};
 
 /**
  * Get plugin config
  * @param  {String} name Name of the plugin
  * @return {Object}      Plugin's config
  */
-const getPluginConfig = (name) =>
-  require(path.join(process.cwd(), 'node_modules', name));
+const getPluginConfig = (cwd, name) =>
+  require(path.join(cwd, 'node_modules', name));
 
 /**
  * Compose a list of dependencies from default actions,
@@ -31,12 +37,8 @@ const getPluginConfig = (name) =>
  * @type {Array}
  */
 const pluginsList = flatten([
-  defaultActions,
-  Object.keys(pjson.dependencies || []),
-  Object.keys(pjson.devDependencies || []),
+  getActions(path.join(__dirname, '..')),
+  getActions(process.cwd())
 ]);
 
-module.exports = () =>
-  pluginsList
-    .filter(isPlugin)
-    .map(getPluginConfig);
+module.exports = () => pluginsList;
