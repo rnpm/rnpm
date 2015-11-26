@@ -5,7 +5,9 @@ const updateNotifier = require('update-notifier');
 const log = require('npmlog');
 
 const actions = require('../src/getActions')();
+const config = require('../config');
 const pkg = require('../package.json');
+
 
 updateNotifier({ pkg: pkg }).notify();
 log.heading = 'rnpm';
@@ -19,7 +21,9 @@ actions.forEach((action) =>
     .command(action.name)
     .usage(action.usage)
     .description(action.description)
-    .action(action.func)
+    .action(function runAction() {
+      action.func(config, arguments);
+    })
 );
 
 cli.parse(process.argv);
