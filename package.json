@@ -41,7 +41,6 @@
     "lodash.zipobject": "^3.0.0",
     "npmlog": "^2.0.0",
     "update-notifier": "^0.5.0",
-    "xcode": "^0.8.2",
     "xmldoc": "^0.4.0",
     "rnpm-plugin-link": "^0.0.1"
   },
