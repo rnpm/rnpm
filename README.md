@@ -80,6 +80,16 @@ If you know how to improve `rnpm` - please, [let us know](https://github.com/rnp
 
 Yes, in fact - it has nothing to do with it. What it does is just linking static libraries automatically to your xcodeproj in the normal way you have been doing that. There are no more other changes.
 
+#### Can I use `rnpm link` with npm's postinstall hook?
+Sure you can! Try doing something like this in your package.json:
+```json
+...
+"scripts": {
+  "postinstall": "rnpm link"
+},
+...
+```
+
 ## Special thanks
 
 Special thanks to [**coreh**](https://github.com/coreh) for giving us the `rnpm` name in the registry.
