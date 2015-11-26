@@ -17,6 +17,7 @@ $ npm install rnpm -g
 ```
 
 **Running**
+
 From your's project folder install some react-native modules that require additional installation and simply run:
 ```bash
 $ rnpm link
