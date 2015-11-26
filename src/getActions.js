@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const flatten = require('lodash.flatten');
 
 /**
@@ -13,7 +14,14 @@ const isPlugin = (dependency) => !!~dependency.indexOf('rnpm-plugin-');
  * @type {Array}
  */
 const getActions = (cwd) => {
-  const pjson = require(path.join(cwd, 'package.json'));
+  const packagePath = path.join(cwd, 'package.json');
+
+  if (!fs.existsSync(packagePath)) {
+    return [];
+  }
+
+  const pjson = require(packagePath);
+
   return flatten(
       Object.keys(pjson.dependencies || {}),
       Object.keys(pjson.devDependencies || {})
