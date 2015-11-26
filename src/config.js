@@ -6,9 +6,6 @@
  * In order to override default settings, simply mirror them under `rnpm` key in your
  * package.json.
  *
- * In order to make `rnpm` ignore certain targets, simply set them to `false`. Otherwise,
- * there will be warnings.
- *
  * It optionally accepts packageName - when it's present, config will be loaded from node_modules/packageName
  */
 
