@@ -8,7 +8,6 @@ const actions = require('../src/getActions')();
 const config = require('../src/config');
 const pkg = require('../package.json');
 
-
 updateNotifier({ pkg: pkg }).notify();
 
 log.heading = 'rnpm';
