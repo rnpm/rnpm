@@ -4,7 +4,7 @@ const cli = require('commander');
 const updateNotifier = require('update-notifier');
 const log = require('npmlog');
 
-const actions = require('../src/getActions')();
+const actions = require('../src/actions');
 const config = require('../src/config');
 const pkg = require('../package.json');
 
