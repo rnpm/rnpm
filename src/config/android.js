@@ -55,8 +55,6 @@ const getPackageInstance = (src) => {
     cwd: src,
   });
 
-  console.log(files);
-
   const packages = files
     .map(filePath => fs.readFileSync(path.join(src, filePath), 'utf8'))
     .map(file => file.match(/class (.*) implements ReactPackage/))
