@@ -1,6 +1,6 @@
 {
   "name": "rnpm",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "React Native Package Manager",
   "main": "./src/getActions.js",
   "bin": {
@@ -41,7 +41,7 @@
     "lodash.uniq": "^3.2.2",
     "lodash.zipobject": "^3.0.0",
     "npmlog": "^2.0.0",
-    "rnpm-plugin-link": "1.1.0",
+    "rnpm-plugin-link": "^1.1.1",
     "update-notifier": "^0.5.0",
     "xmldoc": "^0.4.0"
   },
