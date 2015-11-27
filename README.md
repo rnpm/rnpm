@@ -1,4 +1,4 @@
-:iphone: rnpm <img src="https://david-dm.org/rnpm/rnpm.svg" />
+:iphone: rnpm [![npm version](https://badge.fury.io/js/rnpm.svg)](https://badge.fury.io/js/rnpm) <img src="https://david-dm.org/rnpm/rnpm.svg" />
 =============
 
 **React Native Package Manager** built to ease your daily React Native development. Inspired by `Cocoapods`, `fastlane` and `react-native link` it acts as your best friend and guides you through the native unknowns. It aims to work with almost all packages available with no extra configuration required.
