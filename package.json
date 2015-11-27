@@ -18,7 +18,6 @@
   "engines": {
     "node": ">= 4.0.0"
   },
-  "engineStrict": true,
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/rnpm/rnpm/issues"
