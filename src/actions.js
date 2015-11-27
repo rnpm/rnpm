@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const flatten = require('lodash.flatten');
 const union = require('lodash.union');
-const unique = require('lodash.uniq');
+const uniq = require('lodash.uniq');
 
 /**
  * Filter dependencies by name pattern
@@ -50,4 +50,4 @@ const actionsList = flatten([
   getActions(process.cwd()),
 ]);
 
-module.exports = unique(actionsList, 'name');
+module.exports = uniq(actionsList, 'name');
