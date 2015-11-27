@@ -48,6 +48,8 @@ Automatically updates your project by linking all dependencies for Android (if p
 $ rnpm link react-native-module
 ```
 
+Source: https://github.com/rnpm/rnpm-plugin-link
+
 ## Advanced usage
 If you're authoring an awesome react-native library with custom assets, you probably need an additional step after linking - copying assets to the application folder. Well, that's not complicated: just add `rnpm` section in your `package.json` file:
 ```json
@@ -57,12 +59,28 @@ If you're authoring an awesome react-native library with custom assets, you prob
 },
 ...
 ```
-We'll copy your assets carefully with love :heart:
+We'll copy your assets carefully with love for Android :heart: For iOS, we will add files to `Resources` group and update Info.plist so fonts are available for you to use straight away!
+
+## Plugins
+
+As of version 1.1.0, rnpm supports plugin system. 
+
+In order to install 3rd party plugin simply run below from your project directory:
+```bash
+$ npm install rnpm-plugin-<name> --save-dev
+$ rnpm --help
+```
+
+Commands exported by installed plugin will be available straight away.
+
+### Developers
+
+The documentation is still in progress, but if you are interested in the concept and good practices, see sample implementation [here](https://github.com/rnpm/rnpm-plugin-link/blob/master/index.js)
 
 ## Roadmap
 First prio: **core elements**
 - [ ] Test coverage
-- [ ] Plugins support
+- [X] Plugins support
 
 Second prio: **new plugins**
 - [ ] rnpm ship
