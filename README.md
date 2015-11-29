@@ -63,15 +63,40 @@ We'll copy your assets carefully with love for Android :heart: For iOS, we will 
 
 ## Plugins
 
-As of version 1.1.0, rnpm supports plugin system. 
+As of version 1.1.0, rnpm supports plugin system.
+
+#### Installing plugins
 
 In order to install 3rd party plugin simply run below from your project directory:
 ```bash
 $ npm install rnpm-plugin-<name> --save-dev
-$ rnpm --help
+$ rnpm --help # you'll see installed plugin in your list
 ```
 
-Commands exported by installed plugin will be available straight away.
+Command exported by installed plugin will be available straight away.
+
+#### Mastering your first plugin
+
+First of all, every plugin is [just a function](https://github.com/rnpm/rnpm-plugin-link/blob/master/src/action.js#L24) which accepts `config` and `args` parameters. Every plugin consists of [public interface](https://github.com/rnpm/rnpm-plugin-link/blob/master/index.js) for CLI and [implementation intself](https://github.com/rnpm/rnpm-plugin-link/blob/master/src/action.js).
+
+We use **public interface** to make your plugins auto-pluggable and easy to use for end-users. Every public interface consists of `name` & `func` and `description` fields:
+- `name` - Name of the plugin. After plugin installation it'll be used as a command name. For instance plugin with following interface:
+  ```javascript
+  module.exports = {
+    func: require('./src/action'),
+    description: 'This action updates your project and links all native dependencies',
+    name: 'link [packageName]',
+  };
+  ```
+  can be used like via rnpm like this:
+  ```bash
+  $ rnpm link
+  ```
+
+- `func` - Plugin itself. This function will be used when you run a command above
+- `descripion` - Command description. If user runs `$ rnpm --help`, this field will be displayed as a command description
+
+For further reading you can check our [example plugin](https://github.com/rnpm/rnpm-plugin-link)
 
 ### Developers
 
