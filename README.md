@@ -79,7 +79,7 @@ Command exported by installed plugin will be available straight away.
 
 First of all, every plugin is [just a function](https://github.com/rnpm/rnpm-plugin-link/blob/master/src/action.js#L24) which accepts `config` and `args` parameters. Every plugin consists of [public interface](https://github.com/rnpm/rnpm-plugin-link/blob/master/index.js) for CLI and [implementation intself](https://github.com/rnpm/rnpm-plugin-link/blob/master/src/action.js).
 
-We use **public interface** to make your plugins auto-pluggable and easy to use for end-users. Every public interface consists of `name` & `func` and `description` fields:
+We use **public interface** to make your plugins auto-pluggable and easy to use for end-users. Every public interface consists of `name`, `func` & `description` fields:
 - `name` - Name of the plugin. After plugin installation it'll be used as a command name. For instance plugin with following interface:
   ```javascript
   module.exports = {
@@ -94,7 +94,11 @@ We use **public interface** to make your plugins auto-pluggable and easy to use 
   ```
 
 - `func` - Plugin itself. This function will be used when you run a command above
-- `descripion` - Command description. If user runs `$ rnpm --help`, this field will be displayed as a command description
+- `descripion` - Command description. If user runs `$ rnpm --help`, this field will be displayed as a command description.
+
+#### Using third-party plugins
+
+All existing plugins follows a naming convention: `rnpm-plugin-<plugin name>` (e.g. [`rnpm-plugin-link`]((https://github.com/rnpm/rnpm-plugin-link))). To include plugin to your rnpm build, just install it as a npm package, it'll be included to your rnpm tool automatically (wow, magic!). Let's consider following example: we have a `rnpm-plugin-something` plugin which we doesn't provide you automatically with `rnpm` tool. To install it manually, you need to run `npm install rnpm-plugin-something --save-dev` inside your project folder. Then, you can run it by `rnpm something` or check if command has been successfully installed by running `rnpm --help` - you should see a new plugin in the list of commands.
 
 For further reading you can check our [example plugin](https://github.com/rnpm/rnpm-plugin-link)
 
@@ -103,6 +107,7 @@ For further reading you can check our [example plugin](https://github.com/rnpm/r
 The documentation is still in progress, but if you are interested in the concept and good practices, see sample implementation [here](https://github.com/rnpm/rnpm-plugin-link/blob/master/index.js)
 
 ## Roadmap
+
 First prio: **core elements**
 - [ ] Test coverage
 - [X] Plugins support
