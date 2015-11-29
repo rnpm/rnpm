@@ -63,7 +63,7 @@ We'll copy your assets carefully with love for Android :heart: For iOS, we will 
 
 ## Plugins
 
-As of version 1.1.0, rnpm supports plugin system.
+As of version 1.1.0, rnpm supports plugin system. It allows you to write your own / use third-party commands to make your `rnpm` sharpened for specific purposes.
 
 #### Installing plugins
 
