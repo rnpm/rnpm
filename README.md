@@ -70,7 +70,7 @@ As of version 1.1.0, rnpm supports plugin system. It allows you to write your ow
 In order to install 3rd party plugin simply run below from your project directory:
 ```bash
 $ npm install rnpm-plugin-<name> --save-dev
-$ rnpm --help # you'll see installed plugin in your list
+$ rnpm --help # you'll see installed plugin in the commands list
 ```
 
 Command exported by installed plugin will be available straight away.
