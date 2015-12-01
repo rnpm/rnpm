@@ -35,8 +35,7 @@ const getActions = (cwd) => {
   try {
     pjson = getConfig(cwd);
   } catch (e) {
-    log.error(e);
-    process.exit(1);
+    return [];
   }
 
   const deps = union(
