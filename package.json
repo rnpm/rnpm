@@ -3,6 +3,9 @@
   "version": "1.2.1",
   "description": "React Native Package Manager",
   "main": "./src/getActions.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
   "bin": {
     "rnpm": "bin/cli"
   },
