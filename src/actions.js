@@ -3,6 +3,11 @@ const fs = require('fs');
 const flatten = require('lodash.flatten');
 const union = require('lodash.union');
 const uniq = require('lodash.uniq');
+const log = require('npmlog');
+
+const getConfig = require('./getConfig');
+
+log.heading = 'rnpm-link';
 
 /**
  * Filter dependencies by name pattern
@@ -25,13 +30,15 @@ const getPluginConfig = cwd => name =>
  * @type  {Array}      Array of actions or an empty array if no package.json found
  */
 const getActions = (cwd) => {
-  const packagePath = path.join(cwd, 'package.json');
+  var pjson;
 
-  if (!fs.existsSync(packagePath)) {
-    return [];
+  try {
+    pjson = getConfig(cwd);
+  } catch (e) {
+    log.error(e);
+    process.exit(1);
   }
 
-  const pjson = require(packagePath);
   const deps = union(
     Object.keys(pjson.dependencies || {}),
     Object.keys(pjson.devDependencies || {})
