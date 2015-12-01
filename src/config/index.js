@@ -20,17 +20,27 @@ const getAssetsInFolder = (folder) =>
   glob.sync(path.join(folder, '**'), { nodir: true });
 
 /**
+ * Gets package.json from given folder
+ *
+ * If folder (optional) is not given, it defaults to process.cwd()
+ *
+ * Will throw an error if there's no package.json found
+ */
+const getPackage = exports.getPackage = function getPackage(folder) {
+  return require(
+    path.join(folder || process.cwd(), './package.json')
+  );
+};
+
+/**
  * Gets rnpm config from reading it from JSON (for now)
+ *
+ * This method is just here as a placeholder so that it's
+ * easier for us in the future to change that behaviour
+ * transparently
  */
 const getRNPMConfig = function getRNPMConfig(folder) {
-  const pjsonPath = path.join(folder, './package.json');
-
-  if (!fs.existsSync(pjsonPath)) {
-    return null;
-  }
-
-  const pjson = require(pjsonPath);
-
+  const pjson = getPackage(folder);
   return pjson.rnpm || {};
 };
 
@@ -40,10 +50,6 @@ const getRNPMConfig = function getRNPMConfig(folder) {
 exports.getProjectConfig = function getProjectConfig() {
   const folder = process.cwd();
   const rnpm = getRNPMConfig(folder);
-
-  if (!rnpm) {
-    return null;
-  }
 
   return Object.assign({}, rnpm, {
     ios: iosConfig.projectConfig(folder, rnpm.ios || {}),
@@ -57,10 +63,6 @@ exports.getProjectConfig = function getProjectConfig() {
 exports.getDependencyConfig = function getDependencyConfig(packageName) {
   const folder = path.join(process.cwd(), 'node_modules', packageName);
   const rnpm = getRNPMConfig(folder);
-
-  if (!rnpm) {
-    return null;
-  }
 
   return Object.assign({}, rnpm, {
     ios: iosConfig.dependencyConfig(folder, rnpm.ios || {}),
