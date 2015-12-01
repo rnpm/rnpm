@@ -43,7 +43,7 @@ exports.isValidProject = function isValidProject(folder) {
  *
  * Will throw an error if there's no package.json found
  */
-const getPackage = exports.getPackage = function getPackage(folder) {
+exports.getPackage = function getPackage(folder) {
   return require(
     path.join(folder, './package.json')
   );
