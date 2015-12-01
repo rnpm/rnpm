@@ -39,17 +39,6 @@ exports.isValidProject = function isValidProject(folder) {
 };
 
 /**
- * Gets package.json from given folder
- *
- * Will throw an error if there's no package.json found
- */
-const getPackage = exports.getPackage = function getPackage(folder) {
-  return require(
-    path.join(folder, './package.json')
-  );
-};
-
-/**
  * Gets rnpm config from reading it from JSON (for now)
  *
  * This method is just here as a placeholder so that it's
@@ -61,7 +50,8 @@ const getPackage = exports.getPackage = function getPackage(folder) {
  * defaults.
  */
 const getRNPMConfig = function getRNPMConfig(folder) {
-  return getPackage(folder).rnpm || {};
+  const pjson = require(path.join(folder, './package.json'));
+  return pjson.rnpm || {};
 };
 
 /**

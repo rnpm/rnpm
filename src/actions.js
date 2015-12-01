@@ -5,8 +5,6 @@ const union = require('lodash.union');
 const uniq = require('lodash.uniq');
 const log = require('npmlog');
 
-const config = require('./config');
-
 log.heading = 'rnpm-link';
 
 /**
@@ -33,7 +31,7 @@ const getActions = (cwd) => {
   var pjson;
 
   try {
-    pjson = config.getPackage(cwd);
+    pjson = require(path.join(cwd, './package.json'));
   } catch (e) {
     return [];
   }
