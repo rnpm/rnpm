@@ -27,6 +27,18 @@ const findAssetsInFolders = (folders) =>
     }, []);
 
 /**
+ * Utility function for those who want to avoid try/catch and Check
+ * if package.json exists upfront.
+ *
+ * @Kureev reword, everybody wins
+ */
+exports.isValidProject = function isValidProject(folder) {
+  return fs.existsSync(
+    path.join(folder, './package.json')
+  );
+};
+
+/**
  * Gets package.json from given folder
  *
  * Will throw an error if there's no package.json found
