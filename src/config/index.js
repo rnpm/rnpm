@@ -22,13 +22,11 @@ const getAssetsInFolder = (folder) =>
 /**
  * Gets package.json from given folder
  *
- * If folder (optional) is not given, it defaults to process.cwd()
- *
  * Will throw an error if there's no package.json found
  */
 const getPackage = exports.getPackage = function getPackage(folder) {
   return require(
-    path.join(folder || process.cwd(), './package.json')
+    path.join(folder, './package.json')
   );
 };
 
