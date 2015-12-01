@@ -19,6 +19,13 @@ const iosConfig = require('./ios');
 const getAssetsInFolder = (folder) =>
   glob.sync(path.join(folder, '**'), { nodir: true });
 
+const findAssetsInFolders = (folders) =>
+  (folders || [])
+    .map(assetsFolder => path.join(folder, assetsFolder))
+    .reduce((assets, assetsFolder) => {
+      return assets.concat(getAssetsInFolder(assetsFolder));
+    }, []);
+
 /**
  * Gets package.json from given folder
  *
@@ -36,10 +43,13 @@ const getPackage = exports.getPackage = function getPackage(folder) {
  * This method is just here as a placeholder so that it's
  * easier for us in the future to change that behaviour
  * transparently
+ *
+ * If there's no `rnpm` config declared, we return an empty
+ * object which for now is a placeholder to future optional
+ * defaults.
  */
 const getRNPMConfig = function getRNPMConfig(folder) {
-  const pjson = getPackage(folder);
-  return pjson.rnpm || {};
+  return getPackage(folder).rnpm || {};
 };
 
 /**
@@ -65,10 +75,6 @@ exports.getDependencyConfig = function getDependencyConfig(packageName) {
   return Object.assign({}, rnpm, {
     ios: iosConfig.dependencyConfig(folder, rnpm.ios || {}),
     android: androidConfig.dependencyConfig(folder, rnpm.android || {}),
-    assets: (rnpm.assets || [])
-      .map(assetsFolder => path.join(folder, assetsFolder))
-      .reduce((assets, assetsFolder) => {
-        return assets.concat(getAssetsInFolder(assetsFolder));
-      }, []),
+    assets: findAssetsInFolders(rnpm.assets),
   });
 };
