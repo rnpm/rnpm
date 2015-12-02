@@ -26,14 +26,12 @@ const getPluginConfig = cwd => name =>
 
 /**
  * Gets actions from package.json in the cwd given
- * @param {String} cwd Path to the folder to get the package.json from
- * @type  {Array}      Array of actions or an empty array if no package.json found
+ * @param {String} folder Path to the folder to get the package.json from
+ * @type  {Array}         Array of actions or an empty array if no package.json found
  */
-const getActions = (cwd) => {
-  var pjson;
-
+const getActions = (folder) => {
   try {
-    pjson = config.getPackage(cwd);
+    const pjson = require(path.join(folder, './package.json'));
   } catch (e) {
     return [];
   }
@@ -43,7 +41,7 @@ const getActions = (cwd) => {
     Object.keys(pjson.devDependencies || {})
   );
 
-  return deps.filter(isPlugin).map(getPluginConfig(cwd));
+  return deps.filter(isPlugin).map(getPluginConfig(folder));
 };
 
 /**
