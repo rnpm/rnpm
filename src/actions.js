@@ -3,11 +3,7 @@ const fs = require('fs');
 const flatten = require('lodash.flatten');
 const union = require('lodash.union');
 const uniq = require('lodash.uniq');
-const log = require('npmlog');
-
 const config = require('./config');
-
-log.heading = 'rnpm-link';
 
 /**
  * Filter dependencies by name pattern
