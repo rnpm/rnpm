@@ -12,8 +12,6 @@ const nested = {
   },
 };
 
-const empty = {};
-
 // `Can I embed some other stuff as well?`
 // const dependencies = require('./dependencies');
 // const sampleProjectWithDeps = {
@@ -21,4 +19,4 @@ const empty = {};
 //   node_modules: dependencies,
 // };
 
-module.exports = { flat, nested, empty, };
+module.exports = { flat, nested, };
