@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
+
 /**
  * Gets package's class name (class that implements ReactPackage)
  * by searching for its declaration in all Java files present in the folder
