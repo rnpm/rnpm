@@ -17,7 +17,7 @@ describe('findAssets', () => {
     expect(assets.length).to.equal(3);
   });
 
-  it('should return absoulte paths to assets', () => {
+  it('should prepend assets paths with the folder path', () => {
     const assets = findAssets('testDir', ['fonts', 'images']);
 
     assets.forEach(assetPath => expect(assetPath).to.contain('testDir'));
