@@ -5,7 +5,7 @@ const glob = require('glob');
 const findAndroidAppFolder = require('./findAndroidAppFolder');
 const findManifest = require('./findManifest');
 const readManifest = require('./readManifest');
-const getPackageClassName = require('./getPackageClassName');
+const findPackageClassName = require('./findPackageClassName');
 
 const getPackageName = (manifest) => manifest.attr.package;
 
@@ -74,7 +74,7 @@ exports.dependencyConfig = function dependencyConfigAndroid(folder, userConfig) 
   const manifest = readManifest(manifestPath);
   const sourceDir = path.join(folder, src);
   const packageName = userConfig.packageName || getPackageName(manifest);
-  const packageClassName = getPackageClassName(sourceDir);
+  const packageClassName = findPackageClassName(sourceDir);
 
   const packageImportPath = userConfig.packageImportPath ||
     `import ${packageName}.${packageClassName}`;
