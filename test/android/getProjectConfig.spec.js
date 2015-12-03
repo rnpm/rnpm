@@ -2,17 +2,17 @@ const path = require('path');
 const expect = require('chai').expect;
 const getProjectConfig = require('../../src/config/android').projectConfig;
 const mockFs = require('mock-fs');
-const dependencies = require('../fixtures/dependencies');
+const projects = require('../fixtures/projects');
 
 describe('Config::getProjectConfig', () => {
 
   before(() => {
-    mockFs({ testDir: dependencies });
+    mockFs({ testDir: projects });
   });
 
   it('should return an object with android project configuration', () => {
     const userConfig = {};
-    const folder = path.join('testDir', 'react-native-vector-icons');
+    const folder = path.join('testDir', 'nested');
 
     expect(getProjectConfig(folder, userConfig)).to.be.an('object');
   });
