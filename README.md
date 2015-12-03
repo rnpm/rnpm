@@ -140,6 +140,14 @@ Sure you can! Try doing something like this in your package.json:
 ...
 ```
 
+### `rnpm link <name>` fails with `ERRINVALIDPROJ`
+
+Make sure you have run `npm install <name> --save` first
+
+### `rnpm link` skip react-native module that it should not
+
+To be as fast as possible, `rnpm link` gets list of modules to link from package.json's `dependencies`. If you have them in `devDependencies`, they are going to be skipped.
+
 ## Special thanks
 
 Special thanks to [**coreh**](https://github.com/coreh) for giving us the `rnpm` name in the registry.
