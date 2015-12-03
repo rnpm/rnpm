@@ -4,7 +4,7 @@ const getProjectConfig = require('../../src/config/android').projectConfig;
 const mockFs = require('mock-fs');
 const projects = require('../fixtures/projects');
 
-describe('Config::getProjectConfig', () => {
+describe('ConfigAndroid::getProjectConfig', () => {
 
   before(() => {
     mockFs({ testDir: projects });

@@ -5,11 +5,20 @@ const android = require('./android');
 const pjson = fs.readFileSync(path.join(__dirname, './files/dependency.json'));
 
 module.exports = {
-  'react-native-vector-icons': {
+  valid: {
     'package.json': pjson,
     android: android.valid,
   },
-  'rnpm-android-no-package': {
+  withAssets: {
+    'package.json': pjson,
+    android: android.valid,
+    fonts: {
+      'A.ttf': '',
+      'B.ttf': '',
+      'C.jpg': '',
+    },
+  },
+  noPackage: {
     'package.json': pjson,
     android: android.noPackage,
   },
