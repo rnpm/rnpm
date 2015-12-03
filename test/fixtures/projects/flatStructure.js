@@ -1,26 +1,13 @@
 const fs = require('fs');
-
-const android = {
-  src: {
-    'AndroidManifest.xml': fs.readFileSync('test/fixtures/files/AndroidManifest.xml'),
-    main: {
-      com: {
-        some: {
-          example: {
-            'Main.java': fs.readFileSync('test/fixtures/files/Main.java'),
-          },
-        },
-      },
-    },
-  },
-};
+const path = require('path');
+const android = require('./android');
 
 module.exports = {
+  android,
   node_modules: {
     'react-native-vector-icons': {
-      'package.json': fs.readFileSync('test/fixtures/files/vector-icons.json'),
+      'package.json': fs.readFileSync(path.join(__dirname, '../files/vector-icons.json')),
       android,
     },
   },
-  android,
 };
