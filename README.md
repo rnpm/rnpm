@@ -45,6 +45,7 @@ And don't worry - in case it fails, you can always add `rnpm` object to your `pa
 Automatically updates your project by linking all dependencies for Android (if present) and for iOS (if present). It's a great fit to your `postinstall` hook to always make sure you are linked. You can supply optional [name] argument to link only one dependency, e.g.
 
 ```bash
+$ npm install react-native-module --save
 $ rnpm link react-native-module
 ```
 
