@@ -7,27 +7,20 @@ const dependencies = require('./fixtures/dependencies');
 describe('findAssets', () => {
 
   before(() => {
-    mockFs({ testDir: dependencies });
+    mockFs({ testDir: dependencies.withAssets });
   });
 
   it('should return an array of all files in given folders', () => {
-    const assets = findAssets(
-      path.join('testDir', 'withAssets'),
-      ['fonts', 'images']
-    );
+    const assets = findAssets('testDir', ['fonts', 'images']);
 
     expect(assets).to.be.an('array');
     expect(assets.length).to.equal(3);
   });
 
   it('should return absoulte paths to assets', () => {
-    const folder = path.join('testDir', 'withAssets');
-    const assets = findAssets(
-      path.join('testDir', 'withAssets'),
-      ['fonts', 'images']
-    );
+    const assets = findAssets('testDir', ['fonts', 'images']);
 
-    assets.forEach(assetPath => expect(assetPath).to.contain(folder));
+    assets.forEach(assetPath => expect(assetPath).to.contain('testDir'));
   });
 
   after(() => {
