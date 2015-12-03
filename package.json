@@ -4,7 +4,7 @@
   "description": "React Native Package Manager",
   "main": "./src/getActions.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "./node_modules/mocha/bin/mocha --recursive"
   },
   "bin": {
     "rnpm": "bin/cli"
@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^4.1.5",
+    "react-native-vector-icons": "*",
     "chai": "^3.4.1",
     "eslint": "^1.9.0",
     "mocha": "^2.3.4"
