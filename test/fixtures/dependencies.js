@@ -15,6 +15,8 @@ module.exports = {
     fonts: {
       'A.ttf': '',
       'B.ttf': '',
+    },
+    images: {
       'C.jpg': '',
     },
   },
