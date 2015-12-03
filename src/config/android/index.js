@@ -76,18 +76,18 @@ exports.dependencyConfig = function dependencyConfigAndroid(folder, userConfig) 
   const packageName = userConfig.packageName || getPackageName(manifest);
   const packageClassName = findPackageClassName(sourceDir);
 
+  /**
+   * This module has no package to export
+   */
+  if (!packageClassName) {
+    return null;
+  }
+
   const packageImportPath = userConfig.packageImportPath ||
     `import ${packageName}.${packageClassName}`;
 
   const packageInstance = userConfig.packageInstance ||
     `new ${packageClassName}()`;
-
-  /**
-   * This module has no package to export
-   */
-  if (!packageInstance) {
-    return null;
-  }
 
   return { sourceDir, folder, manifest, packageImportPath, packageInstance };
 };

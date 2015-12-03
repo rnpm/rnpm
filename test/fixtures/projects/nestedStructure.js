@@ -3,6 +3,6 @@ const android = require('./android');
 
 module.exports = {
   android: {
-    app: android,
+    app: android.valid,
   },
 };

@@ -19,7 +19,14 @@ describe('Config::getDependencyConfig', () => {
 
   it('should return `null` if android project was not found', () => {
     const userConfig = {};
-    const folder = path.join('testing', 'fixtures', 'empty');
+    const folder = path.join('testing', 'empty');
+
+    expect(getDependencyConfig(folder, userConfig)).to.be.null;
+  });
+
+  it('should return `null` if android project does not contain ReactPackage', () => {
+    const userConfig = {};
+    const folder = path.join('testing', 'flat', 'node_modules', 'rnpm-android-no-package');
 
     expect(getDependencyConfig(folder, userConfig)).to.be.null;
   });
