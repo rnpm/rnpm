@@ -1,13 +1,12 @@
 const path = require('path');
-const chai = require('chai');
-const expect = chai.expect;
+const expect = require('chai').expect;
 const readManifest = require('../../src/config/android/readManifest');
 
 describe('readManifest', () => {
 
   it('should return manifest content if file exists in the folder', () => {
     const manifestPath = path.join(
-      'test', 'android', 'fixtures', 'AndroidManifest.xml'
+      process.cwd(), 'test', 'android', 'fixtures', 'AndroidManifest.xml'
     );
 
     expect(readManifest(manifestPath)).to.be.an('object');
