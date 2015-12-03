@@ -7,16 +7,16 @@ const projects = require('../fixtures/projects');
 describe('findPackageClassName', () => {
 
   before(() => {
-    mockFs(projects);
+    mockFs({ testDir: projects });
   });
 
   it('should return manifest content if file exists in the folder', () => {
-    const fixturesFolder = path.join('testing', 'flat');
+    const fixturesFolder = path.join('testDir', 'flat');
     expect(findPackageClassName(fixturesFolder)).to.be.a('string');
   });
 
   it('should return `null` if there\'s no matches', () => {
-    const emptyFolder = path.join('testing', 'empty');
+    const emptyFolder = path.join('testDir', 'empty');
     expect(findPackageClassName(emptyFolder)).to.be.null;
   });
 

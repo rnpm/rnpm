@@ -7,16 +7,16 @@ const projects = require('../fixtures/projects');
 describe('findManifest', () => {
 
   before(() => {
-    mockFs(projects);
+    mockFs({ testDir: projects });
   });
 
   it('should return a manifest path if file exists in the folder', () => {
-    const fixturesPath = path.join('testing', 'flat');
+    const fixturesPath = path.join('testDir', 'flat');
     expect(findManifest(fixturesPath)).to.be.a('string');
   });
 
   it('should return `null` if there is no manifest in the folder', () => {
-    const emptyFolder = path.join('testing', 'empty');
+    const emptyFolder = path.join('testDir', 'empty');
     expect(findManifest(emptyFolder)).to.be.null;
   });
 

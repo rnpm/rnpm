@@ -7,19 +7,19 @@ const projects = require('../fixtures/projects');
 describe('findAndroidAppFolder', () => {
 
   before(() => {
-    mockFs(projects);
+    mockFs({ testDir: projects });
   });
 
   it('should return an android app folder if it exists in the given folder', () => {
-    const flat = path.join('testing', 'flat');
-    const nested = path.join('testing', 'nested');
+    const flat = path.join('testDir', 'flat');
+    const nested = path.join('testDir', 'nested');
 
     expect(findAndroidAppFolder(flat)).to.be.equal('android');
     expect(findAndroidAppFolder(nested)).to.be.equal(path.join('android', 'app'));
   });
 
   it('should return `null` if there\'s no android app folder', () => {
-    const emptyFolder = path.join('testing', 'empty');
+    const emptyFolder = path.join('testDir', 'empty');
     expect(findAndroidAppFolder(emptyFolder)).to.be.null;
   });
 

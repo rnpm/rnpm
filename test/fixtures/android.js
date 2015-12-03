@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const manifest = fs.readFileSync(path.join(__dirname, '../files/AndroidManifest.xml'));
-const mainJavaClass = fs.readFileSync(path.join(__dirname, '../files/Main.java'));
+const manifest = fs.readFileSync(path.join(__dirname, './files/AndroidManifest.xml'));
+const mainJavaClass = fs.readFileSync(path.join(__dirname, './files/Main.java'));
 
 exports.valid = {
   src: {
@@ -12,7 +12,7 @@ exports.valid = {
         some: {
           example: {
             'Main.java': mainJavaClass,
-            'ReactPackage.java': fs.readFileSync(path.join(__dirname, '../files/ReactPackage.java')),
+            'ReactPackage.java': fs.readFileSync(path.join(__dirname, './files/ReactPackage.java')),
           },
         },
       },
