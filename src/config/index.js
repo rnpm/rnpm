@@ -1,74 +1,38 @@
-/**
- * Config
- *
- * Loads config for `rnpm` to use by projects.
- *
- * In order to override default settings, simply mirror them under `rnpm` key in your
- * package.json.
- *
- * It optionally accepts packageName - when it's present, config will be loaded from node_modules/packageName
- */
-
-const fs = require('fs');
 const path = require('path');
-const glob = require('glob');
 
-const androidConfig = require('./android');
-const iosConfig = require('./ios');
+const android = require('./android');
+const ios = require('./ios');
+const findAssets = require('./findAssets');
 
-const getAssetsInFolder = (folder) =>
-  glob.sync(path.join(folder, '**'), { nodir: true });
-
-/**
- * Gets rnpm config from reading it from JSON (for now)
- */
-const getRNPMConfig = function getRNPMConfig(folder) {
-  const pjsonPath = path.join(folder, './package.json');
-
-  if (!fs.existsSync(pjsonPath)) {
-    return null;
-  }
-
-  const pjson = require(pjsonPath);
-
-  return pjson.rnpm || {};
-};
+const getRNPMConfig = (folder) =>
+  require(path.join(folder, './package.json')).rnpm || {};
 
 /**
- * Returns project config for current working directory
+ * Returns project config from the current working directory
+ * @return {Object}
  */
 exports.getProjectConfig = function getProjectConfig() {
   const folder = process.cwd();
   const rnpm = getRNPMConfig(folder);
 
-  if (!rnpm) {
-    return null;
-  }
-
   return Object.assign({}, rnpm, {
-    ios: iosConfig.projectConfig(folder, rnpm.ios || {}),
-    android: androidConfig.projectConfig(folder, rnpm.android || {}),
+    ios: ios.projectConfig(folder, rnpm.ios || {}),
+    android: android.projectConfig(folder, rnpm.android || {}),
   });
 };
 
 /**
- * Returns dependency config for a dependency located under node_modules/<package_name>
+ * Returns a dependency config from node_modules/<package_name>
+ * @param {String} packageName Dependency name
+ * @return {Object}
  */
 exports.getDependencyConfig = function getDependencyConfig(packageName) {
   const folder = path.join(process.cwd(), 'node_modules', packageName);
   const rnpm = getRNPMConfig(folder);
 
-  if (!rnpm) {
-    return null;
-  }
-
   return Object.assign({}, rnpm, {
-    ios: iosConfig.dependencyConfig(folder, rnpm.ios || {}),
-    android: androidConfig.dependencyConfig(folder, rnpm.android || {}),
-    assets: (rnpm.assets || [])
-      .map(assetsFolder => path.join(folder, assetsFolder))
-      .reduce((assets, assetsFolder) => {
-        return assets.concat(getAssetsInFolder(assetsFolder));
-      }, []),
+    ios: ios.dependencyConfig(folder, rnpm.ios || {}),
+    android: android.dependencyConfig(folder, rnpm.android || {}),
+    assets: findAssets(folder, rnpm.assets),
   });
 };

@@ -3,6 +3,7 @@ const fs = require('fs');
 const flatten = require('lodash.flatten');
 const union = require('lodash.union');
 const uniq = require('lodash.uniq');
+const config = require('./config');
 
 /**
  * Filter dependencies by name pattern
@@ -21,23 +22,22 @@ const getPluginConfig = cwd => name =>
 
 /**
  * Gets actions from package.json in the cwd given
- * @param {String} cwd Path to the folder to get the package.json from
- * @type  {Array}      Array of actions or an empty array if no package.json found
+ * @param {String} folder Path to the folder to get the package.json from
+ * @type  {Array}         Array of actions or an empty array if no package.json found
  */
-const getActions = (cwd) => {
-  const packagePath = path.join(cwd, 'package.json');
-
-  if (!fs.existsSync(packagePath)) {
+const getActions = (folder) => {
+  try {
+    const pjson = require(path.join(folder, './package.json'));
+  } catch (e) {
     return [];
   }
 
-  const pjson = require(packagePath);
   const deps = union(
     Object.keys(pjson.dependencies || {}),
     Object.keys(pjson.devDependencies || {})
   );
 
-  return deps.filter(isPlugin).map(getPluginConfig(cwd));
+  return deps.filter(isPlugin).map(getPluginConfig(folder));
 };
 
 /**
