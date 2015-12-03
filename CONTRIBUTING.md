@@ -20,11 +20,16 @@ $ cd rnpm
 $ npm i
   ```
   
-5. Checkout to the new branch
+5. Link rnpm so it's available globally
+  ```bash
+$ npm link
+  ```
+  
+6. Checkout to the new branch
   ```bash
 $ git checkout -b <branch_name>
   ```
-6. Make an awesome changes!
+7. Make an awesome changes!
 
 Don't forget to change a `<username>` to your real github username and a `<branch_name>` to something meaningful. We recommend using following convention for new branches: `<type>/<caption>`, like 
 - `feature/add-ignore-flag` for a new feature;
