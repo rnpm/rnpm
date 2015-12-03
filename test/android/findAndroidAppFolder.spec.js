@@ -5,7 +5,7 @@ const findAndroidAppFolder = require('../../src/config/android/findAndroidAppFol
 
 describe('findAndroidAppFolder', () => {
 
-  it('should return an android app folder if it persists in the given folder', () => {
+  it('should return an android app folder if it exists in the given folder', () => {
     const flat = path.join('test', 'android', 'fixtures', 'flat-structure');
     const nested = path.join('test', 'android', 'fixtures', 'nested-structure');
 
