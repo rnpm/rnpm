@@ -5,7 +5,7 @@ const readManifest = require('../../src/config/android/readManifest');
 
 describe('readManifest', () => {
 
-  it('should return manifest content if file persists in the folder', () => {
+  it('should return manifest content if file exists in the folder', () => {
     const manifestPath = path.join(
       'test', 'android', 'fixtures', 'AndroidManifest.xml'
     );

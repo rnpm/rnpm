@@ -5,7 +5,7 @@ const findManifest = require('../../src/config/android/findManifest');
 
 describe('findManifest', () => {
 
-  it('should return a manifest path if file persists in the folder', () => {
+  it('should return a manifest path if file exists in the folder', () => {
     expect(findManifest(path.join('test', 'android', 'fixtures'))).to.be.a('string');
   });
 

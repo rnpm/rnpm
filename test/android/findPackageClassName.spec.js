@@ -5,7 +5,7 @@ const findPackageClassName = require('../../src/config/android/findPackageClassN
 
 describe('findPackageClassName', () => {
 
-  it('should return manifest content if file persists in the folder', () => {
+  it('should return manifest content if file exists in the folder', () => {
     const fixturesFolder = path.join('test', 'android', 'fixtures');
     expect(findPackageClassName(fixturesFolder)).to.be.a('string');
   });
