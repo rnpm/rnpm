@@ -9,29 +9,29 @@ In the case you want to submit a pull request, we recommend you to follow this i
   ```bash
 $ git clone https://github.com/<username>/rnpm.git
   ```
-  
+
 3. Go to the clonned folder
   ```bash
 $ cd rnpm
   ```
-  
+
 4. Install development dependencies
   ```bash
 $ npm i
   ```
-  
+
 5. Link rnpm so it's available globally
   ```bash
 $ npm link
   ```
-  
+
 6. Checkout to the new branch
   ```bash
 $ git checkout -b <branch_name>
   ```
 7. Make an awesome changes!
 
-Don't forget to change a `<username>` to your real github username and a `<branch_name>` to something meaningful. We recommend using following convention for new branches: `<type>/<caption>`, like 
+Don't forget to change a `<username>` to your real github username and a `<branch_name>` to something meaningful. We recommend using following convention for new branches: `<type>/<caption>`, like
 - `feature/add-ignore-flag` for a new feature;
 - `chore/improve-documentation` for a technical chore
 - `bug/missing-dependencies` for bugfix.
@@ -39,6 +39,6 @@ Don't forget to change a `<username>` to your real github username and a `<branc
 We'll review / answer your issues faster, if you will provide some examples, screenshots and all the information we may need.
 
 # Questions
-We'd like to keep issues for bug reports and feature proposals only. If you have any questions regarding `rnpm` work, please, don't hesistate to contact us directly on reactiflux channel in Discord, #react-native thread.
+We'd like to keep issues for bug reports and feature proposals only. If you have any questions regarding `rnpm` work, please, don't hesistate to contact us directly on reactiflux channel in Discord, #react-native thread or by [joining us on Gitter](https://gitter.im/rnpm?utm_source=share-link&utm_medium=link&utm_campaign=share-link).
 
 With :heart: form @kureev and @grabbou
