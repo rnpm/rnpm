@@ -4,7 +4,7 @@ const findManifest = require('../../src/config/android/findManifest');
 const mockFs = require('mock-fs');
 const projects = require('../fixtures/projects');
 
-describe('findManifest', () => {
+describe('android::findManifest', () => {
 
   before(() => {
     mockFs({ testDir: projects });
