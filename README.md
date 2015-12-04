@@ -1,4 +1,4 @@
-:iphone: rnpm ![npm version](https://img.shields.io/npm/v/rnpm.svg) ![dependencies](https://img.shields.io/david/rnpm/rnpm.svg) [![Code Climate](https://codeclimate.com/github/rnpm/rnpm/badges/gpa.svg)](https://codeclimate.com/github/rnpm/rnpm) [![Test Coverage](https://codeclimate.com/github/rnpm/rnpm/badges/coverage.svg)](https://codeclimate.com/github/rnpm/rnpm/coverage) [![Circle CI](https://img.shields.io/circleci/project/rnpm/rnpm/master.svg)](https://circleci.com/gh/rnpm/rnpm) 
+:iphone: rnpm ![npm version](https://img.shields.io/npm/v/rnpm.svg) ![dependencies](https://img.shields.io/david/rnpm/rnpm.svg) [![Code Climate](https://codeclimate.com/github/rnpm/rnpm/badges/gpa.svg)](https://codeclimate.com/github/rnpm/rnpm) [![Test Coverage](https://codeclimate.com/github/rnpm/rnpm/badges/coverage.svg)](https://codeclimate.com/github/rnpm/rnpm/coverage) [![Circle CI](https://img.shields.io/circleci/project/rnpm/rnpm/master.svg)](https://circleci.com/gh/rnpm/rnpm)
 =============
 
 **React Native Package Manager** built to ease your daily React Native development. Inspired by `Cocoapods`, `fastlane` and `react-native link` it acts as your best friend and guides you through the native unknowns. It aims to work with almost all packages available with no extra configuration required.
@@ -96,6 +96,19 @@ We use **public interface** to make your plugins auto-pluggable and easy to use 
 
 - `func` - Plugin itself. This function will be used when you run a command above
 - `descripion` - Command description. If user runs `$ rnpm --help`, this field will be displayed as a command description.
+
+Also, in the case you want to expose multiple commands from the one plugin, you may use an array syntax:
+```javascript
+module.exports = [{
+  func: require('./src/link'),
+  description: 'This action updates your project and links all native dependencies',
+  name: 'link [packageName]',
+}, {
+  func: require('./src/unlink'),
+  description: 'This action updates your project and unlink specific dependency',
+  name: 'unlink <packageName>',
+}]
+```
 
 #### Using third-party plugins
 
