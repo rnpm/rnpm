@@ -1,22 +1,24 @@
 const fs = require('fs');
 const path = require('path');
 const android = require('./android');
+const ios = require('./ios');
 
 const flat = {
   android: android.valid,
+  ios: ios.valid,
 };
 
 const nested = {
   android: {
     app: android.valid,
   },
+  ios: ios.valid,
 };
 
-// `Can I embed some other stuff as well?`
-// const dependencies = require('./dependencies');
-// const sampleProjectWithDeps = {
-//   android: android.valid,
-//   node_modules: dependencies,
-// };
+const withExamples = {
+  Examples: flat,
+  ios: ios.valid,
+  android: android.valid,
+};
 
-module.exports = { flat, nested, };
+module.exports = { flat, nested, withExamples, };
