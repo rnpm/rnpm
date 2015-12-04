@@ -1,5 +1,5 @@
 const path = require('path');
-const findProject = require('findProject');
+const findProject = require('./findProject');
 
 /**
  * Returns project config by analyzing given folder and applying some user defaults
