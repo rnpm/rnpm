@@ -5,7 +5,7 @@
   "main": "./src/getActions.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha --recursive",
-    "coverage": "istanbul cover node_modules/.bin/_mocha -- -- test/*.spec.js test/**/*.spec.js"
+    "coverage": "istanbul cover node_modules/.bin/_mocha -- --recursive"
   },
   "bin": {
     "rnpm": "bin/cli"
