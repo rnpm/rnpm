@@ -21,13 +21,13 @@ const getPluginConfig = cwd => name =>
   require(path.join(cwd, 'node_modules', name));
 
 /**
- * Gets actions from package.json in the cwd given
+ * Gets plugins from package.json in the cwd given
  * @param {String} folder Path to the folder to get the package.json from
- * @type  {Array}         Array of actions or an empty array if no package.json found
+ * @type  {Array}         Array of plugins or an empty array if no package.json found
  */
-const getActions = (folder) => {
+const getPlugins = (folder) => {
   try {
-    const pjson = require(path.join(folder, './package.json'));
+    const pjson = require(path.join(folder, 'package.json'));
   } catch (e) {
     return [];
   }
@@ -45,9 +45,9 @@ const getActions = (folder) => {
  * rnpm dependencies and current project dependencies
  * @type {Array}
  */
-const actionsList = flatten([
-  getActions(path.join(__dirname, '..')),
-  getActions(process.cwd()),
+const pluginsList = flatten([
+  getPlugins(path.join(__dirname, '..')),
+  getPlugins(process.cwd()),
 ]);
 
-module.exports = uniq(actionsList, 'name');
+module.exports = uniq(pluginsList, 'name');
