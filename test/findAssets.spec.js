@@ -23,6 +23,10 @@ describe('findAssets', () => {
     assets.forEach(assetPath => expect(assetPath).to.contain('testDir'));
   });
 
+  it('should return an empty array if given assets list is empty', () => {
+    expect(findAssets('testDir', [])).to.be.empty;
+  });
+
   after(() => {
     mockFs.restore();
   });
