@@ -1,4 +1,11 @@
-languages:
-   JavaScript: true
+engines:
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+ratings:
+  paths:
+  - "**.js"
+  - "**.jsx"
 exclude_paths:
-- "test/*"
+  - test/*
