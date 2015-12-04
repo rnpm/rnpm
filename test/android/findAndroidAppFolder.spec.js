@@ -4,7 +4,7 @@ const findAndroidAppFolder = require('../../src/config/android/findAndroidAppFol
 const mockFs = require('mock-fs');
 const projects = require('../fixtures/projects');
 
-describe('findAndroidAppFolder', () => {
+describe('android::findAndroidAppFolder', () => {
 
   before(() => {
     mockFs({ testDir: projects });

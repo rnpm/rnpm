@@ -4,7 +4,7 @@ const findPackageClassName = require('../../src/config/android/findPackageClassN
 const mockFs = require('mock-fs');
 const projects = require('../fixtures/projects');
 
-describe('findPackageClassName', () => {
+describe('android::findPackageClassName', () => {
 
   before(() => {
     mockFs({ testDir: projects });

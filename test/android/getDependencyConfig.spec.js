@@ -4,7 +4,7 @@ const getDependencyConfig = require('../../src/config/android').dependencyConfig
 const mockFs = require('mock-fs');
 const dependencies = require('../fixtures/dependencies');
 
-describe('ConfigAndroid::getDependencyConfig', () => {
+describe('android::getDependencyConfig', () => {
 
   before(() => {
     mockFs({ testDir: dependencies });
