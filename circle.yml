@@ -4,7 +4,7 @@ machine:
 test:
   post:
     - npm run coverage
-    - codeclimate-test-reporter < coverage/lcov.info
+    - ./coverage.sh
 notify:
   webhooks:
     - url: https://webhooks.gitter.im/e/bf9cb7240681c7263e6b
