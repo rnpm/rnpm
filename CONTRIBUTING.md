@@ -39,6 +39,10 @@ Don't forget to change a `<username>` to your real github username and a `<branc
 We'll review / answer your issues faster, if you will provide some examples, screenshots and all the information we may need.
 
 # Questions
-We'd like to keep issues for bug reports and feature proposals only. If you have any questions regarding `rnpm` work, please, don't hesistate to contact us directly on reactiflux channel in Discord, #react-native thread or by [joining us on Gitter](https://gitter.im/rnpm?utm_source=share-link&utm_medium=link&utm_campaign=share-link).
+We'd like to keep issues for bug reports and feature proposals only. If you have any questions regarding `rnpm` work, please, don't hesistate to contact us directly: 
+- reactiflux#rnpm on Discord
+- [Gitter](https://gitter.im/rnpm?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+- [Kureev's twitter](https://twitter.com/kureevalexey)
+- [Grabbou's twitter](https://twitter.com/grabbou)
 
 With :heart: form @kureev and @grabbou
