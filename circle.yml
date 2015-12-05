@@ -5,6 +5,7 @@ machine:
 deployment:
   coverage:
     branch: master
+    owner: rnpm
     commands:
       - npm run coverage
       - codeclimate-test-reporter < coverage/lcov.info
