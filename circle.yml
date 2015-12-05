@@ -1,10 +1,14 @@
 machine:
   node:
     version: 4.2.1
-test:
-  post:
-    - npm run coverage
-    - ./coverage.sh
+
+deployment:
+  coverage:
+    branch: master
+    commands:
+      - npm run coverage
+      - codeclimate-test-reporter < coverage/lcov.info
+
 notify:
   webhooks:
     - url: https://webhooks.gitter.im/e/bf9cb7240681c7263e6b
