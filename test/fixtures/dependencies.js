@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const android = require('./android');
 
-const pjson = fs.readFileSync(path.join(__dirname, './files/dependency.json'));
+const pjson = fs.readFileSync(path.join(__dirname, 'files', 'package.json'));
 
 module.exports = {
   valid: {

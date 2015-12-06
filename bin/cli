@@ -4,7 +4,7 @@ const cli = require('commander');
 const updateNotifier = require('update-notifier');
 const log = require('npmlog');
 
-const plugins = require('../src/plugins');
+const commands = require('../src/getCommands')();
 const config = require('../src/config');
 const pkg = require('../package.json');
 
@@ -17,23 +17,20 @@ cli.version(pkg.version);
 const isArray = (arg) =>
   Object.prototype.toString.call(arg) === '[object Array]';
 
-const addAction = (action) =>
+const addCommand = (command) =>
   cli
-    .command(action.name)
-    .usage(action.usage)
-    .description(action.description)
+    .command(command.name)
+    .usage(command.usage)
+    .description(command.description)
     .action(function runAction() {
-      action.func(config, arguments);
+      command.func(config, arguments);
     });
 
-/**
- * Builds action from given action configuration and attaches it to commander
- */
-plugins.forEach((plugin) => {
-  if (isArray(plugin)) {
-    plugin.forEach(addAction);
+commands.forEach((command) => {
+  if (isArray(command)) {
+    command.forEach(addCommand);
   } else {
-    addAction(plugin);
+    addCommand(command);
   }
 });
 
