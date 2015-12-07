@@ -14,7 +14,7 @@ const singlePlugin = {
   },
 };
 
-const multipleCommands = {
+const multiplePlugins = {
   dependencies: {
     'rnpm-plugin-test': '*',
     'rnpm-plugin-test-2': '*',
@@ -42,7 +42,7 @@ describe('getCommands', () => {
   });
 
   it('should return an unique list of commands (by name)', () => {
-    mock(pjsonPath, multipleCommands);
+    mock(pjsonPath, multiplePlugins);
     mock(testPlugin, commands.single);
     mock(
       path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test-2'),
