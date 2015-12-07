@@ -27,12 +27,12 @@ describe('getCommands', () => {
     expect(commands).to.be.an('array');
   });
 
-  it('should return a single command (plugin export one command)', () => {
+  it('should export one command)', () => {
     mockRequire(testPluginPath, singlePlugin);
     expect(getCommands().length).to.be.equal(1);
   });
 
-  it('should return a single command (plugin export one command)', () => {
+  it('should export multiple command)', () => {
     mockRequire(testPluginPath, multiPlugin);
     expect(getCommands().length).to.be.equal(2);
   });

@@ -3,6 +3,7 @@
 const cli = require('commander');
 const updateNotifier = require('update-notifier');
 const log = require('npmlog');
+const flatten = require('lodash.flatten');
 
 const commands = require('../src/getCommands')();
 const config = require('../src/config');
@@ -26,12 +27,7 @@ const addCommand = (command) =>
       command.func(config, arguments);
     });
 
-commands.forEach((command) => {
-  if (isArray(command)) {
-    command.forEach(addCommand);
-  } else {
-    addCommand(command);
-  }
-});
+
+flatten(commands).forEach(addCommand);
 
 cli.parse(process.argv);
