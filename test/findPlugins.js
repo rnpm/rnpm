@@ -17,9 +17,7 @@ describe('findPlugins', () => {
 
   it('should return an empty array if there\'re no plugins in this folder', () => {
     mock(pjsonPath, plugins.empty);
-    const foundPlugins = findPlugins(testDir);
-    expect(foundPlugins).to.be.an('array');
-    expect(foundPlugins).to.be.empty;
+    expect(findPlugins(testDir).length).to.be.equal(0);
   });
 
   it('should return an array from both dependencies and devDependencies', () => {
