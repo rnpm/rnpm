@@ -1,14 +1,11 @@
 const path = require('path');
-const Module = require('module');
 const expect = require('chai').expect;
 const getCommands = require('../src/getCommands');
 const findPlugins = require('../src/findPlugins');
 const mockRequire = require('mock-require');
-const mockFs = require('mock-fs');
 
 const commands = getCommands();
 const filesPath = path.join(__dirname, 'fixtures', 'files');
-const testPlugin = findPlugins(filesPath);
 const testPluginPath = path.join(__dirname, '..', 'node_modules', 'rnpm-plugin-test');
 const singlePlugin = require(path.join(filesPath, 'plugin'));
 const multiPlugin = require(path.join(filesPath, 'plugins'));
@@ -44,7 +41,6 @@ describe('getCommands', () => {
   });
 
   after(() => {
-    mockFs.restore();
     mockRequire.stopAll();
   });
 });
