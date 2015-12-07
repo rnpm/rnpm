@@ -1,22 +1,37 @@
 const path = require('path');
 const expect = require('chai').expect;
 const findPlugins = require('../src/findPlugins');
-const mock = require('mock-fs');
-const dependencies = require('./fixtures/dependencies');
+const mock = require('mock-require');
+
+const plugins = require('./fixtures/plugins');
+
+const testDir = path.join(__dirname, '..');
+const pjsonPath = path.join(__dirname, '..', 'package.json');
 
 describe('findPlugins', () => {
-  before(() => mock(dependencies));
 
   it('list of the plugins should be an array', () => {
-    const plugins = findPlugins('valid');
-    expect(plugins).to.be.an('array');
+    const foundPlugins = findPlugins(testDir);
+    expect(foundPlugins).to.be.an('array');
   });
 
   it('should return an empty array if there\'re no plugins in this folder', () => {
-    const plugins = findPlugins('empty');
-    expect(plugins).to.be.an('array');
-    expect(plugins).to.be.empty;
+    mock(pjsonPath, plugins.empty);
+    expect(findPlugins(testDir).length).to.be.equal(0);
   });
 
-  after(mock.restore);
+  it('should return an array from both dependencies and devDependencies', () => {
+    mock(pjsonPath, plugins.valid);
+    expect(findPlugins(testDir).length).to.be.equal(2);
+  });
+
+  it('should return an unique array', () => {
+    mock(pjsonPath, plugins.duplicates);
+    expect(findPlugins(testDir).length).to.be.equal(1);
+  });
+
+  afterEach(() => {
+    mock.stopAll();
+  });
+
 });

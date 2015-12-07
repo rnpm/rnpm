@@ -16,7 +16,7 @@ const getPluginCommands = cwd => name =>
  */
 module.exports = function getCommands() {
   const rnpmRoot = path.join(__dirname, '..');
-  const appRoot = path.join(process.cwd());
+  const appRoot = process.cwd();
 
   const pluginsList = flatten(
     findPlugins(rnpmRoot).map(getPluginCommands(rnpmRoot)),
