@@ -2,38 +2,52 @@ const path = require('path');
 const expect = require('chai').expect;
 const getCommands = require('../src/getCommands');
 const findPlugins = require('../src/findPlugins');
-const mockRequire = require('mock-require');
+const mock = require('mock-require');
 
-const commands = getCommands();
-const filesPath = path.join(__dirname, 'fixtures', 'files');
-const testPluginPath = path.join(__dirname, '..', 'node_modules', 'rnpm-plugin-test');
-const singlePlugin = require(path.join(filesPath, 'plugin'));
-const multiPlugin = require(path.join(filesPath, 'plugins'));
+const commands = require('./fixtures/commands');
+const testPluginPath = path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test');
+const testPluginPath2 = path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test-2');
+const pjsonPath = path.join(__dirname, '..', 'package.json');
 
 describe('getCommands', () => {
 
   beforeEach(() => {
-    mockRequire(path.join(__dirname, '..'), {});
-    mockRequire(
-      path.join(__dirname, '..', 'package.json'),
-      require(path.join(filesPath, 'package'))
-    );
+    mock(pjsonPath, {
+      dependencies: {
+        [path.basename(testPluginPath)]: '*',
+      },
+    });
   });
-
-  afterEach(mockRequire.stopAll);
 
   it('list of the commands should be a non-empty array', () => {
-    expect(commands).to.be.not.empty;
-    expect(commands).to.be.an('array');
+    mock(testPluginPath, commands.single);
+    expect(getCommands()).to.be.not.empty;
+    expect(getCommands()).to.be.an('array');
   });
 
-  it('should export one command)', () => {
-    mockRequire(testPluginPath, singlePlugin);
+  it('should export one command', () => {
+    mock(testPluginPath, commands.single);
     expect(getCommands().length).to.be.equal(1);
   });
 
-  it('should export multiple command)', () => {
-    mockRequire(testPluginPath, multiPlugin);
+  it('should export multiple commands', () => {
+    mock(testPluginPath, commands.multiple);
     expect(getCommands().length).to.be.equal(2);
   });
+
+  it('should export unique list of commands by name', () => {
+    mock(pjsonPath, {
+      dependencies: {
+        [path.basename(testPluginPath)]: '*',
+        [path.basename(testPluginPath2)]: '*',
+      },
+    });
+    mock(testPluginPath, commands.single);
+    mock(testPluginPath2, commands.single);
+
+    expect(getCommands().length).to.be.equal(1);
+  });
+
+  afterEach(mock.stopAll);
+
 });
