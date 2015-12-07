@@ -23,8 +23,6 @@ describe('android::readManifest', () => {
     expect(() => readManifest(fakeManifestPath)).to.throw(Error);
   });
 
-  after(() => {
-    mockFs.restore();
-  });
+  after(mockFs.restore);
 
 });

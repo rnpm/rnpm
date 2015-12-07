@@ -3,8 +3,9 @@
 const cli = require('commander');
 const updateNotifier = require('update-notifier');
 const log = require('npmlog');
+const flatten = require('lodash.flatten');
 
-const actions = require('../src/actions');
+const commands = require('../src/getCommands')();
 const config = require('../src/config');
 const pkg = require('../package.json');
 
@@ -14,17 +15,19 @@ log.heading = 'rnpm';
 
 cli.version(pkg.version);
 
-/**
- * Builds action from given action configuration and attaches it to commander
- */
-actions.forEach((action) =>
+const isArray = (arg) =>
+  Object.prototype.toString.call(arg) === '[object Array]';
+
+const addCommand = (command) =>
   cli
-    .command(action.name)
-    .usage(action.usage)
-    .description(action.description)
+    .command(command.name)
+    .usage(command.usage)
+    .description(command.description)
     .action(function runAction() {
-      action.func(config, arguments);
-    })
-);
+      command.func(config, arguments);
+    });
+
+
+flatten(commands).forEach(addCommand);
 
 cli.parse(process.argv);
