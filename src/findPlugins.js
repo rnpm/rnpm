@@ -16,7 +16,7 @@ const isPlugin = (dependency) => !!~dependency.indexOf('rnpm-plugin-');
  */
 module.exports = function findPlugins(folder) {
   try {
-    const pjson = require(path.join(folder, 'package.json'), 'utf8');
+    const pjson = require(path.join(folder, 'package.json'));
   } catch (e) {
     return [];
   }
