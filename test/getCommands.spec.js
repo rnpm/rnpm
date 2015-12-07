@@ -2,8 +2,7 @@ const path = require('path');
 const Module = require('module');
 const expect = require('chai').expect;
 const getCommands = require('../src/getCommands');
-const mockFs = require('mock-fs');
-const mockRequire = require('mock-require');
+const mock = require('mock-require');
 
 const commands = require('./fixtures/commands');
 const plugins = require('./fixtures/plugins');
@@ -21,21 +20,21 @@ describe('getCommands', () => {
   });
 
   it('should return a single command (plugin export one command)', () => {
-    mockRequire(pluginFolder, commands.single);
+    mock(pluginFolder, commands.single);
     expect(getCommands().length).to.be.equal(1);
   });
 
   it('should return multiple commands (plugin export an array of commands)', () => {
-    mockRequire(pluginFolder, commands.multiple);
+    mock(pluginFolder, commands.multiple);
     expect(getCommands().length).to.be.equal(2);
   });
 
   it('should return an unique list of commands (by name)', () => {
-    mockRequire(
+    mock(
       path.join(__dirname, '..', 'package.json'),
       plugins.valid
     );
-    mockRequire(
+    mock(
       path.join(process.cwd(), 'node_modules', 'rnpm-plugin-build'),
       require('../node_modules/rnpm-plugin-link')
     );
@@ -43,6 +42,6 @@ describe('getCommands', () => {
   });
 
   afterEach(() => {
-    mockRequire.stopAll();
+    mock.stopAll();
   });
 });
