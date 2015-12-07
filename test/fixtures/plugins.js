@@ -1,15 +1,19 @@
-exports.multipleCommands = [{
-  func: () => {},
-  description: 'Test action #1',
-  name: 'test',
-}, {
-  func: () => {},
-  description: 'Test action #2',
-  name: 'test2',
-}];
-
-exports.singleCommand = {
-  func: () => {},
-  description: 'Test action',
-  name: 'test',
+exports.valid = {
+  dependencies: {
+    'rnpm-plugin-link': '1.0.0',
+  },
+  devDependencies: {
+    'rnpm-plugin-build': '1.0.0',
+  },
 };
+
+exports.duplicates = {
+  dependencies: {
+    'rnpm-plugin-link': '1.0.0',
+  },
+  devDependencies: {
+    'rnpm-plugin-link': '1.0.0',
+  },
+};
+
+exports.empty = {};

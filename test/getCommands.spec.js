@@ -5,7 +5,10 @@ const getCommands = require('../src/getCommands');
 const mockFs = require('mock-fs');
 const mockRequire = require('mock-require');
 
+const commands = require('./fixtures/commands');
 const plugins = require('./fixtures/plugins');
+
+const pluginFolder = path.join(process.cwd(), 'node_modules', 'rnpm-plugin-link');
 
 describe('getCommands', () => {
 
@@ -18,33 +21,22 @@ describe('getCommands', () => {
   });
 
   it('should return a single command (plugin export one command)', () => {
-    mockRequire(
-      path.join(process.cwd(), 'node_modules', 'rnpm-plugin-link'),
-      plugins.singleCommand
-    );
+    mockRequire(pluginFolder, commands.single);
     expect(getCommands().length).to.be.equal(1);
   });
 
   it('should return multiple commands (plugin export an array of commands)', () => {
-    mockRequire(
-      path.join(process.cwd(), 'node_modules', 'rnpm-plugin-link'),
-      plugins.multipleCommands
-    );
+    mockRequire(pluginFolder, commands.multiple);
     expect(getCommands().length).to.be.equal(2);
   });
 
   it('should return an unique list of commands (by name)', () => {
     mockRequire(
       path.join(__dirname, '..', 'package.json'),
-      {
-        dependencies: {
-          'rnpm-plugin-link': '1.0.0',
-          'rnpm-plugin-link-duplicate': '1.0.0',
-        },
-      }
+      plugins.valid
     );
     mockRequire(
-      path.join(process.cwd(), 'node_modules', 'rnpm-plugin-link-duplicate'),
+      path.join(process.cwd(), 'node_modules', 'rnpm-plugin-build'),
       require('../node_modules/rnpm-plugin-link')
     );
     expect(getCommands().length).to.be.equal(1);
