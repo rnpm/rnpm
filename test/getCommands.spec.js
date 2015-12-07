@@ -4,44 +4,48 @@ const getCommands = require('../src/getCommands');
 const mock = require('mock-require');
 
 const commands = require('./fixtures/commands');
-const plugins = require('./fixtures/plugins');
 
-const pluginFolder = path.join(process.cwd(), 'node_modules', 'rnpm-plugin-link');
+const testPlugin = path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test');
+const pjsonPath = path.join(__dirname, '..', 'package.json');
+
+const singlePlugin = {
+  dependencies: {
+    'rnpm-plugin-test': '*',
+  },
+};
+
+const multipleCommands = {
+  dependencies: {
+    'rnpm-plugin-test': '*',
+    'rnpm-plugin-test-2': '*',
+  },
+};
 
 describe('getCommands', () => {
 
-  beforeEach(() => {
-    mock(
-      path.join(process.cwd(), 'node_modules', 'rnpm-plugin-link'),
-      commands.single
-    );
-  });
-
   it('list of the commands should be an array', () => {
+    mock(pjsonPath, singlePlugin);
+    mock(testPlugin, commands.single);
     expect(getCommands()).to.be.an('array');
   });
 
-  it('should contain some pre-defined commands by default', () => {
-    expect(getCommands()).to.be.not.empty;
-  });
-
   it('should return a single command (plugin export one command)', () => {
-    mock(pluginFolder, commands.single);
+    mock(pjsonPath, singlePlugin);
+    mock(testPlugin, commands.single);
     expect(getCommands().length).to.be.equal(1);
   });
 
   it('should return multiple commands (plugin export an array of commands)', () => {
-    mock(pluginFolder, commands.multiple);
+    mock(pjsonPath, singlePlugin);
+    mock(testPlugin, commands.multiple);
     expect(getCommands().length).to.be.equal(2);
   });
 
   it('should return an unique list of commands (by name)', () => {
+    mock(pjsonPath, multipleCommands);
+    mock(testPlugin, commands.single);
     mock(
-      path.join(__dirname, '..', 'package.json'),
-      plugins.valid
-    );
-    mock(
-      path.join(process.cwd(), 'node_modules', 'rnpm-plugin-build'),
+      path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test-2'),
       commands.single
     );
     expect(getCommands().length).to.be.equal(1);
