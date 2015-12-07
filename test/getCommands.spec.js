@@ -12,7 +12,7 @@ const multiPlugin = require(path.join(filesPath, 'plugins'));
 
 describe('getCommands', () => {
 
-  before(() => {
+  beforeEach(() => {
     mockRequire(path.join(__dirname, '..'), {});
     mockRequire(
       path.join(__dirname, '..', 'package.json'),
@@ -20,27 +20,20 @@ describe('getCommands', () => {
     );
   });
 
-  it('list of the commands should be an array', () => {
-    expect(commands).to.be.an('array');
-  });
+  afterEach(mockRequire.stopAll);
 
-  it('should contain some pre-defined commands by default', () => {
+  it('list of the commands should be a non-empty array', () => {
     expect(commands).to.be.not.empty;
+    expect(commands).to.be.an('array');
   });
 
   it('should return a single command (plugin export one command)', () => {
     mockRequire(testPluginPath, singlePlugin);
     expect(getCommands().length).to.be.equal(1);
-    mockRequire.stop();
   });
 
   it('should return a single command (plugin export one command)', () => {
     mockRequire(testPluginPath, multiPlugin);
     expect(getCommands().length).to.be.equal(2);
-    mockRequire.stop();
-  });
-
-  after(() => {
-    mockRequire.stopAll();
   });
 });
