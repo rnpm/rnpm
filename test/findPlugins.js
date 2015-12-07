@@ -18,5 +18,7 @@ describe('findPlugins', () => {
     expect(plugins).to.be.empty;
   });
 
-  after(mock.restore);
+  after(() => {
+    mock.restore();
+  });
 });

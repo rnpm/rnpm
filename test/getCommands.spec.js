@@ -2,49 +2,55 @@ const path = require('path');
 const Module = require('module');
 const expect = require('chai').expect;
 const getCommands = require('../src/getCommands');
-const findPlugins = require('../src/findPlugins');
-const mockRequire = require('mock-require');
 const mockFs = require('mock-fs');
+const mockRequire = require('mock-require');
 
-const commands = getCommands();
-const filesPath = path.join(__dirname, 'fixtures', 'files');
-const testPlugin = findPlugins(filesPath);
-const testPluginPath = path.join(__dirname, '..', 'node_modules', 'rnpm-plugin-test');
-const singlePlugin = require(path.join(filesPath, 'plugin'));
-const multiPlugin = require(path.join(filesPath, 'plugins'));
+const plugins = require('./fixtures/plugins');
 
 describe('getCommands', () => {
 
-  before(() => {
-    mockRequire(path.join(__dirname, '..'), {});
-    mockRequire(
-      path.join(__dirname, '..', 'package.json'),
-      require(path.join(filesPath, 'package'))
-    );
-  });
-
   it('list of the commands should be an array', () => {
-    expect(commands).to.be.an('array');
+    expect(getCommands()).to.be.an('array');
   });
 
   it('should contain some pre-defined commands by default', () => {
-    expect(commands).to.be.not.empty;
+    expect(getCommands()).to.be.not.empty;
   });
 
   it('should return a single command (plugin export one command)', () => {
-    mockRequire(testPluginPath, singlePlugin);
+    mockRequire(
+      path.join(process.cwd(), 'node_modules', 'rnpm-plugin-link'),
+      plugins.singleCommand
+    );
     expect(getCommands().length).to.be.equal(1);
-    mockRequire.stop();
   });
 
-  it('should return a single command (plugin export one command)', () => {
-    mockRequire(testPluginPath, multiPlugin);
+  it('should return multiple commands (plugin export an array of commands)', () => {
+    mockRequire(
+      path.join(process.cwd(), 'node_modules', 'rnpm-plugin-link'),
+      plugins.multipleCommands
+    );
     expect(getCommands().length).to.be.equal(2);
-    mockRequire.stop();
   });
 
-  after(() => {
-    mockFs.restore();
+  it('should return an unique list of commands (by name)', () => {
+    mockRequire(
+      path.join(__dirname, '..', 'package.json'),
+      {
+        dependencies: {
+          'rnpm-plugin-link': '1.0.0',
+          'rnpm-plugin-link-duplicate': '1.0.0',
+        },
+      }
+    );
+    mockRequire(
+      path.join(process.cwd(), 'node_modules', 'rnpm-plugin-link-duplicate'),
+      require('../node_modules/rnpm-plugin-link')
+    );
+    expect(getCommands().length).to.be.equal(1);
+  });
+
+  afterEach(() => {
     mockRequire.stopAll();
   });
 });
