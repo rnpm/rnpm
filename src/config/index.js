@@ -18,6 +18,7 @@ exports.getProjectConfig = function getProjectConfig() {
   return Object.assign({}, rnpm, {
     ios: ios.projectConfig(folder, rnpm.ios || {}),
     android: android.projectConfig(folder, rnpm.android || {}),
+    assets: findAssets(folder, rnpm.assets),
   });
 };
 
