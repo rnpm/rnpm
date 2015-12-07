@@ -27,6 +27,14 @@ describe('findPlugins', () => {
     expect(findPlugins(process.cwd()).length).to.equals(2);
   });
 
+  it('should return unique list of plugins', () => {
+    mock(pjsonPath, {
+      dependencies: { 'rnpm-plugin-test': '*' },
+      devDependencies: { 'rnpm-plugin-test': '*' },
+    });
+    expect(findPlugins(process.cwd()).length).to.equals(1);
+  });
+
   afterEach(mock.stopAll);
 
 });
