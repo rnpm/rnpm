@@ -10,6 +10,13 @@ const pluginFolder = path.join(process.cwd(), 'node_modules', 'rnpm-plugin-link'
 
 describe('getCommands', () => {
 
+  beforeEach(() => {
+    mock(
+      path.join(process.cwd(), 'node_modules', 'rnpm-plugin-link'),
+      commands.single
+    );
+  });
+
   it('list of the commands should be an array', () => {
     expect(getCommands()).to.be.an('array');
   });
@@ -35,7 +42,7 @@ describe('getCommands', () => {
     );
     mock(
       path.join(process.cwd(), 'node_modules', 'rnpm-plugin-build'),
-      require('../node_modules/rnpm-plugin-link')
+      commands.single
     );
     expect(getCommands().length).to.be.equal(1);
   });
