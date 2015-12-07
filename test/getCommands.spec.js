@@ -1,5 +1,4 @@
 const path = require('path');
-const Module = require('module');
 const expect = require('chai').expect;
 const getCommands = require('../src/getCommands');
 const mock = require('mock-require');
