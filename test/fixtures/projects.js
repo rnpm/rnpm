@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const android = require('./android');
 const ios = require('./ios');
-const plugins = require('./plugins');
 
 const flat = {
   android: android.valid,
@@ -22,4 +21,4 @@ const withExamples = {
   android: android.valid,
 };
 
-module.exports = { flat, nested, withExamples };
+module.exports = { flat, nested, withExamples, };
