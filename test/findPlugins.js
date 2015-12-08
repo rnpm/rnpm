@@ -7,7 +7,7 @@ const pjsonPath = path.join(process.cwd(), 'package.json');
 
 describe('findPlugins', () => {
 
-  it('list of the plugins should be an array', () => {
+  it('should return an array of dependencies', () => {
     mock(pjsonPath, {
       dependencies: { 'rnpm-plugin-test': '*' },
     });
