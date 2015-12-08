@@ -7,7 +7,7 @@
 
 ## Requirements
 
-- node >= 4.x
+- node >= 4.1
 
 ## Getting started
 
