@@ -19,6 +19,11 @@ describe('findPlugins', () => {
     expect(findPlugins(process.cwd())).to.be.empty;
   });
 
+  it('should return an empty array if there\'s no package.json in the supplied folder', () => {
+    expect(findPlugins('fake-path')).to.be.an('array');
+    expect(findPlugins('fake-path')).to.be.empty;
+  });
+
   it('should return plugins from both dependencies and dev dependencies', () => {
     mock(pjsonPath, {
       dependencies: { 'rnpm-plugin-test': '*' },
