@@ -4,6 +4,7 @@ const getCommands = require('../src/getCommands');
 const findPlugins = require('../src/findPlugins');
 const mock = require('mock-require');
 const mockFs = require('mock-fs');
+const sinon = require('sinon');
 
 const commands = require('./fixtures/commands');
 const testPluginPath = path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test');
@@ -53,19 +54,23 @@ describe('getCommands', () => {
 
   it('should get commands specified by project plugins', () => {
     mockFs({ testDir: {} });
-
-    process.chdir('testDir');
-
     mock(testPluginPath, commands.single);
-    mock(path.join(process.cwd(), 'package.json'), pjson);
     mock(
-      path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test'),
+      path.join(process.cwd(), 'testDir', 'package.json'),
+      pjson
+    );
+    mock(
+      path.join(process.cwd(), 'testDir', 'node_modules', 'rnpm-plugin-test'),
       commands.multiple
     );
 
+    const testCwd = path.join(process.cwd(), 'testDir');
+    const stub = sinon.stub(process, 'cwd').returns(testCwd);
+
     expect(getCommands().length).to.be.equal(2);
 
-    process.chdir('../');
+    stub.restore();
+    mockFs.restore();
   });
 
   afterEach(mock.stopAll);
