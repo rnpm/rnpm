@@ -53,19 +53,22 @@ describe('getCommands', () => {
 
   it('should get commands specified by project plugins', () => {
     mockFs({ testDir: {} });
-
-    process.chdir('testDir');
-
     mock(testPluginPath, commands.single);
-    mock(path.join(process.cwd(), 'package.json'), pjson);
     mock(
-      path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test'),
+      path.join(process.cwd(), 'testDir', 'package.json'),
+      pjson
+    );
+    mock(
+      path.join(process.cwd(), 'testDir', 'node_modules', 'rnpm-plugin-test'),
       commands.multiple
     );
+
+    process.chdir('testDir');
 
     expect(getCommands().length).to.be.equal(2);
 
     process.chdir('../');
+    mockFs.restore();
   });
 
   afterEach(mock.stopAll);
