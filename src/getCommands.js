@@ -18,10 +18,10 @@ module.exports = function getCommands() {
   const rnpmRoot = path.join(__dirname, '..');
   const appRoot = process.cwd();
 
-  const pluginsList = flatten(
+  const pluginsList = flatten([
     findPlugins(rnpmRoot).map(getPluginCommands(rnpmRoot)),
-    findPlugins(appRoot).map(getPluginCommands(appRoot))
-  );
+    findPlugins(appRoot).map(getPluginCommands(appRoot)),
+  ]);
 
   return uniq(pluginsList, 'name');
 };
