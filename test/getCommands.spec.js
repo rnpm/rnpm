@@ -4,6 +4,7 @@ const getCommands = require('../src/getCommands');
 const findPlugins = require('../src/findPlugins');
 const mock = require('mock-require');
 const mockFs = require('mock-fs');
+const sinon = require('sinon');
 
 const commands = require('./fixtures/commands');
 const testPluginPath = path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test');
@@ -63,11 +64,12 @@ describe('getCommands', () => {
       commands.multiple
     );
 
-    process.chdir('testDir');
+    const testCwd = path.join(process.cwd(), 'testDir');
+    const stub = sinon.stub(process, 'cwd').returns(testCwd);
 
     expect(getCommands().length).to.be.equal(2);
 
-    process.chdir('../');
+    stub.restore();
     mockFs.restore();
   });
 
