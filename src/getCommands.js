@@ -21,7 +21,7 @@ module.exports = function getCommands() {
   const pluginsList = flatten([
     findPlugins(rnpmRoot).map(getPluginCommands(rnpmRoot)),
     findPlugins(appRoot).map(getPluginCommands(appRoot)),
-  ]);
+  ], true);
 
   return uniq(pluginsList, 'name');
 };
