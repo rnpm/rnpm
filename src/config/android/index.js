@@ -94,7 +94,7 @@ exports.dependencyConfig = function dependencyConfigAndroid(folder, userConfig) 
   }
 
   const packageImportPath = userConfig.packageImportPath ||
-    `import ${packageName}.${packageClassName}`;
+    `import ${packageName}.${packageClassName};`;
 
   const packageInstance = userConfig.packageInstance ||
     `new ${packageClassName}()`;
