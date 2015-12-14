@@ -7,13 +7,15 @@ const mockFs = require('mock-fs');
 const sinon = require('sinon');
 
 const commands = require('./fixtures/commands');
-const testPluginPath = path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test');
-const testPluginPath2 = path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test-2');
+const nestedPluginPath = path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test');
+const nestedPluginPath2 = path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test-2');
+const flatPluginPath = path.join(process.cwd(), '..', 'rnpm-plugin-test');
+const flatPluginPath2 = path.join(process.cwd(), '..', 'rnpm-plugin-test-2');
 const pjsonPath = path.join(__dirname, '..', 'package.json');
 
 const pjson = {
   dependencies: {
-    [path.basename(testPluginPath)]: '*',
+    [path.basename(nestedPluginPath)]: '*',
   },
 };
 
@@ -21,46 +23,51 @@ describe('getCommands', () => {
 
   beforeEach(() => {
     mock(pjsonPath, pjson);
+    mock(nestedPluginPath, commands.single);
+    mock(flatPluginPath, commands.single);
   });
 
   it('list of the commands should be a non-empty array', () => {
-    mock(testPluginPath, commands.single);
     expect(getCommands()).to.be.not.empty;
     expect(getCommands()).to.be.an('array');
   });
 
   it('should export one command', () => {
-    mock(testPluginPath, commands.single);
     expect(getCommands().length).to.be.equal(1);
   });
 
   it('should export multiple commands', () => {
-    mock(testPluginPath, commands.multiple);
+    mock(nestedPluginPath, commands.multiple);
+    mock(flatPluginPath, commands.multiple);
+
     expect(getCommands().length).to.be.equal(2);
   });
 
   it('should export unique list of commands by name', () => {
     mock(pjsonPath, {
       dependencies: {
-        [path.basename(testPluginPath)]: '*',
-        [path.basename(testPluginPath2)]: '*',
+        [path.basename(nestedPluginPath)]: '*',
+        [path.basename(nestedPluginPath2)]: '*',
       },
     });
-    mock(testPluginPath, commands.single);
-    mock(testPluginPath2, commands.single);
+    mock(nestedPluginPath2, commands.single);
+    mock(flatPluginPath2, commands.single);
 
     expect(getCommands().length).to.be.equal(1);
   });
 
   it('should get commands specified by project plugins', () => {
     mockFs({ testDir: {} });
-    mock(testPluginPath, commands.single);
     mock(
       path.join(process.cwd(), 'testDir', 'package.json'),
       pjson
     );
     mock(
       path.join(process.cwd(), 'testDir', 'node_modules', 'rnpm-plugin-test'),
+      commands.multiple
+    );
+    mock(
+      path.join(process.cwd(), 'testDir', '..', 'rnpm-plugin-test'),
       commands.multiple
     );
 
