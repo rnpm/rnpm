@@ -11,12 +11,12 @@ const findPlugins = require('./findPlugins');
  */
 const getPluginCommands = cwd => name => {
   const nested = path.join(cwd, 'node_modules', name);
-  
+
   /* For rnpm installed locally with flat dependencies structure */
   const flat = path.join(cwd, '..', name);
-  
-  return require(fs.existsSync(nested) ? nested : flat); 
-}
+
+  return require(fs.existsSync(nested) ? nested : flat);
+};
 
 /**
  * @return {Array} Array of commands
