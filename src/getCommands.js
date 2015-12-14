@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const flatten = require('lodash.flatten');
 const uniq = require('lodash.uniq');
 const findPlugins = require('./findPlugins');
@@ -8,8 +9,14 @@ const findPlugins = require('./findPlugins');
  * @param  {String}       name Name of the plugin
  * @return {Array|Object}      Plugin's commands
  */
-const getPluginCommands = cwd => name =>
-  require(path.join(cwd, 'node_modules', name));
+const getPluginCommands = cwd => name => {
+  const nested = path.join(cwd, 'node_modules', name);
+  
+  /* For rnpm installed locally with flat dependencies structure */
+  const flat = path.join(cwd, '..', name);
+  
+  return require(fs.existsSync(nested) ? nested : flat); 
+}
 
 /**
  * @return {Array} Array of commands
