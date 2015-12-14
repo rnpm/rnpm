@@ -43,7 +43,7 @@ describe('ios::findProject', () => {
       },
     });
 
-    expect(findProject('').toLowerCase()).to.not.contain('tests');
+    expect(findProject('').toLowerCase()).to.not.contain('test');
   });
 
   afterEach(() => {
