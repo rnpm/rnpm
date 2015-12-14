@@ -22,7 +22,7 @@ From your's project folder install some react-native modules that require additi
 ```bash
 $ rnpm link
 ```
-In the case you want to link only one depepndency, you can specify it's name as an argument:
+In the case you want to link only one depepndency, you can specify its name as an argument:
 ```bash
 $ rnpm link react-native-blur
 ```
