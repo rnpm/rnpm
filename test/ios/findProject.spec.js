@@ -12,20 +12,41 @@ describe('ios::findProject', () => {
 
   it('should return path to xcodeproj if found', () => {
     const userConfig = {};
-    const folder = path.join('testDir', 'flat');
 
-    expect(findProject(folder)).to.contain('.xcodeproj');
+    mockFs(projects.flat);
+
+    expect(findProject('')).to.contain('.xcodeproj');
   });
 
-  it('should ignore xcodeproj from examples', () => {
+  it('should ignore xcodeproj from example folders', () => {
     const userConfig = {};
-    const folder = path.join('testDir', 'withExamples');
 
-    expect(findProject(folder)).to.not.contain('Examples');
+    mockFs({
+      examples: projects.flat,
+      Examples: projects.flat,
+      App: projects.flat,
+    });
+
+    expect(findProject('').toLowerCase()).to.not.contain('examples');
   });
 
+  it('should ignore xcodeproj from test folders at any level', () => {
+    const userConfig = {};
 
-  after(() => {
+    mockFs({
+      test: projects.flat,
+      IntegrationTests: projects.flat,
+      tests: projects.flat,
+      app: {
+        tests: projects.flat,
+        src: projects.flat,
+      },
+    });
+
+    expect(findProject('').toLowerCase()).to.not.contain('tests');
+  });
+
+  afterEach(() => {
     mockFs.restore();
   });
 
