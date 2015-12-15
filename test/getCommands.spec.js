@@ -83,7 +83,7 @@ describe('getCommands', () => {
       const revert = getCommands.__set__('__dirname', path.join(appNodeModules, 'rnpm/src'));
 
       mock(path.join(appNodeModules, 'rnpm/package.json'), {});
-      mock(path.join(appNodeModules, 'rnpm-plugin-local-app-plugin'), {name: 'local'});
+      mock('rnpm-plugin-local-app-plugin', {name: 'local'});
       mock(appJSON, {
         dependencies: {
           'rnpm-plugin-local-app-plugin': '*',
