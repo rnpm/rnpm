@@ -12,6 +12,9 @@ module.exports = function getCommands() {
   const appRoot = process.cwd();
 
   return uniq(
-    flatten(findPlugins([rnpmRoot, appRoot]).map(require))
+    flatten([
+      findPlugins([rnpmRoot]).map(require),
+      findPlugins([appRoot]).map(name => require(path.join(appRoot, 'node_modules', name))),
+    ], true)
   , 'name');
 };
