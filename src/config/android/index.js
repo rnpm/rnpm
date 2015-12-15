@@ -69,15 +69,20 @@ exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
  * different config that applies to packages only
  */
 exports.dependencyConfig = function dependencyConfigAndroid(folder, userConfig) {
-  const manifestPath = findManifest(folder);
   const src = userConfig.sourceDir || findAndroidAppFolder(folder);
 
-  if (!manifestPath || !src) {
+  if (!src) {
+    return null;
+  }
+
+  const sourceDir = path.join(folder, src);
+  const manifestPath = findManifest(sourceDir);
+
+  if (!manifestPath) {
     return null;
   }
 
   const manifest = readManifest(manifestPath);
-  const sourceDir = path.join(folder, src);
   const packageName = userConfig.packageName || getPackageName(manifest);
   const packageClassName = findPackageClassName(sourceDir);
 
