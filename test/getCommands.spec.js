@@ -21,7 +21,6 @@ const pjson = {
 
 const appJSON = path.join(process.cwd(), 'package.json');
 const appNodeModules = path.join(process.cwd(), 'node_modules');
-const globalNodeModules = '/usr/local/lib/node_modules';
 
 describe('getCommands', () => {
 
@@ -98,19 +97,21 @@ describe('getCommands', () => {
   });
 
   describe('in global installation', () => {
+    const GLOBAL_NODE_MODULES = '/usr/local/lib/node_modules';
+    const GLOBAL_RNPM_PATH = path.join(GLOBAL_NODE_MODULES, '/rnpm/package.json');
 
     var getCommands;
     var revert;
 
     before(() => {
       getCommands = rewire('../src/getCommands');
-      revert = getCommands.__set__('__dirname', path.join(globalNodeModules, 'rnpm/src'));
+      revert = getCommands.__set__('__dirname', path.join(GLOBAL_NODE_MODULES, 'rnpm/src'));
     });
 
     it('should load rnpm own plugins', () => {
       mock('rnpm-plugin-global', commands.single);
       mock(appJSON, {});
-      mock(path.join(globalNodeModules, '/rnpm/package.json'), {
+      mock(GLOBAL_RNPM_PATH, {
         dependencies: {
           'rnpm-plugin-global': '*',
         },
@@ -121,7 +122,7 @@ describe('getCommands', () => {
 
     it('should load app specific plugins', () => {
       mock(path.join(appNodeModules, 'rnpm-plugin-local-app-plugin'), commands.single);
-      mock(path.join(globalNodeModules, '/rnpm/package.json'), {});
+      mock(GLOBAL_RNPM_PATH, {});
       mock(appJSON, {
         dependencies: {
           'rnpm-plugin-local-app-plugin': '*',
