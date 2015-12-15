@@ -70,7 +70,7 @@ describe('getCommands', () => {
     });
 
     it('should load rnpm plugins', () => {
-      mock('rnpm-plugin-global', {name: 'global'});
+      mock('rnpm-plugin-global', commands.single);
       mock(appJSON, {});
       mock(path.join(appNodeModules, 'rnpm/package.json'), {
         dependencies: {
@@ -78,11 +78,11 @@ describe('getCommands', () => {
         },
       });
 
-      expect(getCommands()[0].name).to.be.equal('global');
+      expect(getCommands()[0]).to.be.equal(commands.single);
     });
 
     it('should load app specific plugins', () => {
-      mock('rnpm-plugin-local-app-plugin', {name: 'local'});
+      mock('rnpm-plugin-local-app-plugin', commands.single);
       mock(path.join(appNodeModules, 'rnpm/package.json'), {});
       mock(appJSON, {
         dependencies: {
@@ -90,7 +90,7 @@ describe('getCommands', () => {
         },
       });
 
-      expect(getCommands()[0].name).to.be.equal('local');
+      expect(getCommands()[0]).to.be.equal(commands.single);
     });
 
     after(() => revert());
@@ -108,7 +108,7 @@ describe('getCommands', () => {
     });
 
     it('should load rnpm own plugins', () => {
-      mock('rnpm-plugin-global', {name: 'global'});
+      mock('rnpm-plugin-global', commands.single);
       mock(appJSON, {});
       mock(path.join(globalNodeModules, '/rnpm/package.json'), {
         dependencies: {
@@ -116,11 +116,11 @@ describe('getCommands', () => {
         },
       });
 
-      expect(getCommands()[0].name).to.be.equal('global');
+      expect(getCommands()[0]).to.be.equal(commands.single);
     });
 
     it('should load app specific plugins', () => {
-      mock(path.join(appNodeModules, 'rnpm-plugin-local-app-plugin'), {name: 'local'});
+      mock(path.join(appNodeModules, 'rnpm-plugin-local-app-plugin'), commands.single);
       mock(path.join(globalNodeModules, '/rnpm/package.json'), {});
       mock(appJSON, {
         dependencies: {
@@ -128,7 +128,7 @@ describe('getCommands', () => {
         },
       });
 
-      expect(getCommands()[0].name).to.be.equal('local');
+      expect(getCommands()[0]).to.be.equal(commands.single);
     });
 
     after(() => revert());
