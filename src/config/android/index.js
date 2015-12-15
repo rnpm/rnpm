@@ -15,10 +15,15 @@ const getPackageName = (manifest) => manifest.attr.package;
  */
 exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
   const src = userConfig.sourceDir || findAndroidAppFolder(folder);
+
+  if (!src) {
+    return null;
+  }
+
   const sourceDir = path.join(folder, src);
   const manifestPath = findManifest(sourceDir);
 
-  if (!manifestPath || !src) {
+  if (!manifestPath) {
     return null;
   }
 
