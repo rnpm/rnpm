@@ -1,7 +1,6 @@
 const path = require('path');
 const expect = require('chai').expect;
 const getCommands = require('../src/getCommands');
-const findPlugins = require('../src/findPlugins');
 const mock = require('mock-require');
 const mockFs = require('mock-fs');
 const sinon = require('sinon');
@@ -23,6 +22,7 @@ describe('getCommands', () => {
 
   beforeEach(() => {
     mock(pjsonPath, pjson);
+    mock('rnpm-plugin-test', commands.single);
     mock(nestedPluginPath, commands.single);
     mock(flatPluginPath, commands.single);
   });
@@ -37,8 +37,7 @@ describe('getCommands', () => {
   });
 
   it('should export multiple commands', () => {
-    mock(nestedPluginPath, commands.multiple);
-    mock(flatPluginPath, commands.multiple);
+    mock('rnpm-plugin-test', commands.multiple);
 
     expect(getCommands().length).to.be.equal(2);
   });
@@ -50,34 +49,9 @@ describe('getCommands', () => {
         [path.basename(nestedPluginPath2)]: '*',
       },
     });
-    mock(nestedPluginPath2, commands.single);
-    mock(flatPluginPath2, commands.single);
+    mock('rnpm-plugin-test-2', commands.single);
 
     expect(getCommands().length).to.be.equal(1);
-  });
-
-  it('should get commands specified by project plugins', () => {
-    mockFs({ testDir: {} });
-    mock(
-      path.join(process.cwd(), 'testDir', 'package.json'),
-      pjson
-    );
-    mock(
-      path.join(process.cwd(), 'testDir', 'node_modules', 'rnpm-plugin-test'),
-      commands.multiple
-    );
-    mock(
-      path.join(process.cwd(), 'testDir', '..', 'rnpm-plugin-test'),
-      commands.multiple
-    );
-
-    const testCwd = path.join(process.cwd(), 'testDir');
-    const stub = sinon.stub(process, 'cwd').returns(testCwd);
-
-    expect(getCommands().length).to.be.equal(2);
-
-    stub.restore();
-    mockFs.restore();
   });
 
   afterEach(mock.stopAll);

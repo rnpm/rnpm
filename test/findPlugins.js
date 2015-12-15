@@ -11,17 +11,17 @@ describe('findPlugins', () => {
     mock(pjsonPath, {
       dependencies: { 'rnpm-plugin-test': '*' },
     });
-    expect(findPlugins(process.cwd())).to.be.an('array');
+    expect(findPlugins([process.cwd()])).to.be.an('array');
   });
 
   it('should return an empty array if there\'re no plugins in this folder', () => {
     mock(pjsonPath, {});
-    expect(findPlugins(process.cwd())).to.be.empty;
+    expect(findPlugins([process.cwd()])).to.be.empty;
   });
 
   it('should return an empty array if there\'s no package.json in the supplied folder', () => {
-    expect(findPlugins('fake-path')).to.be.an('array');
-    expect(findPlugins('fake-path')).to.be.empty;
+    expect(findPlugins(['fake-path'])).to.be.an('array');
+    expect(findPlugins(['fake-path'])).to.be.empty;
   });
 
   it('should return plugins from both dependencies and dev dependencies', () => {
@@ -29,7 +29,7 @@ describe('findPlugins', () => {
       dependencies: { 'rnpm-plugin-test': '*' },
       devDependencies: { 'rnpm-plugin-test-2': '*' },
     });
-    expect(findPlugins(process.cwd()).length).to.equals(2);
+    expect(findPlugins([process.cwd()]).length).to.equals(2);
   });
 
   it('should return unique list of plugins', () => {
@@ -37,7 +37,7 @@ describe('findPlugins', () => {
       dependencies: { 'rnpm-plugin-test': '*' },
       devDependencies: { 'rnpm-plugin-test': '*' },
     });
-    expect(findPlugins(process.cwd()).length).to.equals(1);
+    expect(findPlugins([process.cwd()]).length).to.equals(1);
   });
 
   afterEach(mock.stopAll);
