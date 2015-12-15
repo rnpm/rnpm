@@ -10,7 +10,7 @@ describe('android::getProjectConfig', () => {
     mockFs({ testDir: projects });
   });
 
-  it('should return `null` if manifest file haven\'t been found', () => {
+  it('should return `null` if manifest file hasn\'t been found', () => {
     const userConfig = {};
     const folder = path.join('testDir', 'empty');
 
