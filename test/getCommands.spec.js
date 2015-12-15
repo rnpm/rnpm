@@ -4,6 +4,7 @@ const getCommands = require('../src/getCommands');
 const mock = require('mock-require');
 const mockFs = require('mock-fs');
 const sinon = require('sinon');
+const rewire = require('rewire');
 
 const commands = require('./fixtures/commands');
 const nestedPluginPath = path.join(process.cwd(), 'node_modules', 'rnpm-plugin-test');
@@ -17,6 +18,10 @@ const pjson = {
     [path.basename(nestedPluginPath)]: '*',
   },
 };
+
+const appJSON = path.join(process.cwd(), 'package.json');
+const appNodeModules = path.join(process.cwd(), 'node_modules');
+const globalNodeModules = '/usr/local/lib/node_modules';
 
 describe('getCommands', () => {
 
@@ -53,6 +58,83 @@ describe('getCommands', () => {
 
     expect(getCommands().length).to.be.equal(1);
   });
+
+  describe('in local installation', () => {
+
+    var getCommands;
+    var revert;
+
+    before(() => {
+      getCommands = rewire('../src/getCommands');
+      revert = getCommands.__set__('__dirname', path.join(appNodeModules, 'rnpm/src'));
+    });
+
+    it('should load rnpm plugins', () => {
+      mock('rnpm-plugin-global', commands.single);
+      mock(appJSON, {});
+      mock(path.join(appNodeModules, 'rnpm/package.json'), {
+        dependencies: {
+          'rnpm-plugin-global': '*',
+        },
+      });
+
+      expect(getCommands()[0]).to.be.equal(commands.single);
+    });
+
+    it('should load app specific plugins', () => {
+      mock('rnpm-plugin-local-app-plugin', commands.single);
+      mock(path.join(appNodeModules, 'rnpm/package.json'), {});
+      mock(appJSON, {
+        dependencies: {
+          'rnpm-plugin-local-app-plugin': '*',
+        },
+      });
+
+      expect(getCommands()[0]).to.be.equal(commands.single);
+    });
+
+    after(() => revert());
+
+  });
+
+  describe('in global installation', () => {
+
+    var getCommands;
+    var revert;
+
+    before(() => {
+      getCommands = rewire('../src/getCommands');
+      revert = getCommands.__set__('__dirname', path.join(globalNodeModules, 'rnpm/src'));
+    });
+
+    it('should load rnpm own plugins', () => {
+      mock('rnpm-plugin-global', commands.single);
+      mock(appJSON, {});
+      mock(path.join(globalNodeModules, '/rnpm/package.json'), {
+        dependencies: {
+          'rnpm-plugin-global': '*',
+        },
+      });
+
+      expect(getCommands()[0]).to.be.equal(commands.single);
+    });
+
+    it('should load app specific plugins', () => {
+      mock(path.join(appNodeModules, 'rnpm-plugin-local-app-plugin'), commands.single);
+      mock(path.join(globalNodeModules, '/rnpm/package.json'), {});
+      mock(appJSON, {
+        dependencies: {
+          'rnpm-plugin-local-app-plugin': '*',
+        },
+      });
+
+      expect(getCommands()[0]).to.be.equal(commands.single);
+    });
+
+    after(() => revert());
+
+  });
+
 
   afterEach(mock.stopAll);
 
