@@ -8,7 +8,7 @@ const GLOB_PATTERN = '**/*.xcodeproj';
 /**
  * These folders will be excluded from search to speed it up
  */
-const GLOB_EXCLUDE_PATTERN = ['node_modules/**', 'Examples/**', 'examples/**', 'Pods/**'];
+const GLOB_EXCLUDE_PATTERN = ['node_modules/**', '**/@(E|e)xamples/**', '**/*@(T|t)est*/**', 'Pods/**'];
 
 /**
  * Finds iOS project by looking for all .xcodeproj files
