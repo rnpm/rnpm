@@ -150,4 +150,35 @@ describe('getCommands', () => {
 
   });
 
+  describe('rnpm and project plugins', () => {
+
+    var getCommands;
+    var revert;
+
+    before(() => {
+      getCommands = rewire('../src/getCommands');
+      revert = getCommands.__set__({__dirname: path.join(LOCAL_NODE_MODULES, 'rnpm/src')});
+    });
+
+    after(() => revert());
+
+    it('should load concatenated list of plugins', () => {
+      mock(APP_JSON, SAMPLE_RNPM_JSON);
+      mock(LOCAL_RNPM_PJSON, {
+        dependencies: {
+          [`${SAMPLE_RNPM_PLUGIN}-2`]: '*',
+        },
+      });
+
+      mock(
+        path.join(LOCAL_NODE_MODULES, SAMPLE_RNPM_PLUGIN),
+        commands.multiple
+      );
+      mock(`${SAMPLE_RNPM_PLUGIN}-2`, commands.single);
+
+      expect(getCommands().length).to.be.equal(2);
+    });
+
+  });
+
 });
