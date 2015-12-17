@@ -176,7 +176,7 @@ describe('getCommands', () => {
       );
       mock(`${SAMPLE_RNPM_PLUGIN}-2`, commands.single);
 
-      expect(getCommands().length).to.be.equal(2);
+      expect(getCommands().length).to.be.equal(3);
     });
 
   });
