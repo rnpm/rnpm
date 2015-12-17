@@ -1,6 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 const union = require('lodash.union');
+const uniq = require('lodash.uniq');
+const flatten = require('lodash.flatten');
 
 /**
  * Filter dependencies by name pattern
@@ -9,12 +11,7 @@ const union = require('lodash.union');
  */
 const isPlugin = (dependency) => !!~dependency.indexOf('rnpm-plugin-');
 
-/**
- * Find plugins in package.json of the given folder
- * @param {String} folder Path to the folder to get the package.json from
- * @type  {Array}         Array of plugins or an empty array if no package.json found
- */
-module.exports = function findPlugins(folder) {
+const findPluginInFolder = (folder) => {
   try {
     const pjson = require(path.join(folder, 'package.json'));
   } catch (e) {
@@ -27,4 +24,13 @@ module.exports = function findPlugins(folder) {
   );
 
   return deps.filter(isPlugin);
+};
+
+/**
+ * Find plugins in package.json of the given folder
+ * @param {String} folder Path to the folder to get the package.json from
+ * @type  {Array}         Array of plugins or an empty array if no package.json found
+ */
+module.exports = function findPlugins(folders) {
+  return uniq(flatten(folders.map(findPluginInFolder)));
 };
