@@ -7,7 +7,7 @@ exports.single = {
 exports.multiple = [{
   func: () => {},
   description: 'Test action #1',
-  name: 'test',
+  name: 'test1',
 }, {
   func: () => {},
   description: 'Test action #2',
