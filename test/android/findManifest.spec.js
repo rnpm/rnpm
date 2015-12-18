@@ -2,26 +2,24 @@ const path = require('path');
 const expect = require('chai').expect;
 const findManifest = require('../../src/config/android/findManifest');
 const mockFs = require('mock-fs');
-const projects = require('../fixtures/projects');
+const mocks = require('../fixtures/android');
 
 describe('android::findManifest', () => {
 
-  before(() => {
-    mockFs({ testDir: projects });
-  });
+  before(() => mockFs({
+    empty: {},
+    flat: {
+      android: mocks.valid,
+    },
+  }));
 
   it('should return a manifest path if file exists in the folder', () => {
-    const fixturesPath = path.join('testDir', 'flat');
-    expect(findManifest(fixturesPath)).to.be.a('string');
+    expect(findManifest('flat')).to.be.a('string');
   });
 
   it('should return `null` if there is no manifest in the folder', () => {
-    const emptyFolder = path.join('testDir', 'empty');
-    expect(findManifest(emptyFolder)).to.be.null;
+    expect(findManifest('empty')).to.be.null;
   });
 
-  after(() => {
-    mockFs.restore();
-  });
-
+  after(mockFs.restore);
 });

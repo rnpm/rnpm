@@ -6,13 +6,16 @@ const path = require('path');
  * @return {String}
  */
 module.exports = function findAndroidAppFolder(folder) {
-  if (!fs.existsSync(path.join(folder, 'android'))) {
-    return null;
+  const flat = 'android';
+  const nested = path.join('android', 'app');
+
+  if (fs.existsSync(path.join(folder, nested))) {
+    return nested;
   }
 
-  if (fs.existsSync(path.join(folder, 'android', 'app'))) {
-    return path.join('android', 'app');
+  if (fs.existsSync(path.join(folder, flat))) {
+    return flat;
   }
 
-  return 'android';
+  return null;
 };

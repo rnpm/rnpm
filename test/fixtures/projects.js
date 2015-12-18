@@ -15,4 +15,10 @@ const nested = {
   ios: ios.valid,
 };
 
-module.exports = { flat, nested };
+const withExamples = {
+  Examples: flat,
+  ios: ios.valid,
+  android: android.valid,
+};
+
+module.exports = { flat, nested, withExamples };
