@@ -57,6 +57,7 @@ exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
   return {
     sourceDir,
     folder,
+    manifestPath,
     buildGradlePath,
     settingsGradlePath,
     assetsPath,
