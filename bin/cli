@@ -15,9 +15,6 @@ log.heading = 'rnpm';
 
 cli.version(pkg.version);
 
-const isArray = (arg) =>
-  Object.prototype.toString.call(arg) === '[object Array]';
-
 const addCommand = (command) =>
   cli
     .command(command.name)
