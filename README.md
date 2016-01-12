@@ -111,12 +111,12 @@ module.exports = [{
 ```
 
 #### `link` hooks
-If you're mastering your plugin which requires some user input (for example, google analytics token), you can use rnpm's hooks. For instance:
+If you're mastering your plugin which requires some user input (for example, google analytics token), you can use rnpm's prelink and postlink hooks. For instance:
 
 ```json
 "rnpm": {
   "hooks": {
-    "before": "./bin/input.js"
+    "prelink": "./bin/input.js"
   }
 }
 ```
