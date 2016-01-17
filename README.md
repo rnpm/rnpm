@@ -110,6 +110,34 @@ module.exports = [{
 }]
 ```
 
+#### `link` hooks
+If you're mastering your plugin which requires some user input (for example, google analytics token), you can use rnpm's prelink and postlink hooks. For instance:
+
+```json
+"rnpm": {
+  "hooks": {
+    "prelink": "./bin/input.js"
+  }
+}
+```
+
+Let's assume we have a `bin/input.js` executable:
+
+```javascript
+const inquirer = require('inquirer');
+
+inquirer.prompt([{
+  message: 'Please, insert here your GA token',
+  name: 'GAToken'
+}], (answers) => {
+  // Do something with answers.GAToken
+});
+```
+
+Run `link` command and that's what you should see:
+
+![image](http://s22.postimg.org/g6m8w0t75/ezgif_com_optimize.gif)
+
 #### Using third-party plugins
 
 All existing plugins follows a naming convention: `rnpm-plugin-<plugin name>` (e.g. [`rnpm-plugin-link`]((https://github.com/rnpm/rnpm-plugin-link))). To include plugin to your rnpm build, just install it as a npm package, it'll be included to your rnpm tool automatically (wow, magic!). Let's consider following example: we have a `rnpm-plugin-something` plugin which we doesn't provide you automatically with `rnpm` tool. To install it manually, you need to run `npm install rnpm-plugin-something --save-dev` inside your project folder. Then, you can run it by `rnpm something` or check if command has been successfully installed by running `rnpm --help` - you should see a new plugin in the list of commands.
@@ -123,7 +151,7 @@ The documentation is still in progress, but if you are interested in the concept
 ## Roadmap
 
 First prio: **core elements**
-- [ ] Test coverage
+- [X] Test coverage
 - [X] Plugins support
 
 Second prio: **new plugins**
