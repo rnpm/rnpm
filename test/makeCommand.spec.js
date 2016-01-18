@@ -11,7 +11,7 @@ describe('makeCommand', () => {
   });
 
   it('should throw an error if there\'s no callback provided', () => {
-    expect(command).to.throw(Error);
+    expect(command).to.throw(/missed a callback/);
   });
 
   it('should invoke a callback after command execution', (done) => {

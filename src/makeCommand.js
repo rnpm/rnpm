@@ -4,7 +4,7 @@ const log = require('npmlog');
 module.exports = function makeCommand(command) {
   return (cb) => {
     if (!cb) {
-      cb(new Error(`You missed a callback function for the ${command} command`));
+      throw new Error(`You missed a callback function for the ${command} command`);
     }
 
     const args = command.split(' ');
