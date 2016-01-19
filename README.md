@@ -116,6 +116,24 @@ All existing plugins follows a naming convention: `rnpm-plugin-<plugin name>` (e
 
 For further reading you can check our [example plugin](https://github.com/rnpm/rnpm-plugin-link)
 
+### Commands
+In the case you need an additional input from the user, you may make a `command` for this purpose. Commands works similar to the npm scripts.
+
+*Depdendency's `package.json`:*
+```json
+"rnpm": {
+  "commands": {
+    "prelink": "./bin/requestGAToken",
+    "postlink": "./bin/linkingSucceeded"
+  }
+}
+```
+In this scenario we're using custom `prelink` and `postlink` hooks for `rnpm-plugin-link` to tell `rnpm` that we want to run `prelink` script before and `postlink` after the linking process.
+
+**Note:** `commands` may be async and require some user input using third-party libraries (inquirer for instance). You don't need to worry about async queues, we do it for you under the rnpm hood.
+
+While making your own plugins for `rnpm` you may use any names for the commands, but we strongly recommend you to use a convention we suggest to avoid collisions: `when` + `plugin name`: `prelink` = `pre` + `link`.
+
 ### Developers
 
 The documentation is still in progress, but if you are interested in the concept and good practices, see sample implementation [here](https://github.com/rnpm/rnpm-plugin-link/blob/master/index.js)

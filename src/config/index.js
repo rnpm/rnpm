@@ -3,6 +3,7 @@ const path = require('path');
 const android = require('./android');
 const ios = require('./ios');
 const findAssets = require('./findAssets');
+const wrapCommands = require('./wrapCommands');
 
 const getRNPMConfig = (folder) =>
   require(path.join(folder, './package.json')).rnpm || {};
@@ -35,5 +36,6 @@ exports.getDependencyConfig = function getDependencyConfig(packageName) {
     ios: ios.dependencyConfig(folder, rnpm.ios || {}),
     android: android.dependencyConfig(folder, rnpm.android || {}),
     assets: findAssets(folder, rnpm.assets),
+    commands: wrapCommands(rnpm.commands),
   });
 };
