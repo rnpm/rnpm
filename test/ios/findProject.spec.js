@@ -24,10 +24,12 @@ describe('ios::findProject', () => {
     mockFs({
       examples: projects.flat,
       Examples: projects.flat,
-      App: projects.flat,
+      example: projects.flat,
+      KeychainExample: projects.flat,
+      Zpp: projects.flat,
     });
 
-    expect(findProject('').toLowerCase()).to.not.contain('examples');
+    expect(findProject('').toLowerCase()).to.not.contain('example');
   });
 
   it('should ignore xcodeproj from test folders at any level', () => {
@@ -37,7 +39,7 @@ describe('ios::findProject', () => {
       test: projects.flat,
       IntegrationTests: projects.flat,
       tests: projects.flat,
-      app: {
+      Zpp: {
         tests: projects.flat,
         src: projects.flat,
       },
