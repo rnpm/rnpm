@@ -192,6 +192,8 @@ This project follows semver. There are several 0.x versions published to npm reg
 
 We welcome all contributors, simply make an issue or send over a pull request. We really appreciate your help - let's build this tool together!
 
+Special thanks to [Sonny Lazuardi](https://github.com/sonnylazuardi) for the awesome rnpm logo!
+
 ## Sponsors
 
 This tool development and maintainance is sponsored by below companies:
