@@ -4,7 +4,7 @@
 
 **React Native Package Manager** built to ease your daily React Native development. Inspired by `Cocoapods`, `fastlane` and `react-native link` it acts as your best friend and guides you through the native unknowns. It aims to work with almost all packages available with no extra configuration required.
 
-**This version is still in alpha as we are getting unit tests written. Feel free to submit bugs and feature requests. Always use this tool in a connection with source control to make sure all changes can be reverted.**
+> RNPM should always be run in projects that use **version control** to ensure any changes made can be easily reverted
 
 ## Requirements
 
