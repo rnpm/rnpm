@@ -7,6 +7,9 @@ const wrapCommands = require('./wrapCommands');
 
 const getRNPMConfig = (folder) =>
   require(path.join(folder, './package.json')).rnpm || {};
+  
+const getReactNativeVersion = (folder) =>
+  require(path.join(folder, './node_modules/react-native/package.json')).version;
 
 /**
  * Returns project config from the current working directory
@@ -20,6 +23,7 @@ exports.getProjectConfig = function getProjectConfig() {
     ios: ios.projectConfig(folder, rnpm.ios || {}),
     android: android.projectConfig(folder, rnpm.android || {}),
     assets: findAssets(folder, rnpm.assets),
+    rnVersion: getReactNativeVersion(folder),
   });
 };
 
