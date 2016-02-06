@@ -21,6 +21,7 @@ exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
   }
 
   const sourceDir = path.join(folder, src);
+  const isFlat = sourceDir.indexOf('app') === -1;
   const manifestPath = findManifest(sourceDir);
 
   if (!manifestPath) {
@@ -56,6 +57,7 @@ exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
 
   return {
     sourceDir,
+    isFlat,
     folder,
     manifestPath,
     buildGradlePath,
