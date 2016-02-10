@@ -167,7 +167,7 @@ Sure you can! Try doing something like this in your package.json:
 ```json
 ...
 "dependencies": {
-  "rnpm": "1.4.1"
+  "rnpm": "^1.4.1"
 },
 "scripts": { 
   "postinstall": "cd ../.. && rnpm link <name>"
