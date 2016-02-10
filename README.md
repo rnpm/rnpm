@@ -170,11 +170,11 @@ Sure you can! Try doing something like this in your package.json:
   "rnpm": "1.4.1"
 },
 "scripts": { 
-  "postinstall": "cd ../.. && rnpm link <name>" 
-  // "cd ../.." is needed to go up to the working directory of the parent project to be linked with this plugin
+  "postinstall": "cd ../.. && rnpm link <name>"
 }
 ...
 ```
+Note that the `cd ../..` in the postinstall script is needed to go up to the working directory of the parent project that is to be linked with your plugin.
 
 ### `rnpm link <name>` fails with `ERRINVALIDPROJ`
 
