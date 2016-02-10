@@ -166,9 +166,13 @@ Yes, in fact - it has nothing to do with it. What it does is just linking static
 Sure you can! Try doing something like this in your package.json:
 ```json
 ...
-"scripts": {
-  "postinstall": "rnpm link"
+"dependencies": {
+  "rnpm": "1.4.1"
 },
+"scripts": { 
+  "postinstall": "cd ../.. && rnpm link <name>" 
+  // "cd ../.." is needed to go up to the working directory of the parent project to be linked with this plugin
+}
 ...
 ```
 
