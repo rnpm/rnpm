@@ -61,6 +61,15 @@ $ rnpm link react-native-module
 
 Source: https://github.com/rnpm/rnpm-plugin-link
 
+#### rnpm install [name]
+Automatically instals given package and links it to your project. It's equivalent to running the previous example. It's just instead of running two commands, you can now just:
+
+```bash
+$ rnpm install react-native-module
+```
+
+Source: https://github.com/rnpm/rnpm-plugin-install
+
 ## Advanced usage
 If you're authoring an awesome react-native library with custom assets, you probably need an additional step after linking - copying assets to the application folder. Well, that's not complicated: just add `rnpm` section in your `package.json` file:
 ```json
