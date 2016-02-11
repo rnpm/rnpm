@@ -1,5 +1,4 @@
 const spawn = require('child_process').spawn;
-const log = require('npmlog');
 
 module.exports = function makeCommand(command) {
   return (cb) => {
