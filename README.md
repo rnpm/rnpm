@@ -12,20 +12,29 @@
 
 ## Getting started
 
-**Installation**
+#### Installation
 ```bash
 $ npm install rnpm -g
 ```
 
-**Running**
+#### Running
 
-From your's project folder install some react-native modules that require additional installation and simply run:
+**Installing dependency:**
+
+If you want to install a dependency and link it in one run:
+```bash
+$ rnpm install <name>
+```
+
+**Linking dependency:**
+
+If you already have some installed (but not linked) modules, run:
 ```bash
 $ rnpm link
 ```
 In the case you want to link only one depepndency, you can specify its name as an argument:
 ```bash
-$ rnpm link react-native-blur
+$ rnpm link <name>
 ```
 
 ## Rationale
