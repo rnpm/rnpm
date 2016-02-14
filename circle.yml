@@ -1,10 +1,12 @@
 machine:
+  pre:
+    - npm install codeclimate-test-reporter
   node:
     version: 4.2.1
 
 deployment:
   coverage:
-    branch: master
+    branch: /*/
     owner: rnpm
     commands:
       - npm run coverage
