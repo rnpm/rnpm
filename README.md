@@ -39,7 +39,7 @@ $ rnpm link <name>
 
 ## Rationale
 
-Why? Tooling is important. We all know this. One of the biggest advantages of native iOS development is XCode and its great tools. Unfortunately, the process of adding native dependencies to React Native projects is far from perfect and our aim is to make it fun again.
+Why? Tooling is important. We all know this. One of the biggest advantages of native iOS development is Xcode and its great tools. Unfortunately, the process of adding native dependencies to React Native projects is far from perfect and our aim is to make it fun again.
 
 React Native Package Manager provides you with (soon) multiple actions to help you with daily development, including automatic app store releases, over-the-air integration with AppHub and react-native-playground shares.
 
