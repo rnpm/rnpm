@@ -1,5 +1,4 @@
 const path = require('path');
-const xml = require('xmldoc');
 const fs = require('fs');
 const glob = require('glob');
 const findAndroidAppFolder = require('./findAndroidAppFolder');
