@@ -4,8 +4,8 @@
   "description": "React Native Package Manager",
   "main": "./src/getActions.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --recursive",
-    "coverage": "node_modules/istanbul/lib/cli.js cover node_modules/.bin/_mocha -- --recursive"
+    "test": "mocha --recursive",
+    "coverage": "istanbul cover _mocha -- --recursive"
   },
   "bin": {
     "rnpm": "bin/cli"
