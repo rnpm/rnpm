@@ -1,31 +1,25 @@
-const path = require('path');
-const expect = require('chai').expect;
+jest.autoMockOff();
+
 const getProjectConfig = require('../../src/config/ios').projectConfig;
 const mockFs = require('mock-fs');
 const projects = require('../fixtures/projects');
 
 describe('ios::getProjectConfig', () => {
+  const userConfig = {};
 
-  before(() => {
-    mockFs({ testDir: projects });
-  });
+  beforeEach(() => mockFs({ testDir: projects }));
 
   it('should return an object with ios project configuration', () => {
-    const userConfig = {};
-    const folder = path.join('testDir', 'nested');
+    const folder = 'testDir/nested';
 
-    expect(getProjectConfig(folder, userConfig)).to.be.an('object');
+    expect(typeof getProjectConfig(folder, userConfig)).toBe('object');
   });
 
   it('should return `null` if ios project was not found', () => {
-    const userConfig = {};
-    const folder = path.join('testDir', 'empty');
+    const folder = 'testDir/empty';
 
-    expect(getProjectConfig(folder, userConfig)).to.be.null;
+    expect(getProjectConfig(folder, userConfig)).toBe(null);
   });
 
-  after(() => {
-    mockFs.restore();
-  });
-
+  afterEach(mockFs.restore);
 });

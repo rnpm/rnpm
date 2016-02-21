@@ -4,8 +4,12 @@
   "description": "React Native Package Manager",
   "main": "./src/getActions.js",
   "scripts": {
-    "test": "mocha --recursive",
+    "test": "jest",
     "coverage": "istanbul cover _mocha -- --recursive"
+  },
+  "jest": {
+    "testDirectoryName": "test",
+    "testPathIgnorePatterns": ["/node_modules/", "/test/fixtures/"]
   },
   "bin": {
     "rnpm": "bin/cli"
@@ -44,12 +48,10 @@
   },
   "devDependencies": {
     "babel-eslint": "^4.1.5",
-    "chai": "^3.4.1",
     "eslint": "^1.9.0",
-    "mocha": "^2.3.4",
     "mock-fs": "^3.5.0",
     "mock-require": "^1.2.1",
     "rewire": "^2.5.1",
-    "sinon": "^1.17.2"
+    "jest-cli": "^0.8.2"
   }
 }

@@ -1,27 +1,26 @@
-const path = require('path');
-const expect = require('chai').expect;
-const sinon = require('sinon');
+jest.autoMockOff();
+
 const makeCommand = require('../src/makeCommand');
 
-const command = makeCommand('echo');
-
 describe('makeCommand', () => {
+  const command = makeCommand('echo');
+
   it('should generate a function around shell command', () => {
-    expect(typeof command).to.be.equal('function');
+    expect(typeof command).toBe('function');
   });
 
   it('should throw an error if there\'s no callback provided', () => {
-    expect(command).to.throw(/missed a callback/);
+    expect(command).toThrow();
   });
 
   it('should invoke a callback after command execution', (done) => {
-    const spy = sinon.spy();
+    const spy = jest.genMockFunction();
 
     command(spy);
 
     setTimeout(() => {
-      expect(spy.calledOnce).to.be.true;
+      expect(spy.calls.length).toBe(1);
       done();
-    }, 100);
+    }, 1);
   });
 });

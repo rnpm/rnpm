@@ -1,12 +1,12 @@
-const path = require('path');
-const expect = require('chai').expect;
+jest.autoMockOff();
+
 const findPackageClassName = require('../../src/config/android/findPackageClassName');
 const mockFs = require('mock-fs');
 const mocks = require('../fixtures/android');
 
 describe('android::findPackageClassName', () => {
 
-  before(() => mockFs({
+  beforeEach(() => mockFs({
     empty: {},
     flat: {
       android: mocks.valid,
@@ -14,12 +14,12 @@ describe('android::findPackageClassName', () => {
   }));
 
   it('should return manifest content if file exists in the folder', () => {
-    expect(findPackageClassName('flat')).to.be.a('string');
+    expect(typeof findPackageClassName('flat')).toBe('string');
   });
 
   it('should return `null` if there\'s no matches', () => {
-    expect(findPackageClassName('empty')).to.be.null;
+    expect(findPackageClassName('empty')).toBe(null);
   });
 
-  after(mockFs.restore);
+  afterEach(mockFs.restore);
 });
