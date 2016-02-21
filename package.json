@@ -9,7 +9,8 @@
   },
   "jest": {
     "testDirectoryName": "test",
-    "testPathIgnorePatterns": ["/node_modules/", "/test/fixtures/"]
+    "testPathIgnorePatterns": ["/node_modules/", "/test/fixtures/"],
+    "collectCoverage": true
   },
   "bin": {
     "rnpm": "bin/cli"
