@@ -4,8 +4,7 @@
   "description": "React Native Package Manager",
   "main": "./src/getActions.js",
   "scripts": {
-    "test": "jest",
-    "coverage": "istanbul cover _mocha -- --recursive"
+    "test": "jest"
   },
   "jest": {
     "testDirectoryName": "test",

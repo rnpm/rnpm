@@ -4,9 +4,8 @@ machine:
 
 test:
   pre:
-    - npm install codeclimate-test-reporter@0.1 istanbul@0.4
+    - npm install codeclimate-test-reporter@0.1
   post:
-    - npm run coverage
     - codeclimate-test-reporter < coverage/lcov.info
 
 notify:
