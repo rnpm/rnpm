@@ -1,8 +1,8 @@
 const path = require('path');
 const fs = require('fs');
-const union = require('lodash.union');
-const uniq = require('lodash.uniq');
-const flatten = require('lodash.flatten');
+const union = require('lodash').union;
+const uniq = require('lodash').uniq;
+const flatten = require('lodash').flatten;
 
 /**
  * Filter dependencies by name pattern

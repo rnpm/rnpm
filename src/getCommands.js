@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-const uniq = require('lodash.uniq');
-const flattenDeep = require('lodash.flattendeep');
+const uniq = require('lodash').uniq;
+const flattenDeep = require('lodash').flattenDeep;
 const findPlugins = require('./findPlugins');
 
 /**
