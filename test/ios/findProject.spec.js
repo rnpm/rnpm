@@ -3,6 +3,7 @@ jest.autoMockOff();
 const findProject = require('../../src/config/ios/findProject');
 const mockFs = require('mock-fs');
 const projects = require('../fixtures/projects');
+const userConfig = {};
 
 describe('ios::findProject', () => {
 
@@ -11,16 +12,17 @@ describe('ios::findProject', () => {
   });
 
   it('should return path to xcodeproj if found', () => {
-    const userConfig = {};
 
     mockFs(projects.flat);
 
     expect(findProject('')).toContain('.xcodeproj');
   });
 
-  it('should ignore xcodeproj from example folders', () => {
-    const userConfig = {};
+  it('should return null if there\'re no projects', () => {
+    expect(findProject('')).toBe(null);
+  });
 
+  it('should ignore xcodeproj from example folders', () => {
     mockFs({
       examples: projects.flat,
       Examples: projects.flat,
@@ -33,8 +35,6 @@ describe('ios::findProject', () => {
   });
 
   it('should ignore xcodeproj from test folders at any level', () => {
-    const userConfig = {};
-
     mockFs({
       test: projects.flat,
       IntegrationTests: projects.flat,
