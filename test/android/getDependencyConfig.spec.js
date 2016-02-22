@@ -14,6 +14,11 @@ describe('android::getDependencyConfig', () => {
         app: mocks.valid,
       },
     },
+    corrupted: {
+      android: {
+        app: mocks.corrupted,
+      },
+    },
     noPackage: {
       android: {},
     },
@@ -36,8 +41,8 @@ describe('android::getDependencyConfig', () => {
     expect(getDependencyConfig('noPackage', userConfig)).toBe(null);
   });
 
-  it('should return `null` if android project does not contain ReactPackage', () => {
-    expect(getDependencyConfig('noPackage', userConfig)).toBe(null);
+  it('should return `null` if it can\'t find a packageClassName', () => {
+    expect(getDependencyConfig('corrupted', userConfig)).toBe(null);
   });
 
   afterEach(mockFs.restore);

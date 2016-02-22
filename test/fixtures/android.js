@@ -20,6 +20,19 @@ exports.valid = {
   },
 };
 
+exports.corrupted = {
+  src: {
+    'AndroidManifest.xml': manifest,
+    main: {
+      com: {
+        some: {
+          example: {},
+        },
+      },
+    },
+  },
+};
+
 exports.noPackage = {
   src: {
     'AndroidManifest.xml': manifest,
