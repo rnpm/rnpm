@@ -7,8 +7,6 @@ const projects = require('../fixtures/projects');
 describe('ios::getProjectConfig', () => {
   const userConfig = {};
 
-  beforeEach(() => mockFs({ testDir: projects }));
-
   it('should return an object with ios project configuration', () => {
     const folder = 'testDir/nested';
 
@@ -20,6 +18,4 @@ describe('ios::getProjectConfig', () => {
 
     expect(getProjectConfig(folder, userConfig)).toBe(null);
   });
-
-  afterEach(mockFs.restore);
 });
