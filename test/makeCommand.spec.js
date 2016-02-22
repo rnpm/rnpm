@@ -24,9 +24,7 @@ describe('makeCommand', () => {
     const spy = jest.genMockFunction();
     command(spy);
 
-    setTimeout(() => {
-      expect(spy.mock.calls.length).toBe(1);
-    }, 1);
+    expect(spy.mock.calls.length).toBe(1);
   });
 
   it('should throw an error if spawn ended up with error', () => {

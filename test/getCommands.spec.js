@@ -60,7 +60,7 @@ describe('getCommands', () => {
 
     afterEach(() => revert());
 
-    it.only('list of the commands should be a non-empty array', () => {
+    it('list of the commands should be a non-empty array', () => {
       mock(APP_JSON, NO_PLUGINS_JSON);
       mock(LOCAL_RNPM_PJSON, SAMPLE_RNPM_JSON);
       mock(SAMPLE_RNPM_PLUGIN, commands.single);
@@ -144,8 +144,9 @@ describe('getCommands', () => {
   describe('rnpm and project plugins', () => {
 
     beforeEach(() => {
-      getCommands = rewire('../src/getCommands');
-      revert = getCommands.__set__({__dirname: path.join(LOCAL_NODE_MODULES, 'rnpm/src')});
+      revert = getCommands.__set__({
+        __dirname: path.join(LOCAL_NODE_MODULES, 'rnpm/src'),
+      });
     });
 
     afterEach(() => revert());
