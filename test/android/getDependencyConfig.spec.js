@@ -3,6 +3,7 @@ jest.autoMockOff();
 const getDependencyConfig = require('../../src/config/android').dependencyConfig;
 const mockFs = require('mock-fs');
 const mocks = require('../fixtures/android');
+const userConfig = {};
 
 describe('android::getDependencyConfig', () => {
 
@@ -19,32 +20,24 @@ describe('android::getDependencyConfig', () => {
   }));
 
   it('should return an object with android project configuration', () => {
-    const userConfig = {};
-    const folder = 'nested';
-
-    expect(getDependencyConfig(folder, userConfig)).not.toBe(null);
-    expect(typeof getDependencyConfig(folder, userConfig)).toBe('object');
+    expect(getDependencyConfig('nested', userConfig)).not.toBe(null);
+    expect(typeof getDependencyConfig('nested', userConfig)).toBe('object');
   });
 
   it('should return `null` if manifest file hasn\'t been found', () => {
-    const userConfig = {};
-    const folder = 'empty';
-
-    expect(getDependencyConfig(folder, userConfig)).toBe(null);
+    expect(getDependencyConfig('empty', userConfig)).toBe(null);
   });
 
   it('should return `null` if android project was not found', () => {
-    const userConfig = {};
-    const folder = 'empty';
-
-    expect(getDependencyConfig(folder, userConfig)).toBe(null);
+    expect(getDependencyConfig('empty', userConfig)).toBe(null);
   });
 
   it('should return `null` if android project does not contain ReactPackage', () => {
-    const userConfig = {};
-    const folder = 'noPackage';
+    expect(getDependencyConfig('noPackage', userConfig)).toBe(null);
+  });
 
-    expect(getDependencyConfig(folder, userConfig)).toBe(null);
+  it('should return `null` if android project does not contain ReactPackage', () => {
+    expect(getDependencyConfig('noPackage', userConfig)).toBe(null);
   });
 
   afterEach(mockFs.restore);
