@@ -32,6 +32,7 @@ describe('android::getProjectConfig', () => {
       const userConfig = {};
       const folder = 'nested';
 
+      expect(getProjectConfig(folder, userConfig)).not.toBe(null);
       expect(typeof getProjectConfig(folder, userConfig)).toBe('object');
     });
 
@@ -39,6 +40,7 @@ describe('android::getProjectConfig', () => {
       const userConfig = {};
       const folder = 'flat';
 
+      expect(getProjectConfig(folder, userConfig)).not.toBe(null);
       expect(typeof getProjectConfig(folder, userConfig)).toBe('object');
     });
   });

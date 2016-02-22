@@ -18,6 +18,7 @@ describe('android::readManifest', () => {
 
   it('should return manifest content if file exists in the folder', () => {
     const manifestPath = findManifest('nested');
+    expect(readManifest(manifestPath)).not.toBe(null);
     expect(typeof readManifest(manifestPath)).toBe('object');
   });
 

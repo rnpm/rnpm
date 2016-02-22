@@ -22,6 +22,7 @@ describe('android::getDependencyConfig', () => {
     const userConfig = {};
     const folder = 'nested';
 
+    expect(getDependencyConfig(folder, userConfig)).not.toBe(null);
     expect(typeof getDependencyConfig(folder, userConfig)).toBe('object');
   });
 
