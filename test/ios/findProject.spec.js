@@ -1,26 +1,28 @@
-const path = require('path');
-const expect = require('chai').expect;
+jest.autoMockOff();
+
 const findProject = require('../../src/config/ios/findProject');
 const mockFs = require('mock-fs');
 const projects = require('../fixtures/projects');
+const userConfig = {};
 
 describe('ios::findProject', () => {
 
-  before(() => {
+  beforeEach(() => {
     mockFs({ testDir: projects });
   });
 
   it('should return path to xcodeproj if found', () => {
-    const userConfig = {};
 
     mockFs(projects.flat);
 
-    expect(findProject('')).to.contain('.xcodeproj');
+    expect(findProject('')).toContain('.xcodeproj');
+  });
+
+  it('should return null if there\'re no projects', () => {
+    expect(findProject('')).toBe(null);
   });
 
   it('should ignore xcodeproj from example folders', () => {
-    const userConfig = {};
-
     mockFs({
       examples: projects.flat,
       Examples: projects.flat,
@@ -29,12 +31,10 @@ describe('ios::findProject', () => {
       Zpp: projects.flat,
     });
 
-    expect(findProject('').toLowerCase()).to.not.contain('example');
+    expect(findProject('').toLowerCase()).not.toContain('example');
   });
 
   it('should ignore xcodeproj from test folders at any level', () => {
-    const userConfig = {};
-
     mockFs({
       test: projects.flat,
       IntegrationTests: projects.flat,
@@ -45,11 +45,8 @@ describe('ios::findProject', () => {
       },
     });
 
-    expect(findProject('').toLowerCase()).to.not.contain('test');
+    expect(findProject('').toLowerCase()).not.toContain('test');
   });
 
-  afterEach(() => {
-    mockFs.restore();
-  });
-
+  afterEach(mockFs.restore);
 });

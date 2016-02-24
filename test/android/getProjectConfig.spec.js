@@ -1,11 +1,11 @@
-const path = require('path');
-const expect = require('chai').expect;
+jest.autoMockOff();
+
 const getProjectConfig = require('../../src/config/android').projectConfig;
 const mockFs = require('mock-fs');
 const mocks = require('../fixtures/android');
 
 describe('android::getProjectConfig', () => {
-  before(() => mockFs({
+  beforeEach(() => mockFs({
     empty: {},
     nested: {
       android: {
@@ -24,7 +24,7 @@ describe('android::getProjectConfig', () => {
     const userConfig = {};
     const folder = 'noManifest';
 
-    expect(getProjectConfig(folder, userConfig)).to.be.null;
+    expect(getProjectConfig(folder, userConfig)).toBe(null);
   });
 
   describe('return an object with android project configuration for', () => {
@@ -32,14 +32,16 @@ describe('android::getProjectConfig', () => {
       const userConfig = {};
       const folder = 'nested';
 
-      expect(getProjectConfig(folder, userConfig)).to.be.an('object');
+      expect(getProjectConfig(folder, userConfig)).not.toBe(null);
+      expect(typeof getProjectConfig(folder, userConfig)).toBe('object');
     });
 
     it('flat structure', () => {
       const userConfig = {};
       const folder = 'flat';
 
-      expect(getProjectConfig(folder, userConfig)).to.be.an('object');
+      expect(getProjectConfig(folder, userConfig)).not.toBe(null);
+      expect(typeof getProjectConfig(folder, userConfig)).toBe('object');
     });
   });
 
@@ -47,8 +49,8 @@ describe('android::getProjectConfig', () => {
     const userConfig = {};
     const folder = 'empty';
 
-    expect(getProjectConfig(folder, userConfig)).to.be.null;
+    expect(getProjectConfig(folder, userConfig)).toBe(null);
   });
 
-  after(mockFs.restore);
+  afterEach(mockFs.restore);
 });

@@ -1,12 +1,12 @@
+jest.autoMockOff();
+
 const path = require('path');
-const expect = require('chai').expect;
-const getCommands = require('../src/getCommands');
 const mock = require('mock-require');
-const mockFs = require('mock-fs');
-const sinon = require('sinon');
 const rewire = require('rewire');
 
 const commands = require('./fixtures/commands');
+const isArray = (arg) =>
+  Object.prototype.toString.call(arg) === '[object Array]';
 
 /**
  * Paths to two possible `node_modules` locations `rnpm` can be installed
@@ -42,50 +42,45 @@ const NO_PLUGINS_JSON = {
   dependencies: {},
 };
 
+const getCommands = rewire('../src/getCommands');
+var revert;
+
 describe('getCommands', () => {
 
   afterEach(mock.stopAll);
 
   describe('in all installations', () => {
 
-    var getCommands;
-    var revert;
-
-    before(() => {
-      getCommands = rewire('../src/getCommands');
-      revert = getCommands.__set__({__dirname: path.join(LOCAL_NODE_MODULES, 'rnpm/src')});
-    });
-
-    /**
-     * In this suite we only test `rnpm` package.json, thus we make sure
-     * that project json on process.cwd() is properly mocked.
-     */
     beforeEach(() => {
+      revert = getCommands.__set__({
+        __dirname: path.join(LOCAL_NODE_MODULES, 'rnpm/src'),
+      });
       mock(APP_JSON, NO_PLUGINS_JSON);
     });
 
-    after(() => revert());
+    afterEach(() => revert());
 
     it('list of the commands should be a non-empty array', () => {
+      mock(APP_JSON, NO_PLUGINS_JSON);
       mock(LOCAL_RNPM_PJSON, SAMPLE_RNPM_JSON);
       mock(SAMPLE_RNPM_PLUGIN, commands.single);
 
-      expect(getCommands()).to.be.not.empty;
-      expect(getCommands()).to.be.an('array');
+      expect(getCommands().length).not.toBe(0);
+      expect(isArray(getCommands())).toBeTruthy();
     });
 
     it('should export one command', () => {
       mock(LOCAL_RNPM_PJSON, SAMPLE_RNPM_JSON);
       mock(SAMPLE_RNPM_PLUGIN, commands.single);
 
-      expect(getCommands().length).to.be.equal(1);
+      expect(getCommands().length).toEqual(1);
     });
 
     it('should export multiple commands', () => {
       mock(LOCAL_RNPM_PJSON, SAMPLE_RNPM_JSON);
       mock(SAMPLE_RNPM_PLUGIN, commands.multiple);
 
-      expect(getCommands().length).to.be.equal(2);
+      expect(getCommands().length).toEqual(2);
     });
 
     it('should export unique list of commands by name', () => {
@@ -99,20 +94,12 @@ describe('getCommands', () => {
       mock(SAMPLE_RNPM_PLUGIN, commands.single);
       mock(`${SAMPLE_RNPM_PLUGIN}-2`, commands.single);
 
-      expect(getCommands().length).to.be.equal(1);
+      expect(getCommands().length).toEqual(1);
     });
 
   });
 
   describe('project plugins', () => {
-
-    var getCommands;
-    var revert;
-
-    before(() => {
-      getCommands = rewire('../src/getCommands');
-    });
-
     /**
      * In this test suite we only test project plugins thus we make sure
      * `rnpm` package.json is properly mocked
@@ -125,7 +112,9 @@ describe('getCommands', () => {
     afterEach(() => revert());
 
     it('shoud load when installed locally', () => {
-      revert = getCommands.__set__({__dirname: path.join(LOCAL_NODE_MODULES, 'rnpm/src')});
+      revert = getCommands.__set__({
+        __dirname: path.join(LOCAL_NODE_MODULES, 'rnpm/src'),
+      });
 
       mock(APP_JSON, SAMPLE_RNPM_JSON);
       mock(
@@ -133,11 +122,13 @@ describe('getCommands', () => {
         commands.single
       );
 
-      expect(getCommands()[0]).to.be.equal(commands.single);
+      expect(getCommands()[0]).toEqual(commands.single);
     });
 
     it('should load when installed globally', () => {
-      revert = getCommands.__set__({__dirname: path.join(GLOBAL_NODE_MODULES, 'rnpm/src')});
+      revert = getCommands.__set__({
+        __dirname: path.join(GLOBAL_NODE_MODULES, 'rnpm/src'),
+      });
 
       mock(APP_JSON, SAMPLE_RNPM_JSON);
       mock(
@@ -145,22 +136,20 @@ describe('getCommands', () => {
         commands.single
       );
 
-      expect(getCommands()[0]).to.be.equal(commands.single);
+      expect(getCommands()[0]).toEqual(commands.single);
     });
 
   });
 
   describe('rnpm and project plugins', () => {
 
-    var getCommands;
-    var revert;
-
-    before(() => {
-      getCommands = rewire('../src/getCommands');
-      revert = getCommands.__set__({__dirname: path.join(LOCAL_NODE_MODULES, 'rnpm/src')});
+    beforeEach(() => {
+      revert = getCommands.__set__({
+        __dirname: path.join(LOCAL_NODE_MODULES, 'rnpm/src'),
+      });
     });
 
-    after(() => revert());
+    afterEach(() => revert());
 
     it('should load concatenated list of plugins', () => {
       mock(APP_JSON, SAMPLE_RNPM_JSON);
@@ -176,9 +165,7 @@ describe('getCommands', () => {
       );
       mock(`${SAMPLE_RNPM_PLUGIN}-2`, commands.single);
 
-      expect(getCommands().length).to.be.equal(3);
+      expect(getCommands().length).toEqual(3);
     });
-
   });
-
 });

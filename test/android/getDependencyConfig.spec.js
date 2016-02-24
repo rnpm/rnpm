@@ -1,16 +1,22 @@
-const path = require('path');
-const expect = require('chai').expect;
+jest.autoMockOff();
+
 const getDependencyConfig = require('../../src/config/android').dependencyConfig;
 const mockFs = require('mock-fs');
 const mocks = require('../fixtures/android');
+const userConfig = {};
 
 describe('android::getDependencyConfig', () => {
 
-  before(() => mockFs({
+  beforeEach(() => mockFs({
     empty: {},
     nested: {
       android: {
         app: mocks.valid,
+      },
+    },
+    corrupted: {
+      android: {
+        app: mocks.corrupted,
       },
     },
     noPackage: {
@@ -19,32 +25,25 @@ describe('android::getDependencyConfig', () => {
   }));
 
   it('should return an object with android project configuration', () => {
-    const userConfig = {};
-    const folder = 'nested';
-
-    expect(getDependencyConfig(folder, userConfig)).to.be.an('object');
+    expect(getDependencyConfig('nested', userConfig)).not.toBe(null);
+    expect(typeof getDependencyConfig('nested', userConfig)).toBe('object');
   });
 
   it('should return `null` if manifest file hasn\'t been found', () => {
-    const userConfig = {};
-    const folder = 'empty';
-
-    expect(getDependencyConfig(folder, userConfig)).to.be.null;
+    expect(getDependencyConfig('empty', userConfig)).toBe(null);
   });
 
   it('should return `null` if android project was not found', () => {
-    const userConfig = {};
-    const folder = 'empty';
-
-    expect(getDependencyConfig(folder, userConfig)).to.be.null;
+    expect(getDependencyConfig('empty', userConfig)).toBe(null);
   });
 
   it('should return `null` if android project does not contain ReactPackage', () => {
-    const userConfig = {};
-    const folder = 'noPackage';
-
-    expect(getDependencyConfig(folder, userConfig)).to.be.null;
+    expect(getDependencyConfig('noPackage', userConfig)).toBe(null);
   });
 
-  after(mockFs.restore);
+  it('should return `null` if it can\'t find a packageClassName', () => {
+    expect(getDependencyConfig('corrupted', userConfig)).toBe(null);
+  });
+
+  afterEach(mockFs.restore);
 });
