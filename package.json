@@ -8,7 +8,8 @@
   },
   "jest": {
     "testDirectoryName": "test",
-    "collectCoverage": true
+    "collectCoverage": true,
+    "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js"
   },
   "bin": {
     "rnpm": "bin/cli"
