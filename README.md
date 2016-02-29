@@ -97,13 +97,13 @@ Command exported by installed plugin will be available straight away.
 
 #### Mastering your first plugin
 
-First of all, every plugin is [just a function](https://github.com/rnpm/rnpm-plugin-link/blob/master/src/action.js#L24) which accepts `config` and `args` parameters. Every plugin consists of [public interface](https://github.com/rnpm/rnpm-plugin-link/blob/master/index.js) for CLI and [implementation intself](https://github.com/rnpm/rnpm-plugin-link/blob/master/src/action.js).
+First of all, every plugin is [just a function](https://github.com/rnpm/rnpm-plugin-link/blob/master/src/link.js#L81) which accepts `config` and `args` parameters. Every plugin consists of [public interface](https://github.com/rnpm/rnpm-plugin-link/blob/master/index.js) for CLI and [implementation intself](https://github.com/rnpm/rnpm-plugin-link/blob/master/src/link.js).
 
 We use **public interface** to make your plugins auto-pluggable and easy to use for end-users. Every public interface consists of `name`, `func` & `description` fields:
 - `name` - Name of the plugin. After plugin installation it'll be used as a command name. For instance plugin with following interface:
   ```javascript
   module.exports = {
-    func: require('./src/action'),
+    func: require('./src/link'),
     description: 'This action updates your project and links all native dependencies',
     name: 'link [packageName]',
   };
