@@ -32,7 +32,7 @@ If you already have some installed (but not linked) modules, run:
 ```bash
 $ rnpm link
 ```
-In the case you want to link only one depepndency, you can specify its name as an argument:
+In the case you want to link only one dependency, you can specify its name as an argument:
 ```bash
 $ rnpm link <name>
 ```
@@ -47,7 +47,7 @@ React Native Package Manager provides you with (soon) multiple actions to help y
 
 So are we. That's why we have spent great amount of work on getting configuration done right. Our packager automatically scans your source directory and dependencies you are working with. This approach allows it to link all the things without supplying any extra configuration. It detects Android package names, import paths, gradle location - and for iOS - it works with any code structure you have ever came up with.
 
-And don't worry - in case it fails, you can always add `rnpm` object to your `package.json` - our `npm` in a name is not a mistake! We embrance existing ecosystem and integrate with the present tooling for maxium developer experience.
+And don't worry - in case it fails, you can always add `rnpm` object to your `package.json` - our `npm` in a name is not a mistake! We embrace existing ecosystem and integrate with the present tooling for maximum developer experience.
 
 ## Available commands
 
@@ -62,7 +62,7 @@ $ rnpm link react-native-module
 Source: https://github.com/rnpm/rnpm-plugin-link
 
 #### rnpm install [name]
-Automatically instals given package and links it to your project. It's equivalent to running the previous example. It's just instead of running two commands, you can now just:
+Automatically installs the given package and links it to your project. It's equivalent to running the previous example. It's just instead of running two commands, you can now just:
 
 ```bash
 $ rnpm install react-native-module
@@ -114,7 +114,7 @@ We use **public interface** to make your plugins auto-pluggable and easy to use 
   ```
 
 - `func` - Plugin itself. This function will be used when you run a command above
-- `descripion` - Command description. If user runs `$ rnpm --help`, this field will be displayed as a command description.
+- `description` - Command description. If user runs `$ rnpm --help`, this field will be displayed as a command description.
 
 Also, in the case you want to expose multiple commands from the one plugin, you may use an array syntax:
 ```javascript
@@ -159,11 +159,11 @@ The documentation is still in progress, but if you are interested in the concept
 
 ## Roadmap
 
-First prio: **core elements**
+First priority: **core elements**
 - [ ] Test coverage
 - [X] Plugins support
 
-Second prio: **new plugins**
+Second priority: **new plugins**
 - [ ] rnpm ship
 - [ ] rnpm build
 
@@ -174,7 +174,7 @@ If you know how to improve `rnpm` - please, [let us know](https://github.com/rnp
 
 #### How's that different from react-native link
 
-`react-native link` is great, but it only works for Android now. It also does not automatically add packages to your project nor support custom folder configuration. We aim to solve these issues by analyzing folders and getting maxium informations available from them. When running `rnpm link` you don't have to think about the package exported by developer or the import path to include in your Java project.
+`react-native link` is great, but it only works for Android now. It also does not automatically add packages to your project nor support custom folder configuration. We aim to solve these issues by analyzing folders and getting maximum informations available from them. When running `rnpm link` you don't have to think about the package exported by developer or the import path to include in your Java project.
 
 #### Does it work with CocoaPods?
 
@@ -214,7 +214,7 @@ Special thanks to [Sonny Lazuardi](https://github.com/sonnylazuardi) for the awe
 
 ## Sponsors
 
-This tool development and maintainance is sponsored by below companies:
+This tool development and maintenance is sponsored by below companies:
 
 <a href="http://manandmoon.com" title="Man+Moon"><img src="http://manandmoon.com/images/man-moon-full-logo-.svg" width="200" /></a>
 
