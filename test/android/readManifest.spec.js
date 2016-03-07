@@ -7,7 +7,7 @@ const mocks = require('../fixtures/android');
 
 describe('android::readManifest', () => {
 
-  beforeEach(() => mockFs({
+  beforeAll(() => mockFs({
     empty: {},
     nested: {
       android: {
@@ -27,5 +27,5 @@ describe('android::readManifest', () => {
     expect(() => readManifest(fakeManifestPath)).toThrow();
   });
 
-  afterEach(mockFs.restore);
+  afterAll(mockFs.restore);
 });

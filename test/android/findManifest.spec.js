@@ -6,7 +6,7 @@ const mocks = require('../fixtures/android');
 
 describe('android::findManifest', () => {
 
-  beforeEach(() => mockFs({
+  beforeAll(() => mockFs({
     empty: {},
     flat: {
       android: mocks.valid,
@@ -21,5 +21,5 @@ describe('android::findManifest', () => {
     expect(findManifest('empty')).toBe(null);
   });
 
-  afterEach(mockFs.restore);
+  afterAll(mockFs.restore);
 });

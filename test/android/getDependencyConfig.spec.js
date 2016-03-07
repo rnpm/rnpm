@@ -7,7 +7,7 @@ const userConfig = {};
 
 describe('android::getDependencyConfig', () => {
 
-  beforeEach(() => mockFs({
+  beforeAll(() => mockFs({
     empty: {},
     nested: {
       android: {
@@ -45,5 +45,5 @@ describe('android::getDependencyConfig', () => {
     expect(getDependencyConfig('corrupted', userConfig)).toBe(null);
   });
 
-  afterEach(mockFs.restore);
+  afterAll(mockFs.restore);
 });

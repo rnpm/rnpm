@@ -5,7 +5,7 @@ const mockFs = require('mock-fs');
 const mocks = require('../fixtures/android');
 
 describe('android::getProjectConfig', () => {
-  beforeEach(() => mockFs({
+  beforeAll(() => mockFs({
     empty: {},
     nested: {
       android: {
@@ -52,5 +52,5 @@ describe('android::getProjectConfig', () => {
     expect(getProjectConfig(folder, userConfig)).toBe(null);
   });
 
-  afterEach(mockFs.restore);
+  afterAll(mockFs.restore);
 });

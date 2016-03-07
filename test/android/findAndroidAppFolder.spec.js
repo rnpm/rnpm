@@ -5,7 +5,7 @@ const mockFs = require('mock-fs');
 const mocks = require('../fixtures/android');
 
 describe('android::findAndroidAppFolder', () => {
-  beforeEach(() => mockFs({
+  beforeAll(() => mockFs({
     empty: {},
     nested: {
       android: {
@@ -26,5 +26,5 @@ describe('android::findAndroidAppFolder', () => {
     expect(findAndroidAppFolder('empty')).toBe(null);
   });
 
-  afterEach(mockFs.restore);
+  afterAll(mockFs.restore);
 });
