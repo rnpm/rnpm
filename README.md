@@ -157,16 +157,6 @@ While making your own plugins for `rnpm` you may use any names for the commands,
 
 The documentation is still in progress, but if you are interested in the concept and good practices, see sample implementation [here](https://github.com/rnpm/rnpm-plugin-link/blob/master/index.js)
 
-## Roadmap
-
-First priority: **core elements**
-- [ ] Test coverage
-- [X] Plugins support
-
-Second priority: **new plugins**
-- [ ] rnpm ship
-- [ ] rnpm build
-
 We're open for community ideas!
 If you know how to improve `rnpm` - please, [let us know](https://github.com/rnpm/rnpm/issues/new)!
 
