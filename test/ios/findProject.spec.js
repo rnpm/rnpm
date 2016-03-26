@@ -7,17 +7,13 @@ const ios = require('../fixtures/ios');
 const userConfig = {};
 
 describe('ios::findProject', () => {
-
-  beforeEach(() => {
-    mockFs({ testDir: projects });
-  });
-
   it('should return path to xcodeproj if found', () => {
     mockFs(projects.flat);
     expect(findProject('')).not.toBe(null);
   });
 
   it('should return null if there\'re no projects', () => {
+    mockFs({ testDir: projects });
     expect(findProject('')).toBe(null);
   });
 
