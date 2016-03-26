@@ -32,12 +32,11 @@ module.exports = function findProject(folder) {
   const projects = glob
     .sync(GLOB_PATTERN, {
       cwd: folder,
-      root: folder,
       ignore: GLOB_EXCLUDE_PATTERN,
     })
-    .filter(path => {
-      const p = path.toLowerCase();
-      return p.indexOf(IOS_BASE) === 0 || !p.match(TEST_PROJECTS);
+    .filter(xcPath => {
+      const path = xcPath.toLowerCase();
+      return path.indexOf(IOS_BASE) === 0 || !path.match(TEST_PROJECTS);
     });
 
   if (projects.length === 0) {
