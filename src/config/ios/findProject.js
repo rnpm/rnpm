@@ -1,4 +1,5 @@
 const glob = require('glob');
+const path = require('path');
 
 /**
  * Glob pattern to look for xcodeproj
@@ -13,7 +14,7 @@ const TEST_PROJECTS = /(test|example)/;
 /**
  * Base iOS folder
  */
-const IOS_BASE = 'ios/';
+const IOS_BASE = 'ios';
 
 /**
  * These folders will be excluded from search to speed it up
@@ -34,9 +35,9 @@ module.exports = function findProject(folder) {
       cwd: folder,
       ignore: GLOB_EXCLUDE_PATTERN,
     })
-    .filter(xcPath => {
-      const path = xcPath.toLowerCase();
-      return path.indexOf(IOS_BASE) === 0 || !path.match(TEST_PROJECTS);
+    .filter(project => {
+      const xcPath = project.toLowerCase();
+      return path.dirname(xcPath) === IOS_BASE || !xcPath.match(TEST_PROJECTS);
     });
 
   if (projects.length === 0) {
