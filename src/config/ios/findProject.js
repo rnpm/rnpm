@@ -6,21 +6,39 @@ const glob = require('glob');
 const GLOB_PATTERN = '**/*.xcodeproj';
 
 /**
+ * Regexp matching all test projects
+ */
+const TEST_PROJECTS = /(test|example)/;
+
+/**
+ * Base iOS folder
+ */
+const IOS_BASE = 'ios/';
+
+/**
  * These folders will be excluded from search to speed it up
  */
-const GLOB_EXCLUDE_PATTERN = ['node_modules/**', '**/*@(E|e)xample*/**', '**/*@(T|t)est*/**', 'Pods/**'];
+const GLOB_EXCLUDE_PATTERN = ['@(Pods|node_modules)/**'];
 
 /**
  * Finds iOS project by looking for all .xcodeproj files
  * in given folder.
  *
  * Returns first match if files are found or null
+ *
+ * Note: `./ios/*.xcodeproj` are returned regardless of the name
  */
 module.exports = function findProject(folder) {
-  const projects = glob.sync(GLOB_PATTERN, {
-    cwd: folder,
-    ignore: GLOB_EXCLUDE_PATTERN,
-  });
+  const projects = glob
+    .sync(GLOB_PATTERN, {
+      cwd: folder,
+      root: folder,
+      ignore: GLOB_EXCLUDE_PATTERN,
+    })
+    .filter(path => {
+      const p = path.toLowerCase();
+      return p.indexOf(IOS_BASE) === 0 || !p.match(TEST_PROJECTS);
+    });
 
   if (projects.length === 0) {
     return null;
