@@ -9,7 +9,7 @@ const GLOB_PATTERN = '**/*.xcodeproj';
 /**
  * Regexp matching all test projects
  */
-const TEST_PROJECTS = /(test|example)/;
+const TEST_PROJECTS = /test|example/i;
 
 /**
  * Base iOS folder
@@ -36,8 +36,7 @@ module.exports = function findProject(folder) {
       ignore: GLOB_EXCLUDE_PATTERN,
     })
     .filter(project => {
-      const xcPath = project.toLowerCase();
-      return path.dirname(xcPath) === IOS_BASE || !xcPath.match(TEST_PROJECTS);
+      return path.dirname(project) === IOS_BASE || !TEST_PROJECTS.test(project);
     });
 
   if (projects.length === 0) {
