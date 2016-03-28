@@ -21,6 +21,7 @@ exports.projectConfig = function projectConfigIOS(folder, userConfig) {
     sourceDir: path.dirname(projectPath),
     folder: folder,
     pbxprojPath: path.join(projectPath, 'project.pbxproj'),
+    sharedLibraries: userConfig.sharedLibraries || [],
     projectPath: projectPath,
     projectName: path.basename(projectPath),
     libraryFolder: userConfig.libraryFolder || 'Libraries',
