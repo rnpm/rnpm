@@ -24,6 +24,7 @@ exports.projectConfig = function projectConfigIOS(folder, userConfig) {
     projectPath: projectPath,
     projectName: path.basename(projectPath),
     libraryFolder: userConfig.libraryFolder || 'Libraries',
+    plist: userConfig.plist || [],
   };
 };
 
