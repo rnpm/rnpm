@@ -27,19 +27,19 @@ describe('ios::findProject', () => {
     expect(findProject('')).toBe(null);
   });
 
-  it('should ignore node_modules in child folders', () => {
-    mockFs({ ios: { node_modules: projects.flat }});
-    expect(findProject('')).toBe(null);
-  });
-
   it('should ignore Pods', () => {
     mockFs({ Pods: projects.flat });
     expect(findProject('')).toBe(null);
   });
 
-  it('should ignore node_modules in child folders', () => {
-    mockFs({ ios: { Pods: projects.flat }});
-    expect(findProject('')).toBe(null);
+  it('should ignore Pods inside `ios` folder', () => {
+    mockFs({
+      ios: {
+        Pods: projects.flat,
+        SampleApp: projects.flat.ios,
+      },
+    });
+    expect(findProject('')).toBe('ios/SampleApp/sampleProject.xcodeproj');
   });
 
   it('should ignore xcodeproj from example folders', () => {

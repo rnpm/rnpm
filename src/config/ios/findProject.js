@@ -19,7 +19,7 @@ const IOS_BASE = 'ios';
 /**
  * These folders will be excluded from search to speed it up
  */
-const GLOB_EXCLUDE_PATTERN = ['@(Pods|node_modules)/**', '**/@(Pods|node_modules)/**'];
+const GLOB_EXCLUDE_PATTERN = ['**/@(Pods|node_modules)/**'];
 
 /**
  * Finds iOS project by looking for all .xcodeproj files
