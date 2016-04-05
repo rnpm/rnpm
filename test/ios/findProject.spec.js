@@ -33,8 +33,13 @@ describe('ios::findProject', () => {
   });
 
   it('should ignore Pods inside `ios` folder', () => {
-    mockFs({ ios: { Pods: projects.flat } });
-    expect(findProject('')).toBe(null);
+    mockFs({
+      ios: {
+        Pods: projects.flat,
+        SampleApp: projects.flat.ios,
+      },
+    });
+    expect(findProject('')).toBe('ios/SampleApp/sampleProject.xcodeproj');
   });
 
   it('should ignore xcodeproj from example folders', () => {
