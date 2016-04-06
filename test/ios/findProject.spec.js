@@ -36,10 +36,10 @@ describe('ios::findProject', () => {
     mockFs({
       ios: {
         Pods: projects.flat,
-        SampleApp: projects.flat.ios,
+        DemoApp: projects.flat.ios,
       },
     });
-    expect(findProject('')).toBe('ios/SampleApp/sampleProject.xcodeproj');
+    expect(findProject('')).toBe('ios/DemoApp/demoProject.xcodeproj');
   });
 
   it('should ignore xcodeproj from example folders', () => {
@@ -52,6 +52,18 @@ describe('ios::findProject', () => {
     });
 
     expect(findProject('').toLowerCase()).not.toContain('example');
+  });
+
+  it('should ignore xcodeproj from sample folders', () => {
+    mockFs({
+      samples: projects.flat,
+      Samples: projects.flat,
+      sample: projects.flat,
+      KeychainSample: projects.flat,
+      Zpp: projects.flat,
+    });
+
+    expect(findProject('').toLowerCase()).not.toContain('sample');
   });
 
   it('should ignore xcodeproj from test folders at any level', () => {

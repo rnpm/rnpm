@@ -9,7 +9,7 @@ const GLOB_PATTERN = '**/*.xcodeproj';
 /**
  * Regexp matching all test projects
  */
-const TEST_PROJECTS = /test|example/i;
+const TEST_PROJECTS = /test|example|sample/i;
 
 /**
  * Base iOS folder
