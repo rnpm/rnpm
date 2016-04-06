@@ -232,7 +232,7 @@ Special thanks to [Sonny Lazuardi](https://github.com/sonnylazuardi) for the awe
 
 This tool development and maintenance is sponsored by below companies:
 
-<a href="http://manandmoon.com" title="Man+Moon"><img src="http://manandmoon.com/images/man-moon-full-logo-.svg" width="200" /></a>
+<a href="http://callstack.io" title="Callstack.io"><img src="https://cloud.githubusercontent.com/assets/2464966/14333364/9df04cb6-fc4e-11e5-92ce-88a95d146a75.png" width="200" /></a>
 
 ## License
 
