@@ -37,6 +37,6 @@ exports.getDependencyConfig = function getDependencyConfig(packageName) {
     android: android.dependencyConfig(folder, rnpm.android || {}),
     assets: findAssets(folder, rnpm.assets),
     commands: wrapCommands(rnpm.commands),
-    params: rnpm.params || {},
+    params: rnpm.params || [],
   });
 };
