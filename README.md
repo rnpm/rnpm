@@ -153,6 +153,32 @@ In this scenario we're using custom `prelink` and `postlink` hooks for `rnpm-plu
 
 While making your own plugins for `rnpm` you may use any names for the commands, but we strongly recommend you to use a convention we suggest to avoid collisions: `when` + `plugin name`: `prelink` = `pre` + `link`.
 
+### Params
+On Android - you can specify a custom `packageInstance` to be used when linking your project. The reason for that is often that your package constructor simply requires extra user provided config (e.g. API token). `rnpm` allows you to define an array of additional arguments to get from user during linking process that you can then, reference in your `packageInstance`.
+
+Simply include the following in your package.json:
+```json
+"rnpm": {
+  "params": [{
+    "type": "input",
+    "name": "gaToken",
+    "message": "What's your GA token"
+  }]
+}
+```
+and update your `packageInstance` with the new variable:
+```json
+"rnpm": {
+  "android": {
+    "packageInstance": "new SomeLibName(this, ${gaToken})"
+  }
+}
+```
+
+Starting from now on - users will be presented an interactive form powered by `inquirer` each time they run `rnpm link`.
+
+**Note**: We pass `params` array directly to inquirer which means you can also let users choose an answer from a list as well as provide a default value! See [API docs](https://github.com/SBoudrias/Inquirer.js/#question) for more details.
+
 ### Developers
 
 The documentation is still in progress, but if you are interested in the concept and good practices, see sample implementation [here](https://github.com/rnpm/rnpm-plugin-link/blob/master/index.js)
@@ -206,7 +232,7 @@ Special thanks to [Sonny Lazuardi](https://github.com/sonnylazuardi) for the awe
 
 This tool development and maintenance is sponsored by below companies:
 
-<a href="http://manandmoon.com" title="Man+Moon"><img src="http://manandmoon.com/images/man-moon-full-logo-.svg" width="200" /></a>
+<a href="http://callstack.io" title="Callstack.io"><img src="https://cloud.githubusercontent.com/assets/2464966/14333364/9df04cb6-fc4e-11e5-92ce-88a95d146a75.png" width="200" /></a>
 
 ## License
 
