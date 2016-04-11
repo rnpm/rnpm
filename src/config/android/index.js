@@ -38,6 +38,11 @@ exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
     userConfig.mainActivityPath || `src/main/java/${packageFolder}/MainActivity.java`
   );
 
+  const stringsPath = path.join(
+    sourceDir,
+    userConfig.stringsPath || 'src/main/res/values/strings.xml'
+  );
+
   const settingsGradlePath = path.join(
     folder,
     'android',
@@ -58,6 +63,7 @@ exports.projectConfig = function projectConfigAndroid(folder, userConfig) {
     sourceDir,
     isFlat,
     folder,
+    stringsPath,
     manifestPath,
     buildGradlePath,
     settingsGradlePath,
