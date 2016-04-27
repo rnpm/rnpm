@@ -12,8 +12,9 @@ const flatten = require('lodash').flatten;
 const isPlugin = (dependency) => !!~dependency.indexOf('rnpm-plugin-');
 
 const findPluginInFolder = (folder) => {
+  var pjson;
   try {
-    const pjson = require(path.join(folder, 'package.json'));
+    pjson = require(path.join(folder, 'package.json'));
   } catch (e) {
     return [];
   }
