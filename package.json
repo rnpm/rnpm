@@ -1,6 +1,6 @@
 {
   "name": "rnpm",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "React Native Package Manager",
   "main": "./src/getActions.js",
   "scripts": {
