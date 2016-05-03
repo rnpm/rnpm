@@ -41,8 +41,8 @@
     "commander": "^2.9.0",
     "glob": "^7.0.1",
     "lodash": "^3.10.1",
-    "rnpm-plugin-install": "^1.0.0",
-    "rnpm-plugin-link": "^1.7.2",
+    "rnpm-plugin-install": "^1.1.0",
+    "rnpm-plugin-link": "^1.7.4",
     "update-notifier": "^0.6.0",
     "xmldoc": "^0.4.0"
   },
