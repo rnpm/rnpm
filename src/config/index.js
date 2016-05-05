@@ -30,7 +30,14 @@ exports.getProjectConfig = function getProjectConfig() {
  */
 exports.getDependencyConfig = function getDependencyConfig(packageName) {
   const folder = path.join(process.cwd(), 'node_modules', packageName);
-  const rnpm = getRNPMConfig(folder);
+  var rnpm;
+
+  // Will throw when package.json is not present in a nested folder
+  try {
+    rnpm = getRNPMConfig(folder);
+  } catch (err) {
+    rnpm = {};
+  }
 
   return Object.assign({}, rnpm, {
     ios: ios.dependencyConfig(folder, rnpm.ios || {}),
