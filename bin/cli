@@ -12,15 +12,25 @@ updateNotifier({ pkg }).notify();
 
 cli.version(pkg.version);
 
-const addCommand = (command) =>
-  cli
+const defaultOptParser = (val) => val;
+
+const addCommand = (command) => {
+  const cmd = cli
     .command(command.name)
     .usage(command.usage)
     .description(command.description)
     .action(function runAction() {
-      command.func(config, arguments);
+      command.func(config, arguments, this.opts());
     });
 
+  (command.options || [])
+    .forEach(opt => cmd.option(
+      opt.flags,
+      opt.description,
+      opt.parse || defaultOptParser,
+      opt.default
+    ));
+};
 
 flatten(commands).forEach(addCommand);
 
