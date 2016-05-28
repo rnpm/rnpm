@@ -100,7 +100,7 @@ Command exported by installed plugin will be available straight away.
 First of all, every plugin is [just a function](https://github.com/rnpm/rnpm-plugin-link/blob/master/src/link.js#L81) which accepts `config` and `args` parameters. Every plugin consists of [public interface](https://github.com/rnpm/rnpm-plugin-link/blob/master/index.js) for CLI and [implementation intself](https://github.com/rnpm/rnpm-plugin-link/blob/master/src/link.js).
 
 We use **public interface** to make your plugins auto-pluggable and easy to use for end-users. Every public interface consists of `name`, `func` & `description` fields:
-- `name` - Name of the plugin. After plugin installation it'll be used as a command name. For instance plugin with following interface:
+- `name` - Name of the plugin. After plugin installation it'll be used as a command name. For instance a plugin with the following interface:
   ```javascript
   module.exports = {
     func: require('./src/link'),
@@ -115,6 +115,23 @@ We use **public interface** to make your plugins auto-pluggable and easy to use 
 
 - `func` - Plugin itself. This function will be used when you run a command above
 - `description` - Command description. If user runs `$ rnpm --help`, this field will be displayed as a command description.
+- `options` - An array of flags user can specify for your plugin to run. When defined, your exported `func` will receive an object of options as a 3rd argument. For instance a plugin with the following:
+  
+  ```js
+  options: [{
+    flags: '-L, --list [path]',
+    description: 'List flag',
+    parse: (val) => val.split(',').map(Number),
+    default: [1,2,3],
+  }],
+  ```
+  will receive the following object:
+  ```
+  { list: [1,2,3] }
+  ```
+  by default.
+  
+  **Note**: `parse` and `default` are optional. You can check [commander.js](https://github.com/tj/commander.js#option-parsing) docs for more information on how to define `flags` value. 
 
 Also, in the case you want to expose multiple commands from the one plugin, you may use an array syntax:
 ```javascript
