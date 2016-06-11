@@ -1,6 +1,6 @@
 {
   "name": "rnpm",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "React Native Package Manager",
   "main": "./src/getCommands.js",
   "scripts": {
