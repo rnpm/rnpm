@@ -9,7 +9,7 @@ const flatten = require('lodash').flatten;
  * @param  {String} dependency Name of the dependency
  * @return {Boolean}           If dependency is a rnpm plugin
  */
-const isRNPMPlugin = (dependency) => !!~dependency.indexOf('rnpm-plugin-')
+const isRNPMPlugin = (dependency) => !!~dependency.indexOf('rnpm-plugin-');
 const isReactNativePlugin = (dependency) => !!~dependency.indexOf('react-native-');
 
 const readPackage = (folder) => {
@@ -21,11 +21,11 @@ const readPackage = (folder) => {
 };
 
 const findPluginsInReactNativePackage = (pjson) => {
-  if (!pjson.rnpm || !pjson.rnpm.commands) {
+  if (!pjson.rnpm || !pjson.rnpm.plugin) {
     return [];
   }
 
-  return path.join(pjson.name, pjson.rnpm.commands);
+  return path.join(pjson.name, pjson.rnpm.plugin);
 };
 
 const findPluginInFolder = (folder) => {
