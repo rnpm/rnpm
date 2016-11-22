@@ -94,6 +94,17 @@ If you're authoring an awesome react-native library with custom assets, you prob
 ```
 We'll copy your assets carefully with love for Android :heart: For iOS, we will add files to `Resources` group and update Info.plist so fonts are available for you to use straight away!
 
+Also, if you are including other `.xcodeproj` such as third-party libraries you can include this section in your `package.json`:
+```json
+...
+"rnpm": {
+  "ios": {
+    "project": "RNStreamingKit.xcodeproj"
+  }
+},
+...
+```
+
 ## Plugins
 
 As of version 1.1.0, rnpm supports plugin system. It allows you to write your own / use third-party commands to make your `rnpm` sharpened for specific purposes.
