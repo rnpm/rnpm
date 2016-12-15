@@ -65,7 +65,7 @@ And don't worry - in case it fails, you can always add `rnpm` object to your `pa
 ## Available commands
 
 #### rnpm link [name]
-Automatically updates your project by linking all dependencies for Android (if present) and for iOS (if present). It's a great fit to your `postinstall` hook to always make sure you are linked. You can supply optional [name] argument to link only one dependency, e.g.
+Automatically updates your project by linking all dependencies for Android (if present) and for iOS (if present). It's a [great fit to your `postinstall` hook](#can-i-use-rnpm-link-with-npms-postinstall-hook) to always make sure you are linked. You can supply optional [name] argument to link only one dependency, e.g.
 
 ```bash
 $ npm install react-native-module --save
@@ -230,11 +230,15 @@ Yes, in fact - it has nothing to do with it. What it does is just linking static
 Sure you can! Try doing something like this in your package.json:
 ```json
 ...
-"scripts": {
-  "postinstall": "rnpm link"
+"dependencies": {
+  "rnpm": "^1.4.1"
 },
+"scripts": { 
+  "postinstall": "cd ../.. && rnpm link <name>"
+}
 ...
 ```
+Note that the `cd ../..` in the postinstall script is needed to go up to the working directory of the parent project that is to be linked with your plugin.
 
 ### `rnpm link <name>` fails with `ERRINVALIDPROJ`
 
